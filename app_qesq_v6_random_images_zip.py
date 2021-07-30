@@ -301,7 +301,7 @@ def Load_Images_randomly(num_rows,num_cols):
     image_files=[]
     image_names=[]     
         
-    archive = zipfile.ZipFile('.\celeba_resized.zip', 'r')
+    archive = zipfile.ZipFile('.\guess_who_images.zip.zip', 'r')
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
     image_index=[]
@@ -347,7 +347,7 @@ def Load_Images_randomly(num_rows,num_cols):
     # image_files=[]
     # image_names=[]
     
-    # with ZipFile('.\img_celeba.zip', 'r') as zipObj:
+    # with ZipFile('.\guess_who_images.zip', 'r') as zipObj:
        ### Get a list of all archived file names from the zip
         # listOfFileNames = zipObj.namelist()
         
