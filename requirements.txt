@@ -1,4 +1,5 @@
 numpy
 torch
 torchvision
+tensorflow
 opencv-python-headless
