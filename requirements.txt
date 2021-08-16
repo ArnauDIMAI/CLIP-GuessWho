@@ -195,7 +195,6 @@ pycosat==0.6.3
 pycparser==2.20
 pycrypto==2.6.1
 pycryptodome==3.10.1
-pycurl==7.43.0.6
 pydeck==0.6.2
 pydocstyle==6.1.1
 pyflakes==2.2.0
