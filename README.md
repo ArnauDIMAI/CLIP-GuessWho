@@ -10,7 +10,7 @@ The "Guess Who?" game has a handicap when it uses real images, because it is nec
 
 ## Select Images
 The first step of the game is to select the images to play. The player can press a button to randomly change the used images, which are taken from the CelebA data set. This data set contains 202,599 face images of the size 178×218 from 10,177 celebrities, each annotated with 40 binary labels indicating facial attributes like hair color, gender and age. (see next figure).
-![CLIP](paper_images_b.png)
+![CLIP](paper_images.png)
 
 
 ## Ask Questions
