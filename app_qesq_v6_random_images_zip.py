@@ -298,7 +298,7 @@ def Load_Images_randomly(num_rows,num_cols):
     image_files=[]
     image_names=[]     
         
-    archive = zipfile.ZipFile('.\guess_who_images.zip', 'r')
+    archive = zipfile.ZipFile('guess_who_images.zip', 'r')
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
     image_index=[]
