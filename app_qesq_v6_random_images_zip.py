@@ -314,7 +314,7 @@ def Load_Images_randomly(num_rows,num_cols):
     for current_index in image_index:
         image_current_path=listOfFileNames[current_index]
         image_files.append(np.array(Image.open(io.BytesIO(archive.read(image_current_path)))))
-        image_names.append(image_current_path[:-4])
+        image_names.append(image_current_path[-10:-4])
             
     fig, axs = plt.subplots(num_rows,num_cols,figsize=(1*num_cols,1*num_rows))
     plt.subplots_adjust(top = 0.9, bottom=0.0, hspace=0.2, wspace=0.05)
