@@ -44,12 +44,6 @@ cloudpickle==1.6.0
 cmake==3.18.4.post1
 colorama==0.4.4
 comtypes==1.1.10
-conda-content-trust==0+unknown
-conda-pack==0.6.0
-conda-package-handling==1.7.3
-conda-repo-cli==1.0.4
-conda-token==0.3.0
-conda-verify==3.4.2
 contextlib2==0.6.0.post1
 contextvars==2.4
 coverage==5.5
