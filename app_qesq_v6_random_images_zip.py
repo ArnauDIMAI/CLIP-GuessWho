@@ -39,8 +39,6 @@ from torch.utils.data import Dataset, DataLoader
 from torch import optim
 from torch import nn
 from torch.utils.data.sampler import SubsetRandomSampler
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report,plot_confusion_matrix,precision_score,accuracy_score,roc_auc_score,f1_score,recall_score
 from tensorflow.keras import layers,regularizers
 from tensorflow.keras import backend as K
 from tensorflow.keras.layers import Input, Conv2D, Conv3D, Activation, Flatten, Dense, Dropout, BatchNormalization, MaxPooling2D
@@ -52,7 +50,6 @@ from tensorflow.keras.applications import Xception, VGG19, ResNet50
 from urllib.request import urlopen
 # from google.colab import drive  # for google colab drive mount
 from numpy.random import seed
-from scipy.special import softmax
 
 # %matplotlib inline
 # used_seed=seed(42)
