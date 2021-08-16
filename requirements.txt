@@ -41,7 +41,6 @@ cffi==1.14.5
 chardet==4.0.0
 click==8.0.1
 cloudpickle==1.6.0
-clyent==1.2.2
 cmake==3.18.4.post1
 colorama==0.4.4
 comtypes==1.1.10
