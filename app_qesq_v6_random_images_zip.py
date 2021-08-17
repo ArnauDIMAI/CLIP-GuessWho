@@ -409,8 +409,8 @@ def Show_Info(feature_options):
 def Reload_data():
     path_info='D:/Datasets/Celeba/'
     first_image=1
-    num_cols=6
-    num_rows=4
+    num_cols=5
+    num_rows=3
     n_images=num_cols*num_rows
     current_querys=['A picture of a man','A picture of a woman']
     n_tokens,clip_tokens,clip_device,clip_model, clip_transform, clip_text = Token_process_query(current_querys)
@@ -487,8 +487,8 @@ def Reload_data():
 def load_data():
     path_info='D:/Datasets/Celeba/'
     first_image=1
-    num_cols=6
-    num_rows=4
+    num_cols=5
+    num_rows=3
     n_images=num_cols*num_rows
     current_querys=['A picture of a man','A picture of a woman']
     n_tokens,clip_tokens,clip_device,clip_model, clip_transform, clip_text = Token_process_query(current_querys)
