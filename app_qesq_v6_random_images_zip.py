@@ -50,6 +50,8 @@ from tensorflow.keras.applications import Xception, VGG19, ResNet50
 from urllib.request import urlopen
 # from google.colab import drive  # for google colab drive mount
 from numpy.random import seed
+from matplotlib.backends.backend_agg import RendererAgg
+_lock = RendererAgg.lock
 
 # %matplotlib inline
 # used_seed=seed(42)
