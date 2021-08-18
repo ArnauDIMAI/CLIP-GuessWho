@@ -154,7 +154,6 @@ def Load_Images_randomly(n_images):
     image_files=[]
     image_names=[]
     image_index=[]
-    # images_to_show=[]     
         
     archive = zipfile.ZipFile('guess_who_images.zip', 'r')
     listOfFileNames = archive.namelist()        
@@ -354,7 +353,6 @@ Feature_Options=['Ask a Question', 'Create your own query', 'Create your own 2 q
 
 
 ## TITLE
-# st.title('Guess Who?                         SCORE: '+ str(Data_Init['init_data'][0]['award']))
 st.markdown("<h1 style='text-align:left; float:left; color:blue; margin:0px;'>Guess Who?</h1><h2 style='text-align:right; float:right; color:gray; margin:0px;'>score: "+ str(Data_Init['init_data'][0]['award'])+"</h2>", unsafe_allow_html=True)
 
 
@@ -412,7 +410,6 @@ else:
             st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Select a type of Query to play.</h2>", unsafe_allow_html=True)
 
         Selected_Feature=st.selectbox('Ask a question from a list, create your query or select a winner:', Feature_Options, 
-                                               # index=Feature_Options.index(Data_Init['init_data'][0]['selected_feature']), 
                                                index=0, 
                                                key='selected_feature', help=None)     
         if Data_Init['init_data'][0]['selected_feature']!=Selected_Feature and not Data_Init['init_data'][0]['show_results']:
@@ -712,7 +709,6 @@ else:
           Data_Init['init_data'][0]['current_images_discarted'],
           Data_Init['init_data'][0]['current_image_files'],
           Data_Init['init_data'][0]['current_image_names'],
-          # Remaining_Images,
           Data_Init['init_data'][0]['n_images'],
           Data_Init['init_data'][0]['current_winner_index'] ] = Image_discarding(Data_Init['init_data'][0]['image_current_predictions'],
                                                                                 Data_Init['init_data'][0]['current_winner_index'],
@@ -750,7 +746,7 @@ else:
         Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
 
 
-    ##SHOW EXTRA INFO
+    ## SHOW EXTRA INFO
     Show_Info(Data_Init['init_data'][0]['feature_questions'])
  
  
