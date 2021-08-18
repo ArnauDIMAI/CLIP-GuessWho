@@ -264,7 +264,7 @@ def Reload_data():
   
 # ---------------   CACHE   ---------------
 
-@st.cache(allow_output_mutation=True,max_entries=100,ttl=3600) 
+@st.cache(allow_output_mutation=True,max_entries=2,ttl=3600) 
 def load_data():
     path_info='D:/Datasets/Celeba/'
     first_image=1
