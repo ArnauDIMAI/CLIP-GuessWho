@@ -4,5 +4,3 @@ numpy
 torch
 torchvision
 tensorflow
-matplotlib
-opencv-python-headless
