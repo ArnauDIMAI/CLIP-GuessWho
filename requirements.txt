@@ -2,3 +2,4 @@ ftfy
 regex
 numpy
 torch
+torchvision
