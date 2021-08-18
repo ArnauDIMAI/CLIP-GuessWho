@@ -15,6 +15,9 @@ from io import BytesIO
 from PIL import Image
 from zipfile import ZipFile 
 
+import sys
+from sys import getsizeof as getsizeof 
+
 ## --------------- FUNCTIONS ---------------
 
 def Predict_1_vs_0(prediccion_probs):
@@ -753,4 +756,14 @@ else:
  
     ## SHOW CURRENT
     st.image(Remaining_Images, use_column_width=False, caption=Image_Names)
+
+    ## DICTIONARY SIZE
+    size = getsizeof(Data_Init['init_data'][0])
+    st.write(size)
+    
+    size = getsizeof(Data_Init['init_data'][0])
+    size += sum(map(getsizeof, Data_Init['init_data'][0].values())) + sum(map(getsizeof, Data_Init['init_data'][0].keys()))
+    st.write(size)
+    
+    ## CLEAR RESOURCES
     gc.collect()
