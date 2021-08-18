@@ -2,5 +2,3 @@ ftfy
 regex
 numpy
 torch
-torchvision
-tensorflow
