@@ -9,6 +9,7 @@ import torch
 import numpy as np
 import streamlit as st
 import clip
+import gc
 
 from io import BytesIO
 from PIL import Image
@@ -752,3 +753,4 @@ else:
  
     ## SHOW CURRENT
     st.image(Remaining_Images, use_column_width=False, caption=Image_Names)
+    gc.collect()
