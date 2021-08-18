@@ -6,40 +6,16 @@ import io
 import zipfile
 import random
 import torch
-import torchvision
-# import subprocess
-# import cv2
-# import os.path
 import numpy as np
-import tensorflow as tf
-# import pandas as pd
-import torch.nn.functional as F
-import torchvision.datasets as dataset
-import torchvision.transforms as transforms
 import streamlit as st
-import time
 import clip
 
-# import urllib, cStringIO    # imatges
 from io import BytesIO
-from os import path
 from PIL import Image
 from zipfile import ZipFile 
-from torchvision import models
-from torch.utils.data import Dataset, DataLoader
-from torch import optim
-from torch import nn
-from torch.utils.data.sampler import SubsetRandomSampler
-from tensorflow.keras import layers,regularizers
-from tensorflow.keras import backend as K
-from tensorflow.keras.layers import Input, Conv2D, Conv3D, Activation, Flatten, Dense, Dropout, BatchNormalization, MaxPooling2D
-from tensorflow.keras.models import Model,Sequential
-from tensorflow.keras.optimizers import SGD, Adam
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.applications import Xception, VGG19, ResNet50
 
 ## --------------- FUNCTIONS ---------------
+
 def Predict_1_vs_0(prediccion_probs):
     current_result=[]
     for i in range(len(prediccion_probs[:,0])):
@@ -113,21 +89,16 @@ def CLIP_get_probs_only(img_file, img_txt, img_model, img_transf, img_device):
     img_features = img_model.encode_image(img_proeprocessed)
     txt_features = img_model.encode_text(img_txt)
     img_logits, img_logits_txt = img_model(img_proeprocessed, img_txt)
-    # image_p=softmax(img_logits.detach().numpy()[0])
     image_p=img_logits.detach().numpy()[0]
 
     return np.round(image_p,2)
 
-def Image_discarding(image_current_predictions,current_winner_index,current_images_discarted, n_images, num_cols, image_files,image_names):
+def Image_discarding(image_current_predictions,current_winner_index,current_images_discarted, n_images, image_files,image_names):
     for i in range(len(current_images_discarted)):
         if current_images_discarted[i]==0 and image_current_predictions[i]!=image_current_predictions[current_winner_index]:
             current_images_discarted[i]=1
 
-    n_images2=np.sum(current_images_discarted==0)            
-    num_rows= int(round(n_images2/num_cols,0))
-    if num_rows<n_images2/num_cols:
-        num_rows+=1
-
+    n_images2=np.sum(current_images_discarted==0)        
     image_files2=[]
     image_names2=[]
     image_current_predictions2=[]
@@ -146,10 +117,10 @@ def Image_discarding(image_current_predictions,current_winner_index,current_imag
             
         current_index+=1
                                
-    return image_current_predictions2, np.zeros(n_images2), image_files2, np.array(image_names2), n_images2, new_winner_index, num_rows
+    return image_current_predictions2, np.zeros(n_images2), image_files2, np.array(image_names2), n_images2, new_winner_index
     
 def Show_images(show_results,current_image_files,current_images_discarted, image_current_predictions,
-                current_winner_index, num_cols, num_rows, n_images,current_image_names):
+                current_winner_index, n_images,current_image_names):
     remaining_images=[]     
     for current_index in range(n_images):
         if show_results:
@@ -179,8 +150,7 @@ def Highlight_Image(image,thickness,color):
     image_highlighted[:,:thickness,:]=color
     return image_highlighted
 
-def Load_Images_randomly(num_rows,num_cols):
-    n_images=num_rows*num_cols
+def Load_Images_randomly(n_images):
     image_files=[]
     image_names=[]
     image_index=[]
@@ -200,61 +170,11 @@ def Load_Images_randomly(num_rows,num_cols):
    # Iterate over the file names
     for current_index in image_index:
         image_current_path=listOfFileNames[current_index]
-        image_files.append(np.array(Image.open(io.BytesIO(archive.read(image_current_path)))))
+        image_files.append(np.array(Image.open(BytesIO(archive.read(image_current_path)))))
         image_names.append(image_current_path[-10:-4])
-        # images_to_show.append(Highlight_Image(np.array(Image.open(io.BytesIO(archive.read(image_current_path)))),1,np.zeros(3)))
                 
     return image_files, np.array(image_names)
-  
-# def Load_Images_randomly(num_rows,num_cols):
-    # n_images=num_rows*num_cols
-    # image_files=[]
-    # image_names=[]
-    
-    # with ZipFile('.\guess_who_images.zip', 'r') as zipObj:
-       ### Get a list of all archived file names from the zip
-        # listOfFileNames = zipObj.namelist()
-        
-    # archive = zipfile.ZipFile('.\img_celeba.zip', 'r')
-            
-    # image_index_all=list(range(len(listOfFileNames)))
-    # image_index=[]
-    # image_index.append(random.choice(image_index_all))
-    # image_index_all.remove(image_index[0])
-    # current_index=1
-    # while len(image_index)<n_images:
-        # image_index.append(random.choice(image_index_all))
-        # image_index_all.remove(image_index[current_index])
-        # current_index+=1
-        
-   ### Iterate over the file names
-    # for current_index in image_index:
-        # image_current_path='img_celeba/'+str(current_index).zfill(6)+'.jpg'
-        # image_files.append(np.array(Image.open(io.BytesIO(archive.read(image_current_path)))))
-        # image_names.append(str(current_index).zfill(6))
-            
-    # fig, axs = plt.subplots(num_rows,num_cols,figsize=(1.5*num_cols,1.5*num_rows))
-    # plt.subplots_adjust(top = 1.2, bottom=0.0, hspace=0.25, wspace=0.1)
-    # current_index=0
-    # for i in range(num_rows):
-        # for j in range(num_cols):
-            # axs[i,j].imshow(image_files[current_index])
-            # axs[i,j].axes.axes.set_xlabel(image_names[current_index], fontsize=np.int(15))
-            # axs[i,j].axes.xaxis.set_ticks([])
-            # axs[i,j].axes.xaxis.set_ticklabels([])
-            # axs[i,j].axes.yaxis.set_visible(False)
-            # axs[i,j].spines['bottom'].set_color('black')
-            # axs[i,j].spines['top'].set_color('black')
-            # axs[i,j].spines['left'].set_color('black')
-            # axs[i,j].spines['right'].set_color('black')
-            # axs[i,j].spines['bottom'].set_linewidth(1)
-            # axs[i,j].spines['top'].set_linewidth(1)
-            # axs[i,j].spines['left'].set_linewidth(1)
-            # axs[i,j].spines['right'].set_linewidth(1)
-            # current_index+=1        
-
-    # return image_files, np.array(image_names), [fig, axs]
-  
+   
 ## Tokenization process
 def Token_process_query(clip_tokens):
     n_tokens=len(clip_tokens)
@@ -276,15 +196,11 @@ def Show_Info(feature_options):
 def Reload_data():
     path_info='D:/Datasets/Celeba/'
     first_image=1
-    num_cols=5
-    num_rows=3
-    n_images=num_cols*num_rows
+    n_images=20
     current_querys=['A picture of a man','A picture of a woman']
     n_tokens,clip_tokens,clip_device,clip_model, clip_transform, clip_text = Token_process_query(current_querys)
-    current_image_files, current_image_names =Load_Images_randomly(num_rows,num_cols)
+    current_image_files, current_image_names =Load_Images_randomly(n_images)
     Data_Init['init_data'][0]['n_images']=n_images
-    Data_Init['init_data'][0]['num_rows']=num_rows
-    Data_Init['init_data'][0]['num_cols']=num_cols
     Data_Init['init_data'][0]['current_image_files']=current_image_files
     Data_Init['init_data'][0]['current_images_discarted']=np.zeros((n_images))
     Data_Init['init_data'][0]['current_image_names']=current_image_names
@@ -307,8 +223,8 @@ def Reload_data():
     Data_Init['init_data'][0]['path_imgs']='D:/Datasets/Celeba/img_celeba/'
     Data_Init['init_data'][0]['function_predict']=Predict_0_vs_1
     Data_Init['init_data'][0]['token_type']=0
-    Data_Init['init_data'][0]['image_current_probs']=np.zeros((num_cols*num_rows,n_tokens))
-    Data_Init['init_data'][0]['image_current_predictions']=np.zeros((num_cols*num_rows))+2
+    Data_Init['init_data'][0]['image_current_probs']=np.zeros((n_images,n_tokens))
+    Data_Init['init_data'][0]['image_current_predictions']=np.zeros((n_images))+2
     Data_Init['init_data'][0]['selected_feature']='Ask a Question'
     Data_Init['init_data'][0]['selected_question']='Ask a Question'
     Data_Init['init_data'][0]['user_input']='A picture of a person'
@@ -353,17 +269,13 @@ def Reload_data():
 def load_data():
     path_info='D:/Datasets/Celeba/'
     first_image=1
-    num_cols=5
-    num_rows=3
-    n_images=num_cols*num_rows
+    n_images=20
     current_querys=['A picture of a man','A picture of a woman']
     n_tokens,clip_tokens,clip_device,clip_model, clip_transform, clip_text = Token_process_query(current_querys)
-    current_image_files, current_image_names =Load_Images_randomly(num_rows,num_cols)
+    current_image_files, current_image_names =Load_Images_randomly(n_images)
     
     Saved_data={
         'n_images':n_images,
-        'num_rows':num_rows,
-        'num_cols':num_cols,
         'current_image_files':current_image_files,
         'current_images_discarted':np.zeros((n_images)),
         'current_image_names':current_image_names,
@@ -386,8 +298,8 @@ def load_data():
         'path_imgs':'D:/Datasets/Celeba/img_celeba/',
         'function_predict':Predict_0_vs_1,
         'token_type':0,
-        'image_current_probs':np.zeros((num_cols*num_rows,n_tokens)),
-        'image_current_predictions':np.zeros((num_cols*num_rows))+2,
+        'image_current_probs':np.zeros((n_images,n_tokens)),
+        'image_current_predictions':np.zeros((n_images))+2,
         'selected_feature':'Ask a Question',
         'selected_question':'Are you a MAN?',
         'user_input':'A picture of a person',
@@ -445,11 +357,11 @@ Feature_Options=['Ask a Question', 'Create your own query', 'Create your own 2 q
 # st.title('Guess Who?                         SCORE: '+ str(Data_Init['init_data'][0]['award']))
 st.markdown("<h1 style='text-align:left; float:left; color:blue; margin:0px;'>Guess Who?</h1><h2 style='text-align:right; float:right; color:gray; margin:0px;'>score: "+ str(Data_Init['init_data'][0]['award'])+"</h2>", unsafe_allow_html=True)
 
+
 ## SIDEBAR TITLE
 st.sidebar.markdown('# OPTIONS PANEL')
 
 
-## RESET APP
 ## RESET APP
 Reset_App = st.sidebar.button('RESET GAME', key='Reset_App')
 
@@ -463,6 +375,7 @@ else:
         Restart_App = st.button('GO TO IMAGES SELECTION TO START NEW GAME', key='Restart_App')
 
     Use_Images_Selected=False
+    
     ## INITIALIZATION (SELECTING FIGURES)
     if (not Data_Init['init_data'][0]['start_game']) and (Data_Init['init_data'][0]['finished_game']==0):
         
@@ -476,8 +389,7 @@ else:
         Random_Images = st.button('CHANGE IMAGES', key='Random_Images')
         if Random_Images:
             [ Data_Init['init_data'][0]['current_image_files'],
-              Data_Init['init_data'][0]['current_image_names'] ] = Load_Images_randomly(Data_Init['init_data'][0]['num_rows'],
-                                                                                    Data_Init['init_data'][0]['num_cols'])
+              Data_Init['init_data'][0]['current_image_names'] ] = Load_Images_randomly(Data_Init['init_data'][0]['n_images'])
             Data_Init['init_data'][0]['model_changing']=True
                 
         ## Start game button
@@ -714,7 +626,6 @@ else:
             # User 2 querys
             if Data_Init['init_data'][0]['selected_feature']=='Create your own 2 querys':
                 if Check_Querys:
-                    # st.sidebar.markdown('(new 2 own querys:)')
                     Data_Init['init_data'][0]['current_querys']=[Data_Init['init_data'][0]['user_input_querys1'],Data_Init['init_data'][0]['user_input_querys2']]     
                     Data_Init['init_data'][0]['function_predict']=Predict_0_vs_1
                     [ Data_Init['init_data'][0]['n_tokens'],
@@ -790,7 +701,6 @@ else:
                                                 Data_Init['init_data'][0]['current_images_discarted'],
                                                 Data_Init['init_data'][0]['image_current_predictions'],
                                                 Data_Init['init_data'][0]['current_winner_index'], 
-                                                Data_Init['init_data'][0]['num_cols'],Data_Init['init_data'][0]['num_rows'],
                                                 Data_Init['init_data'][0]['n_images'],Data_Init['init_data'][0]['current_image_names'])
     Image_Names=Data_Init['init_data'][0]['current_image_names']
 
@@ -804,12 +714,10 @@ else:
           Data_Init['init_data'][0]['current_image_names'],
           # Remaining_Images,
           Data_Init['init_data'][0]['n_images'],
-          Data_Init['init_data'][0]['current_winner_index'],
-          Data_Init['init_data'][0]['num_rows'] ] = Image_discarding(Data_Init['init_data'][0]['image_current_predictions'],
+          Data_Init['init_data'][0]['current_winner_index'] ] = Image_discarding(Data_Init['init_data'][0]['image_current_predictions'],
                                                                                 Data_Init['init_data'][0]['current_winner_index'],
                                                                                 Data_Init['init_data'][0]['current_images_discarted'],
                                                                                 Data_Init['init_data'][0]['n_images'],
-                                                                                Data_Init['init_data'][0]['num_cols'],
                                                                                 Data_Init['init_data'][0]['current_image_files'],
                                                                                 Data_Init['init_data'][0]['current_image_names'])
                                                                           
@@ -841,8 +749,10 @@ else:
         st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+Data_Init['init_data'][0]['current_image_names'][Data_Init['init_data'][0]['current_winner_index']]+"</h1>", unsafe_allow_html=True)
         Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
 
+
     ##SHOW EXTRA INFO
     Show_Info(Data_Init['init_data'][0]['feature_questions'])
-        
+ 
+ 
     ## SHOW CURRENT
     st.image(Remaining_Images, use_column_width=False, caption=Image_Names)
