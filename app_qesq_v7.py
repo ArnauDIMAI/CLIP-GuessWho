@@ -70,8 +70,7 @@ def Predict_hair_color(prediccion_probs):
     current_result=[]
     for i in range(len(prediccion_probs[:,0])):
         if np.argmax(prediccion_probs[i,:])==0:
-            current_result.append(1)
-        else:
+            current_result.append(1)        else:
             current_result.append(0)
 
     return np.array(current_result)
@@ -264,7 +263,7 @@ def Reload_data():
   
 # ---------------   CACHE   ---------------
 
-@st.cache(allow_output_mutation=True,max_entries=10,ttl=3600) 
+@st.cache(allow_output_mutation=True,max_entries=100,ttl=3600) 
 def load_data():
     path_info='D:/Datasets/Celeba/'
     first_image=1
