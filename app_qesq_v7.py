@@ -15,9 +15,6 @@ from io import BytesIO
 from PIL import Image
 from zipfile import ZipFile 
 
-import sys
-from sys import getsizeof as getsizeof 
-
 ## --------------- FUNCTIONS ---------------
 
 def Predict_1_vs_0(prediccion_probs):
@@ -749,21 +746,11 @@ else:
         st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+Data_Init['init_data'][0]['current_image_names'][Data_Init['init_data'][0]['current_winner_index']]+"</h1>", unsafe_allow_html=True)
         Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
 
-
     ## SHOW EXTRA INFO
     Show_Info(Data_Init['init_data'][0]['feature_questions'])
  
- 
     ## SHOW CURRENT
     st.image(Remaining_Images, use_column_width=False, caption=Image_Names)
-
-    ## DICTIONARY SIZE
-    size = getsizeof(Data_Init['init_data'][0])
-    st.write(size)
-    
-    size = getsizeof(Data_Init['init_data'][0])
-    size += sum(map(getsizeof, Data_Init['init_data'][0].values())) + sum(map(getsizeof, Data_Init['init_data'][0].keys()))
-    st.write(size)
     
     ## CLEAR RESOURCES
     gc.collect()
