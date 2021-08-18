@@ -70,7 +70,8 @@ def Predict_hair_color(prediccion_probs):
     current_result=[]
     for i in range(len(prediccion_probs[:,0])):
         if np.argmax(prediccion_probs[i,:])==0:
-            current_result.append(1)        else:
+            current_result.append(1)        
+        else:
             current_result.append(0)
 
     return np.array(current_result)
