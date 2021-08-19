@@ -193,22 +193,29 @@ def Token_process_query(clip_tokens):
 def Show_Info(feature_options):
     st.sidebar.markdown('#### Questions List:')
     st.sidebar.write(feature_options)
+    st.sidebar.write(st.session_state['init_data'])
 
 # ---------------   CACHE   ---------------
 
 # @st.cache(allow_output_mutation=True,max_entries=2,ttl=3600) 
 def load_data():
     path_info='D:/Datasets/Celeba/'
-    n_images=20
+    N_images=20
+    n_images=N_images
     current_querys=['A picture of a man','A picture of a woman']
     n_tokens,clip_tokens,clip_device,clip_model, clip_transform, clip_text = Token_process_query(current_querys)
-    current_image_files, current_image_names =Load_Images_randomly(n_images)
+    current_image_files, current_image_names =Load_Images_randomly(N_images)
     
     Init_Data={
+        'N_images':N_images,
         'n_images':n_images,
         'current_image_files':current_image_files,
-        'current_images_discarted':np.zeros((n_images)),
+        'current_images_discarted':np.zeros((N_images)),
         'current_image_names':current_image_names,
+        'button_question':False,
+        'button_query1':False,
+        'button_query2':False,
+        'button_winner':False,
         'model_changing':False,
         'show_results':False,
         'start_game':False,
@@ -227,8 +234,8 @@ def load_data():
         'path_imgs':'D:/Datasets/Celeba/img_celeba/',
         'function_predict':Predict_0_vs_1,
         'token_type':0,
-        'image_current_probs':np.zeros((n_images,n_tokens)),
-        'image_current_predictions':np.zeros((n_images))+2,
+        'image_current_probs':np.zeros((N_images,n_tokens)),
+        'image_current_predictions':np.zeros((N_images))+2,
         'selected_feature':'Ask a Question',
         'selected_question':'Are you a MAN?',
         'user_input':'A picture of a person',
@@ -322,7 +329,7 @@ else:
         Random_Images = st.button('CHANGE IMAGES', key='Random_Images')
         if Random_Images:
             [ st.session_state['init_data']['current_image_files'],
-              st.session_state['init_data']['current_image_names'] ] = Load_Images_randomly(st.session_state['init_data']['n_images'])
+              st.session_state['init_data']['current_image_names'] ] = Load_Images_randomly(st.session_state['init_data']['N_images'])
             st.session_state['init_data']['model_changing']=True
                 
         ## Start game button
@@ -331,7 +338,7 @@ else:
         
         if Use_Images:
             ## Choose winner and start game
-            st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['n_images'])))
+            st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
             st.session_state['init_data']['start_game']=True
             st.session_state['init_data']['model_changing']=True
             Use_Images_Selected=True
@@ -346,7 +353,8 @@ else:
 
         Selected_Feature=st.selectbox('Ask a question from a list, create your query or select a winner:', Feature_Options, 
                                                index=0, 
-                                               key='selected_feature', help=None)     
+                                               key='selected_feature', help=None) 
+                                               
         if st.session_state['init_data']['selected_feature']!=Selected_Feature and not st.session_state['init_data']['show_results']:
             st.session_state['init_data']['selected_feature']=Selected_Feature
             st.session_state['init_data']['model_changing']=True
@@ -354,10 +362,6 @@ else:
         ## Select query - elements to show (questions)
         if st.session_state['init_data']['selected_feature']=='Ask a Question':
             st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Select a Question from the list.</h3>", unsafe_allow_html=True)
-            if st.session_state['init_data']['questions_index']<len(st.session_state['init_data']['feature_questions']):
-                current_questions_index=st.session_state['init_data']['questions_index']
-            else:
-                current_questions_index=0
             Selected_Question=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], 
                                                index=0,
                                                key='selected_question', help=None)
@@ -472,8 +476,6 @@ else:
                                                         key='User_Input_Querys1', help=None)
             User_Input_Querys2 = st.text_input('Write your "False" query:', st.session_state['init_data']['user_input_querys2'],
                                                         key='User_Input_Querys2', help=None)
-            Check_Querys = st.button('USE MY QUERYS:   '+User_Input_Querys1+' vs '+User_Input_Querys2, key='Check_Querys')
-            st.session_state['init_data']['token_type']=-2
             if st.session_state['init_data']['user_input_querys1']!=User_Input_Querys1 and not st.session_state['init_data']['show_results']:
                 st.session_state['init_data']['user_input_querys1']=User_Input_Querys1
                 st.session_state['init_data']['model_changing']=True
@@ -481,6 +483,9 @@ else:
             if st.session_state['init_data']['user_input_querys2']!=User_Input_Querys2 and not st.session_state['init_data']['show_results']:
                 st.session_state['init_data']['user_input_querys2']=User_Input_Querys2
                 st.session_state['init_data']['model_changing']=True
+                
+            Check_Querys = st.button('USE MY QUERYS:   '+User_Input_Querys1+' vs '+User_Input_Querys2, key='Check_Querys')
+            st.session_state['init_data']['token_type']=-2
 
 
         ## Select query - elements to show (winner selection)
@@ -490,10 +495,11 @@ else:
             Winner_Options.extend(st.session_state['init_data']['current_image_names'])
             Selected_Winner=st.selectbox('If you are inspired, Select a Winner image directly:', Winner_Options, 
                                                     index=0, key='Selected_Winner', help=None)
-            Check_Winner = st.button('CHECK THIS WINNER', key='Check_Winner')
-            st.session_state['init_data']['token_type']=-3
             if Selected_Winner!='Winner not selected' and not st.session_state['init_data']['show_results']:
                 st.session_state['init_data']['model_changing']=True
+                
+            Check_Winner = st.button('CHECK THIS WINNER', key='Check_Winner')
+            st.session_state['init_data']['token_type']=-3
 
             
         ## ACTIONS IF NOT SHOWING RESULTS
@@ -517,18 +523,35 @@ else:
                                                                                 st.session_state['init_data']['clip_transform'], 
                                                                                 st.session_state['init_data']['clip_device'])
                     st.session_state['init_data']['image_current_predictions']=st.session_state['init_data']['function_predict'](st.session_state['init_data']['image_current_probs'])
+                    
+                    ### delete used question
+                    # if Data_Init['init_data'][0]['selected_question']=='Are you a MAN?' or Data_Init['init_data'][0]['selected_question']=='Are you a WOMAN?':
+                        # del Data_Init['init_data'][0]['querys_list'][0:2]
+                        # del Data_Init['init_data'][0]['feature_questions'][0:2]
+                    # else:
+                        # del Data_Init['init_data'][0]['querys_list'][Data_Init['init_data'][0]['questions_index']]
+                        # del Data_Init['init_data'][0]['feature_questions'][Data_Init['init_data'][0]['questions_index']]
+                    # Data_Init['init_data'][0]['questions_index']=0
+                    
+                    # if st.session_state['init_data']['selected_question']=='Are you a MAN?' or st.session_state['init_data']['selected_question']=='Are you a WOMAN?':
+                        # st.session_state['init_data']['querys_list']=st.session_state['init_data']['querys_list'][2:]
+                        # st.session_state['init_data']['feature_questions']=st.session_state['init_data']['feature_questions'][2:]
+                    # else:
+                        # if st.session_state['init_data']['questions_index']==len(st.session_state['init_data']['querys_list'])-1:
+                            # st.session_state['init_data']['querys_list']=st.session_state['init_data']['querys_list'][:-1]
+                            # st.session_state['init_data']['feature_questions']=st.session_state['init_data']['feature_questions'][:-1]
+                        # elif st.session_state['init_data']['questions_index']==0:
+                            # st.session_state['init_data']['querys_list']=st.session_state['init_data']['querys_list'][1:]
+                            # st.session_state['init_data']['feature_questions']=st.session_state['init_data']['feature_questions'][1:]
+                        # else:
+                            # st.session_state['init_data']['querys_list']=st.session_state['init_data']['querys_list'][:st.session_state['init_data']['questions_index']]+st.session_state['init_data']['querys_list'][st.session_state['init_data']['questions_index']+1:]
+                            # st.session_state['init_data']['feature_questions']=st.session_state['init_data']['feature_questions'][:st.session_state['init_data']['questions_index']]+st.session_state['init_data']['feature_questions'][st.session_state['init_data']['questions_index']+1:]
+                    
+                    # st.session_state.selected_question = st.session_state['init_data']['feature_questions'][0]                    
+                    st.session_state['init_data']['questions_index']=0
                     st.session_state['init_data']['model_changing']=False
                     st.session_state['init_data']['show_results']=True
-                    
-                    ## delete used question
-                    if st.session_state['init_data']['selected_question']=='Are you a MAN?' or st.session_state['init_data']['selected_question']=='Are you a WOMAN?':
-                        del st.session_state['init_data']['querys_list'][0:2]
-                        del st.session_state['init_data']['feature_questions'][0:2]
-                    else:
-                        del st.session_state['init_data']['querys_list'][st.session_state['init_data']['questions_index']]
-                        del st.session_state['init_data']['feature_questions'][st.session_state['init_data']['questions_index']]
-                    st.session_state['init_data']['questions_index']=0
-                    
+
             # User 1 query
             if st.session_state['init_data']['selected_feature']=='Create your own query':
                 if Check_Query:
@@ -596,6 +619,10 @@ else:
                 else:
                     st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to continue.</h2>", unsafe_allow_html=True)
                 Next_Query=st.button('NEXT QUERY', key='Next_Query')
+                
+                if Next_Query:
+                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Query pressed.</h2>", unsafe_allow_html=True)
+
             
             if st.session_state['init_data']['token_type']==0:
                 if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
@@ -639,7 +666,7 @@ else:
    ## APPLY DISCARDING
     if st.session_state['init_data']['show_results']:        
         st.session_state['init_data']['show_results']=False
-        previous_images_discarted=len(st.session_state['init_data']['current_images_discarted'])
+        previous_discarding_images_number=st.session_state['init_data']['n_images']
         [ st.session_state['init_data']['image_current_predictions'],
           st.session_state['init_data']['current_images_discarted'],
           st.session_state['init_data']['current_image_files'],
@@ -652,18 +679,16 @@ else:
                                                                                 st.session_state['init_data']['current_image_files'],
                                                                                 st.session_state['init_data']['current_image_names'])
                                                                           
-        if len(st.session_state['init_data']['current_images_discarted'])>1:
-            st.session_state['init_data']['award']=st.session_state['init_data']['award']-len(st.session_state['init_data']['current_images_discarted'])
+        if st.session_state['init_data']['n_images']>1:
+            st.session_state['init_data']['award']=st.session_state['init_data']['award']-st.session_state['init_data']['n_images']
         
         ## penalty when "select winner" option and few images remain
         if st.session_state['init_data']['token_type']==-3:   
-            st.session_state['init_data']['award']=st.session_state['init_data']['award']-1
-            if previous_images_discarted<np.round(st.session_state['init_data']['n_images']*0.8):
-                st.session_state['init_data']['award']=st.session_state['init_data']['award']+previous_images_discarted-np.round(st.session_state['init_data']['n_images']*0.8)
+            st.session_state['init_data']['award']=st.session_state['init_data']['award']-1-(st.session_state['init_data']['N_images']-previous_discarding_images_number)
 
         ## penalty when no image is discarted
-        if previous_images_discarted==len(st.session_state['init_data']['current_images_discarted']):   
-            st.session_state['init_data']['award']=st.session_state['init_data']['award']-2
+        if previous_discarding_images_number==st.session_state['init_data']['n_images']:   
+            st.session_state['init_data']['award']=st.session_state['init_data']['award']-5
 
 
     ## SHOW FINAL RESULTS
