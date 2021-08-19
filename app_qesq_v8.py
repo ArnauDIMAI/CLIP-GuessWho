@@ -505,7 +505,7 @@ else:
                     [ st.session_state['init_data']['n_tokens'],
                       st.session_state['init_data']['clip_tokens'],
                       st.session_state['init_data']['clip_device'],
-                      st.session_state['init_data'][0]["clip_model"],                
+                      st.session_state['init_data']['clip_model'],                
                       st.session_state['init_data']['clip_transform'],
                       st.session_state['init_data']['clip_text'] ]=Token_process_query(st.session_state['init_data']['current_querys'])
                     st.session_state['init_data']['image_current_probs'] = Token_img(st.session_state['init_data']['n_images'],
@@ -513,7 +513,7 @@ else:
                                                                                 st.session_state['init_data']['current_image_files'],
                                                                                 st.session_state['init_data']['current_images_discarted'],
                                                                                 st.session_state['init_data']['clip_text'], 
-                                                                                st.session_state['init_data'][0]["clip_model"], 
+                                                                                st.session_state['init_data']['clip_model'], 
                                                                                 st.session_state['init_data']['clip_transform'], 
                                                                                 st.session_state['init_data']['clip_device'])
                     st.session_state['init_data']['image_current_predictions']=st.session_state['init_data']['function_predict'](st.session_state['init_data']['image_current_probs'])
@@ -538,7 +538,7 @@ else:
                         [ st.session_state['init_data']['n_tokens'],
                           st.session_state['init_data']['clip_tokens'],
                           st.session_state['init_data']['clip_device'],
-                          st.session_state['init_data'][0]["clip_model"],
+                          st.session_state['init_data']['clip_model'],
                           st.session_state['init_data']['clip_transform'],
                           st.session_state['init_data']['clip_text'] ]=Token_process_query(st.session_state['init_data']['current_querys'])
                         st.session_state['init_data']['image_current_probs'] = Token_img(st.session_state['init_data']['n_images'],
@@ -546,7 +546,7 @@ else:
                                                                                     st.session_state['init_data']['current_image_files'],
                                                                                     st.session_state['init_data']['current_images_discarted'],
                                                                                     st.session_state['init_data']['clip_text'], 
-                                                                                    st.session_state['init_data'][0]["clip_model"], 
+                                                                                    st.session_state['init_data']['clip_model'], 
                                                                                     st.session_state['init_data']['clip_transform'], 
                                                                                     st.session_state['init_data']['clip_device'])
                         st.session_state['init_data']['image_current_predictions']=st.session_state['init_data']['function_predict'](st.session_state['init_data']['image_current_probs'])
@@ -563,7 +563,7 @@ else:
                     [ st.session_state['init_data']['n_tokens'],
                       st.session_state['init_data']['clip_tokens'],
                       st.session_state['init_data']['clip_device'],
-                      st.session_state['init_data'][0]["clip_model"],
+                      st.session_state['init_data']['clip_model'],
                       st.session_state['init_data']['clip_transform'],
                       st.session_state['init_data']['clip_text'] ]=Token_process_query(st.session_state['init_data']['current_querys'])
                     st.session_state['init_data']['image_current_probs'] = Token_img(st.session_state['init_data']['n_images'],
@@ -571,7 +571,7 @@ else:
                                                                                 st.session_state['init_data']['current_image_files'],
                                                                                 st.session_state['init_data']['current_images_discarted'],
                                                                                 st.session_state['init_data']['clip_text'], 
-                                                                                st.session_state['init_data'][0]["clip_model"], 
+                                                                                st.session_state['init_data']['clip_model'], 
                                                                                 st.session_state['init_data']['clip_transform'], 
                                                                                 st.session_state['init_data']['clip_device'])
                     st.session_state['init_data']['image_current_predictions']=st.session_state['init_data']['function_predict'](st.session_state['init_data']['image_current_probs'])
