@@ -193,7 +193,7 @@ def Token_process_query(clip_tokens):
 def Show_Info(feature_options):
     st.sidebar.markdown('#### Questions List:')
     st.sidebar.write(feature_options)
-    st.sidebar.write(st.session_state['init_data'])
+    # st.sidebar.write(st.session_state['init_data'])
 
 # ---------------   CACHE   ---------------
 
