@@ -210,6 +210,7 @@ def load_data():
         'show_results':False,
         'start_game':False,
         'finished_game':False,
+        'reload_game':False,
         'award':100,
         'token_type':0,
         'selected_feature':'Ask a Question',
@@ -717,6 +718,7 @@ else:
 
     ## SHOW FINAL RESULTS
     if st.session_state['init_data']['finished_game']:
+        st.session_state['init_data']['reload_game']=True
         st.image(st.session_state['init_data']['highlighted_images'], use_column_width=False, caption=st.session_state['init_data']['highlighted_image_names'])
         st.session_state['init_data'] = load_data() 
 
@@ -726,7 +728,6 @@ else:
         st.session_state['init_data']['finished_game']=True
         st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
         Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
-        st.image(st.session_state['init_data']['highlighted_images'], use_column_width=False, caption=st.session_state['init_data']['highlighted_image_names'])
 
 
     ## SHOW EXTRA INFO
@@ -734,9 +735,13 @@ else:
  
  
     ## SHOW CURRENT IMAGES
-    if not st.session_state['init_data']['finished_game']:
-        st.image(st.session_state['init_data']['highlighted_images'], use_column_width=False, caption=st.session_state['init_data']['highlighted_image_names'])
+    st.image(st.session_state['init_data']['highlighted_images'], use_column_width=False, caption=st.session_state['init_data']['highlighted_image_names'])
     
    
+    ## RELOAD GAME
+    if st.session_state['init_data']['reload_game']:
+        st.session_state['init_data'] = load_data() 
+        
+        
     ## CLEAR RESOURCES
     gc.collect()
