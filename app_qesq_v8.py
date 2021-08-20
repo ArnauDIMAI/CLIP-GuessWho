@@ -313,6 +313,10 @@ else:
     ## FINISHED GAME BUTTON TO RELOAD GAME
     if st.session_state['init_data']['finished_game']:
         Restart_App = st.button('GO TO IMAGES SELECTION TO START NEW GAME', key='Restart_App')
+        if st.session_state['init_data']['award']==1 or st.session_state['init_data']['award']==-1:
+            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ FINISHED WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
+        else:
+            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ FINISHED WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
     
     else:
         st.session_state['init_data']['images_selected']=False
@@ -713,15 +717,12 @@ else:
 
     ## SHOW FINAL RESULTS
     if st.session_state['init_data']['finished_game']:
-        if st.session_state['init_data']['award']==1 or st.session_state['init_data']['award']==-1:
-            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ FINISHED WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
-        else:
-            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ FINISHED WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
+        st.image(st.session_state['init_data']['highlighted_images'], use_column_width=False, caption=st.session_state['init_data']['highlighted_image_names'])
         st.session_state['init_data'] = load_data() 
 
 
     ## CHECK FINISHED GAME 
-    if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1:
+    if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and not st.session_state['init_data']['finished_game']:
         st.session_state['init_data']['finished_game']=True
         st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
         Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
@@ -732,7 +733,8 @@ else:
  
  
     ## SHOW CURRENT IMAGES
-    st.image(st.session_state['init_data']['highlighted_images'], use_column_width=False, caption=st.session_state['init_data']['highlighted_image_names'])
+    if not st.session_state['init_data']['finished_game']:
+        st.image(st.session_state['init_data']['highlighted_images'], use_column_width=False, caption=st.session_state['init_data']['highlighted_image_names'])
     
    
     ## CLEAR RESOURCES
