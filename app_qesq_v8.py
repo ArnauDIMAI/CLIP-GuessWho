@@ -547,8 +547,8 @@ else:
                             # st.session_state['init_data']['querys_list']=st.session_state['init_data']['querys_list'][:st.session_state['init_data']['questions_index']]+st.session_state['init_data']['querys_list'][st.session_state['init_data']['questions_index']+1:]
                             # st.session_state['init_data']['feature_questions']=st.session_state['init_data']['feature_questions'][:st.session_state['init_data']['questions_index']]+st.session_state['init_data']['feature_questions'][st.session_state['init_data']['questions_index']+1:]
                     
-                    # st.session_state.selected_question = st.session_state['init_data']['feature_questions'][0]                    
-                    st.session_state['init_data']['questions_index']=0
+                    # st.session_state.selected_question = st.session_state['init_data']['feature_questions'][0]        # prova objecte'selectbox'            
+                    # st.session_state['init_data']['questions_index']=0
                     st.session_state['init_data']['model_changing']=False
                     st.session_state['init_data']['show_results']=True
 
