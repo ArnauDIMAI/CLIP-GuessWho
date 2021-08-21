@@ -719,15 +719,13 @@ else:
     ## SHOW FINAL RESULTS
     if st.session_state['init_data']['finished_game']:
         st.session_state['init_data']['reload_game']=True
-        st.image(st.session_state['init_data']['highlighted_images'], use_column_width=False, caption=st.session_state['init_data']['highlighted_image_names'])
-        st.session_state['init_data'] = load_data() 
 
-
-    ## CHECK FINISHED GAME 
-    if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and not st.session_state['init_data']['finished_game']:
-        st.session_state['init_data']['finished_game']=True
-        st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
-        Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
+    else:
+        ## CHECK FINISHED GAME 
+        if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and not st.session_state['init_data']['finished_game']:
+            st.session_state['init_data']['finished_game']=True
+            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
+            Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
 
 
     ## SHOW EXTRA INFO
