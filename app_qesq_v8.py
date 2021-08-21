@@ -278,7 +278,7 @@ def load_data():
     
 st.set_page_config(
     layout="wide",
-    page_icon='Logo DIMAI.png',
+#     page_icon='Logo DIMAI.png',
     page_title='QuienEsQuien',
     initial_sidebar_state="collapsed"
 )
