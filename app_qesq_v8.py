@@ -216,6 +216,7 @@ def load_data():
         'selected_feature':'Ask a Question',
         'questions_index':0,
         'selected_question':'Are you a MAN?',
+        'first_question':'Are you a MAN?',
         'user_input':'A picture of a person',
         'user_input_querys1':'A picture of a person',
         'user_input_querys2':'A picture of a person',
@@ -228,6 +229,7 @@ def load_data():
         'current_image_files':current_image_files,
         'highlighted_images':current_image_files,
         'current_images_discarted':np.zeros((N_images)),
+        'winner_options':current_image_names,
         'current_image_names':current_image_names,
         'highlighted_image_names':current_image_names,
         'clip_tokens':clip_tokens,
@@ -268,7 +270,6 @@ def load_data():
                     'Are you wearing EARRINGS?', 'Are you wearing a HAT?', 
                     'Are you wearing LIPSTICK?', 'Are you wearing NECKLACE?', 
                     'Are you wearing NECKTIE?', 'Is your image BLURRY?'],
-        'winner_options':[],
         'previous_discarding_images_number':0,
         'function_predict':Predict_0_vs_1,
         'image_current_probs':np.zeros((N_images,n_tokens)),
@@ -278,7 +279,7 @@ def load_data():
     
 st.set_page_config(
     layout="wide",
-#     page_icon='Logo DIMAI.png',
+    page_icon='Logo DIMAI.png',
     page_title='QuienEsQuien',
     initial_sidebar_state="collapsed"
 )
@@ -334,7 +335,8 @@ else:
             if Random_Images:
                 [ st.session_state['init_data']['current_image_files'],
                   st.session_state['init_data']['current_image_names'] ] = Load_Images_randomly(st.session_state['init_data']['N_images'])
-                    
+                st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
+                
             ## Button - start game
             st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start playing.</h2>", unsafe_allow_html=True)
             Use_Images = st.button('START GAME', key='Use_Images')
@@ -371,10 +373,13 @@ else:
                 ## SelectBox - Select question
                 Selected_Question=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], 
                                                    index=0,
-                                                   key='selected_question', help=None)
+                                                   key='Selected_Question', help=None)
                 st.session_state['init_data']['selected_question']=Selected_Question  # Save Info
                 
                 ## Current question index
+                if Selected_Question not in st.session_state['init_data']['feature_questions']:
+                    Selected_Question=st.session_state['init_data']['feature_questions'][0]
+                
                 st.session_state['init_data']['questions_index']=st.session_state['init_data']['feature_questions'].index(Selected_Question)
                    
                 ## Text - Show current question
@@ -387,26 +392,6 @@ else:
                 ## Check current question
                 if st.session_state['init_data']['show_results']:
                     st.session_state['init_data']['show_results']=False
-                    
-                    ## Delete used Questions
-                    # if Selected_Question=='Are you a MAN?' or Selected_Question=='Are you a WOMAN?':
-                        # st.write('man')
-                        # st.session_state['init_data']['querys_list']=st.session_state['init_data']['querys_list'][2:]
-                        # st.session_state['init_data']['feature_questions']=st.session_state['init_data']['feature_questions'][2:]
-                    # else:
-                        # if st.session_state['init_data']['questions_index']==len(st.session_state['init_data']['querys_list'])-1:
-                            # st.write(st.session_state['init_data']['querys_list'][:-1])
-                            # st.session_state['init_data']['querys_list']=st.session_state['init_data']['querys_list'][:-1]
-                            # st.session_state['init_data']['feature_questions']=st.session_state['init_data']['feature_questions'][:-1]
-                        # elif st.session_state['init_data']['questions_index']==0:
-                            # st.write(st.session_state['init_data']['querys_list'][1:])
-                            # st.session_state['init_data']['querys_list']=st.session_state['init_data']['querys_list'][1:]
-                            # st.session_state['init_data']['feature_questions']=st.session_state['init_data']['feature_questions'][1:]
-                        # else:
-                            # st.write(st.session_state['init_data']['querys_list'][:st.session_state['init_data']['questions_index']]+st.session_state['init_data']['querys_list'][st.session_state['init_data']['questions_index']+1:])
-                            # st.session_state['init_data']['querys_list']=st.session_state['init_data']['querys_list'][:st.session_state['init_data']['questions_index']]+st.session_state['init_data']['querys_list'][st.session_state['init_data']['questions_index']+1:]
-                            # st.session_state['init_data']['feature_questions']=st.session_state['init_data']['feature_questions'][:st.session_state['init_data']['questions_index']]+st.session_state['init_data']['feature_questions'][st.session_state['init_data']['questions_index']+1:]
-                    # del st.session_state['selected_question'] 
                     
                 else:
                     if Check_Question:
@@ -496,9 +481,8 @@ else:
                                                                                     st.session_state['init_data']['clip_device'])
                         st.session_state['init_data']['image_current_predictions']=st.session_state['init_data']['function_predict'](st.session_state['init_data']['image_current_probs'])
                         st.session_state['init_data']['show_results']=True
-
-
-            ## SHOW ELEMENTS - 1 QUERY MODE
+                        
+            ## SHOW ELEMENTS - 1 QUERY MOD
             if Selected_Feature=='Create your own query':              
                 
                 ## Game mode id
@@ -542,10 +526,10 @@ else:
                                                                                         st.session_state['init_data']['clip_device'])
                             st.session_state['init_data']['image_current_predictions']=st.session_state['init_data']['function_predict'](st.session_state['init_data']['image_current_probs'])
                             st.session_state['init_data']['show_results']=True
+                            
                         else:
                             st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Your query must be different of 'A picture of a person'.</h3>", unsafe_allow_html=True)
-
-
+                    
             ## SHOW ELEMENTS - 2 QUERYS MODE
             if Selected_Feature=='Create your own 2 querys':
                 
@@ -594,9 +578,9 @@ else:
                                                                                         st.session_state['init_data']['clip_device'])
                             st.session_state['init_data']['image_current_predictions']=st.session_state['init_data']['function_predict'](st.session_state['init_data']['image_current_probs'])
                             st.session_state['init_data']['show_results']=True
+                            
                         else:
                             st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Your two own querys must be different.</h3>", unsafe_allow_html=True)
-
 
             ## SHOW ELEMENTS - WINNER MODE
             if Selected_Feature=='Select a Winner': 
@@ -608,8 +592,8 @@ else:
                 st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Select a Winner picture name.</h3>", unsafe_allow_html=True)
                 
                 ## SelectBox - Select winner
-                st.session_state['init_data']['winner_options']=['Winner not selected']
-                st.session_state['init_data']['winner_options'].extend(st.session_state['init_data']['current_image_names'])
+                # st.session_state['init_data']['winner_options']=['Winner not selected']
+                # st.session_state['init_data']['winner_options'].extend(st.session_state['init_data']['current_image_names'])
                 
                 # if st.session_state['init_data']['selected_winner'] not in st.session_state['init_data']['winner_options']:
                     # st.write(st.session_state['init_data']['selected_winner'])
@@ -617,7 +601,6 @@ else:
                     
                 Selected_Winner=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
                                                 index=0, key='Selected_Winner', help=None)
-                # st.write(st.session_state['init_data']['selected_winner'])
                 st.session_state['init_data']['selected_winner']=Selected_Winner  # Save Info
                 
                 ## Text - Show current winner
@@ -630,7 +613,6 @@ else:
                 ## Check current winner
                 if st.session_state['init_data']['show_results']:
                     st.session_state['init_data']['show_results']=False
-                    del st.session_state['Selected_Winner'] 
                 else:
                     if Check_Winner:
                         if Selected_Winner in st.session_state['init_data']['current_image_names']:
@@ -638,8 +620,11 @@ else:
                             st.session_state['init_data']['image_current_predictions']=np.zeros(st.session_state['init_data']['n_images'])
                             st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['selected_winner_index']]=1    
                             st.session_state['init_data']['show_results']=True
+                            
+                            # Delete Winner elements   
+                            # del st.session_state['Selected_Winner']                                    
                         else:
-                            st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Your must select a winner.</h3>", unsafe_allow_html=True)
+                            st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Your must select a not discarded picture.</h3>", unsafe_allow_html=True)
 
 
             ## ACTIONS SHOWING RESULTS
@@ -658,21 +643,21 @@ else:
                 ## Show current results
                 if st.session_state['init_data']['token_type']==0:
                     if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Selected_Question+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>YES</h3>", unsafe_allow_html=True)
+                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['selected_question']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>YES</h3>", unsafe_allow_html=True)
                     else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Selected_Question+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>NO</h3>", unsafe_allow_html=True)
+                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['selected_question']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>NO</h3>", unsafe_allow_html=True)
                         
                 if st.session_state['init_data']['token_type']==-1:
                     if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+User_Input+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>TRUE</h3>", unsafe_allow_html=True)
+                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['user_input']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>TRUE</h3>", unsafe_allow_html=True)
                     else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+User_Input+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>FALSE</h3>", unsafe_allow_html=True)
+                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['user_input']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>FALSE</h3>", unsafe_allow_html=True)
                         
                 if st.session_state['init_data']['token_type']==-2:
                     if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+User_Input_Querys1+"</h3>", unsafe_allow_html=True)
+                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input_querys1']+"</h3>", unsafe_allow_html=True)
                     else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+User_Input_Querys2+"</h3>", unsafe_allow_html=True)
+                        st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input_querys2']+"</h3>", unsafe_allow_html=True)
                   
                 if st.session_state['init_data']['token_type']==-3:
                     if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]:
