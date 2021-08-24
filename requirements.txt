@@ -3,3 +3,4 @@ regex
 numpy
 torch
 torchvision
+pip==21.2.4
