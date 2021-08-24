@@ -15,6 +15,7 @@ from io import BytesIO
 from PIL import Image
 from zipfile import ZipFile 
     
+from streamlit import caching
 
 ## --------------- FUNCTIONS ---------------
 
@@ -726,5 +727,6 @@ else:
         st.session_state['init_data'] = load_data() 
         
         
-    ## CLEAR RESOURCES
-    gc.collect()
+## CLEAR RESOURCES
+gc.collect()
+caching.clear_cache()
