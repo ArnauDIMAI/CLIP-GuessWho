@@ -755,9 +755,6 @@ else:
     ## SHOW CURRENT
     st.image(Remaining_Images, use_column_width=False, caption=Image_Names)
     
-    ## CLEAR RESOURCES
-    gc.collect()
-    
     ## DICTIONARY SIZE
     size = getsizeof(Data_Init['init_data'][0])
     st.write(size)
