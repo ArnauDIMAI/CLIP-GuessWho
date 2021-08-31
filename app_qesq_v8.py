@@ -10,11 +10,11 @@ import numpy as np
 import streamlit as st
 import clip
 import gc
+import psutil
 
 from io import BytesIO
 from PIL import Image
 from zipfile import ZipFile 
-    
 from streamlit import caching
 
 ## --------------- FUNCTIONS ---------------
@@ -189,6 +189,13 @@ def Token_process_query(clip_tokens):
 def Show_Info(feature_options):
     st.sidebar.markdown('#### Questions List:')
     st.sidebar.write(feature_options)
+    
+    # gives a single float value
+    st.sidebar.write(psutil.cpu_percent())
+    
+    # gives an object with many fields
+    st.sidebar.write(psutil.virtual_memory())
+    
     st.sidebar.write(st.session_state['init_data'])
 
 # ---------------   CACHE   ---------------
@@ -714,19 +721,26 @@ else:
             Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
 
 
-    ## SHOW EXTRA INFO
-    Show_Info(st.session_state['init_data']['feature_questions'])
- 
- 
     ## SHOW CURRENT IMAGES
     st.image(st.session_state['init_data']['highlighted_images'], use_column_width=False, caption=st.session_state['init_data']['highlighted_image_names'])
     
-   
+
     ## RELOAD GAME
     if st.session_state['init_data']['reload_game']:
         st.session_state['init_data'] = load_data() 
         
         
+## SHOW EXTRA INFO
+Show_Info(st.session_state['init_data']['feature_questions']) 
+        
+
 ## CLEAR RESOURCES
 gc.collect()
 caching.clear_cache()
+
+    
+# gives a single float value
+st.sidebar.write(psutil.cpu_percent())
+
+# gives an object with many fields
+st.sidebar.write(psutil.virtual_memory())
