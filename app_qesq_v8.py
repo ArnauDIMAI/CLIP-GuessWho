@@ -191,19 +191,19 @@ def Show_Info(feature_options):
     st.sidebar.write(feature_options)
     
     # gives a single float value
-    st.sidebar.write(psutil.cpu_percent())
+    # st.sidebar.write(psutil.cpu_percent())
     
     # gives an object with many fields
-    st.sidebar.write(psutil.virtual_memory())
+    # st.sidebar.write(psutil.virtual_memory())
     
     st.sidebar.write(st.session_state['init_data'])
 
 # ---------------   CACHE   ---------------
 
 # @st.cache(allow_output_mutation=True,max_entries=2,ttl=3600) 
-def load_data():
+def load_data(total_images_number):
     path_info='D:/Datasets/Celeba/'
-    N_images=15
+    N_images=total_images_number
     n_images=N_images
     current_querys=['A picture of a person','A picture of a person']
     n_tokens,clip_tokens,clip_device,clip_model, clip_transform, clip_text = Token_process_query(current_querys)
@@ -294,32 +294,35 @@ st.set_page_config(
 
 ## --------------- PROGRAMA ---------------
 
-# INITIALIZATIONS
-torch.backends.cudnn.benchmark = True
-torch.backends.cudnn.enabled = True
+## SIDEBAR
+st.sidebar.markdown('# OPTIONS PANEL')
+
+## Reset App APP
+Reset_App = st.sidebar.button('RESET GAME', key='Reset_App')
+
+## Images number
+st.sidebar.markdown('# Number of images')
+Total_Images_Number=st.sidebar.number_input('Select the number of images of the game and press "RESET GAME"', min_value=5, max_value=40, value=20, 
+                                                                    step=1, format='%d', key='Total_Images_Number', help=None)
+
+## INITIALIZATIONS
+ 
 Feature_Options=['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner']
 
-## User sesion data
+## Load data to play
 if 'init_data' not in st.session_state:
-    st.session_state['init_data'] = load_data()
-
+    st.session_state['init_data'] = load_data(20)
+ 
 ## Title
 if st.session_state['init_data']['finished_game']:
     st.markdown("<h1 style='text-align:left; float:left; color:blue; margin:0px;'>Guess Who?</h1>", unsafe_allow_html=True)
 else:
     st.markdown("<h1 style='text-align:left; float:left; color:blue; margin:0px;'>Guess Who?</h1><h2 style='text-align:right; float:right; color:gray; margin:0px;'>score: "+ str(st.session_state['init_data']['award'])+"</h2>", unsafe_allow_html=True)
 
-## Sidebar title
-st.sidebar.markdown('# OPTIONS PANEL')
-
-
-## RESET APP
-Reset_App = st.sidebar.button('RESET GAME', key='Reset_App')
-
+## GAME
 if Reset_App:
-    st.session_state['init_data'] = load_data()
+    st.session_state['init_data'] = load_data(Total_Images_Number)
     Restart_App = st.button('GO TO IMAGES SELECTION TO START A NEW GAME', key='Restart_App')
-    
 else:                    
     ## FINISHED GAME BUTTON TO RELOAD GAME
     if st.session_state['init_data']['finished_game']:
@@ -334,7 +337,6 @@ else:
         
         ## INITIALIZATION (SELECT FIGURES)
         if not st.session_state['init_data']['start_game']:
-            
             ## Text - select Celeba images
             st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>", unsafe_allow_html=True)
             st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to randomly modify the selected images.</h3>", unsafe_allow_html=True)
@@ -728,7 +730,7 @@ else:
 
     ## RELOAD GAME
     if st.session_state['init_data']['reload_game']:
-        st.session_state['init_data'] = load_data() 
+        st.session_state['init_data'] = load_data(Total_Images_Number) 
         
         
 ## SHOW EXTRA INFO
