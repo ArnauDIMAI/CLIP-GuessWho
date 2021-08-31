@@ -1,7 +1,7 @@
 ftfy
 regex
 numpy
-torch==1.9.0+cpu
+torch==1.9.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
 torchvision
 pip==21.2.4
 psutil
