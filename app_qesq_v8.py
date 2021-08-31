@@ -295,7 +295,8 @@ st.set_page_config(
 ## --------------- PROGRAMA ---------------
 
 # INITIALIZATIONS
- 
+torch.backends.cudnn.benchmark = True
+torch.backends.cudnn.enabled = True
 Feature_Options=['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner']
 
 ## User sesion data
