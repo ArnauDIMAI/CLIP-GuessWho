@@ -737,6 +737,7 @@ Show_Info(st.session_state['init_data']['feature_questions'])
 ## CLEAR RESOURCES
 gc.collect()
 caching.clear_cache()
+torch.cuda.empty_cache()
 
     
 # gives a single float value
