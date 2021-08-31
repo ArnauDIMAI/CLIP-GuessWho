@@ -203,7 +203,7 @@ def Show_Info(feature_options):
 # @st.cache(allow_output_mutation=True,max_entries=2,ttl=3600) 
 def load_data():
     path_info='D:/Datasets/Celeba/'
-    N_images=20
+    N_images=15
     n_images=N_images
     current_querys=['A picture of a person','A picture of a person']
     n_tokens,clip_tokens,clip_device,clip_model, clip_transform, clip_text = Token_process_query(current_querys)
