@@ -178,6 +178,7 @@ def Load_Images_Randomly(n_images):
     
 def Token_process_query():
     ## Tokenization process
+    st.write(test)
     st.session_state['init_data']['n_tokens']=len(st.session_state['init_data']['current_querys'])
     st.session_state['init_data']['clip_device'] = "cuda" if torch.cuda.is_available() else "cpu"
     st.session_state['init_data']['clip_model'], st.session_state['init_data']['clip_transform'] = clip.load("ViT-B/32", device=st.session_state['init_data']['clip_device'], jit=False)
@@ -297,7 +298,7 @@ Feature_Options=['Ask a Question', 'Create your own query', 'Create your own 2 q
 
 ## Load data to play
 if 'init_data' not in st.session_state:
-    st.session_state['init_data'] = load_data(20)
+    load_data(20)
  
 ## Title
 if st.session_state['init_data']['finished_game']:
@@ -307,7 +308,7 @@ else:
 
 ## GAME
 if Reset_App:
-    st.session_state['init_data'] = load_data(Total_Images_Number)
+    load_data(Total_Images_Number)
     Restart_App = st.button('GO TO IMAGES SELECTION TO START A NEW GAME', key='Restart_App')
 else:                    
     ## FINISHED GAME BUTTON TO RELOAD GAME
@@ -665,7 +666,7 @@ else:
 
     ## RELOAD GAME
     if st.session_state['init_data']['reload_game']:
-        st.session_state['init_data'] = load_data(st.session_state['init_data']['N_images']) 
+        load_data(st.session_state['init_data']['N_images']) 
         
         
 ## SHOW EXTRA INFO
