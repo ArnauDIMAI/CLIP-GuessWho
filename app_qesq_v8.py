@@ -330,7 +330,7 @@ else:
             ## Button - randomly change Celeba images
             Random_Images = st.button('CHANGE IMAGES', key='Random_Images')
             if Random_Images:
-                Load_Images_randomly(st.session_state['init_data']['N_images'])
+                Load_Images_Randomly(st.session_state['init_data']['N_images'])
                 st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
                 
             ## Button - start game
