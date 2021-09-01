@@ -105,7 +105,7 @@ def Image_discarding():
     image_names2=[]
     st.session_state['init_data']['image_current_predictions']=[]
     current_index=0
-    st.session_state['init_data']['current_winner_index']=0
+    # st.session_state['init_data']['current_winner_index']=0
     new_index=0
     for i in range(st.session_state['init_data']['n_images']):
         if st.session_state['init_data']['current_images_discarted'][current_index]==0:
