@@ -151,7 +151,7 @@ def Show_images():
     st.session_state['init_data']['highlighted_images']=np.array(st.session_state['init_data']['highlighted_images'])/255
     del image_highlighted,current_index,current_line_width,current_color,image_size,w,h,c
 
-def Load_Images_randomly(n_images):
+def Load_Images_Randomly(n_images):
     st.session_state['init_data']['current_image_files']=[]
     st.session_state['init_data']['current_image_names']=[]
     image_index=[]
@@ -264,9 +264,9 @@ def load_data(total_images_number):
         'previous_discarding_images_number':0,
         'function_predict':Predict_0_vs_1,
         'image_current_probs':np.zeros((total_images_number,2)),
-        'image_current_predictions':np.zeros((total_images_number))+2
+        'image_current_predictions':np.zeros((total_images_number))+2}
     
-    Load_Images_randomly(total_images_number)
+    Load_Images_Randomly(total_images_number)
     Token_process_query()
     del total_images_number
     
