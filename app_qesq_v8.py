@@ -178,7 +178,6 @@ def Load_Images_Randomly(n_images):
     
 def Token_process_query():
     ## Tokenization process
-    st.write(test)
     st.session_state['init_data']['n_tokens']=len(st.session_state['init_data']['current_querys'])
     st.session_state['init_data']['clip_device'] = "cuda" if torch.cuda.is_available() else "cpu"
     st.session_state['init_data']['clip_model'], st.session_state['init_data']['clip_transform'] = clip.load("ViT-B/32", device=st.session_state['init_data']['clip_device'], jit=False)
