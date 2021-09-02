@@ -101,7 +101,6 @@ def Image_discarding():
             st.session_state['init_data']['current_images_discarted'][i]=1
 
     st.session_state['init_data']['n_images']=np.sum(st.session_state['init_data']['current_images_discarted']==0)  
-    st.session_state['init_data']['current_images_discarted']=np.zeros(st.session_state['init_data']['current_images_discarted'])
     previous_names=st.session_state['init_data']['current_image_names']
     st.session_state['init_data']['current_image_names']=[]
     previous_files=st.session_state['init_data']['current_image_files']     
@@ -112,11 +111,6 @@ def Image_discarding():
     new_index=0
     for i in range(st.session_state['init_data']['n_images']):
         if st.session_state['init_data']['current_images_discarted'][current_index]==0:
-            # st.write('current_index:'+str(current_index))
-            # st.write('new_index:'+str(new_index))
-            # st.write('current_winner_index:'+str(st.session_state['init_data']['current_winner_index']))
-            # st.write('Current index:'+str(st.session_state['init_data']['n_images']))
-            # st.write(st.session_state['init_data'])
             st.session_state['init_data']['current_image_files'].append(previous_files[current_index])
             st.session_state['init_data']['current_image_names'].append(previous_names[current_index])
             st.session_state['init_data']['image_current_predictions'].append(previous_predictions[current_index])
@@ -127,9 +121,13 @@ def Image_discarding():
             
         current_index+=1
                                
-    st.session_state['init_data']['current_image_names']=np.array(image_names2) 
+    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names']) 
+    st.session_state['init_data']['current_images_discarted']=np.zeros(st.session_state['init_data']['n_images'])
     del previous_names,previous_files,previous_predictions,current_index,new_index,i
-    
+   
+    return image_current_predictions2, np.zeros(n_images2), image_files2, np.array(image_names2), n_images2, new_winner_index
+
+   
 def Show_images():
     st.session_state['init_data']['highlighted_images']=[]     
     for current_index in range(st.session_state['init_data']['n_images']):
