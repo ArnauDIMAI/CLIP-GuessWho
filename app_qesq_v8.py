@@ -137,7 +137,7 @@ def Show_images():
         else:
             current_line_width=2
             current_color=np.zeros(3)  
-        st.write(session_state['init_data'])
+        st.write(st.session_state['init_data'])
         image_size=240
         w,h,c = np.shape(st.session_state['init_data']['current_image_files'][current_index])
         images_separation=image_size-w-current_line_width*2
