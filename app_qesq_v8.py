@@ -124,10 +124,7 @@ def Image_discarding():
     st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names']) 
     st.session_state['init_data']['current_images_discarted']=np.zeros(st.session_state['init_data']['n_images'])
     del previous_names,previous_files,previous_predictions,current_index,new_index,i
-   
-    return image_current_predictions2, np.zeros(n_images2), image_files2, np.array(image_names2), n_images2, new_winner_index
-
-   
+      
 def Show_images():
     st.session_state['init_data']['highlighted_images']=[]     
     for current_index in range(st.session_state['init_data']['n_images']):
