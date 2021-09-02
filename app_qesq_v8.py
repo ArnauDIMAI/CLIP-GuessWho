@@ -100,7 +100,6 @@ def Image_discarding():
         if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
             st.session_state['init_data']['current_images_discarted'][i]=1
 
-    st.session_state['init_data']['n_images']=np.sum(st.session_state['init_data']['current_images_discarted']==0)  
     previous_names=st.session_state['init_data']['current_image_names']
     st.session_state['init_data']['current_image_names']=[]
     previous_files=st.session_state['init_data']['current_image_files']     
@@ -120,7 +119,8 @@ def Image_discarding():
             new_index+=1
             
         current_index+=1
-                               
+            
+    st.session_state['init_data']['n_images']=np.sum(st.session_state['init_data']['current_images_discarted']==0)                     
     st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names']) 
     st.session_state['init_data']['current_images_discarted']=np.zeros(st.session_state['init_data']['n_images'])
     del previous_names,previous_files,previous_predictions,current_index,new_index,i
@@ -137,7 +137,6 @@ def Show_images():
         else:
             current_line_width=2
             current_color=np.zeros(3)  
-        st.write(st.session_state['init_data'])
         image_size=240
         w,h,c = np.shape(st.session_state['init_data']['current_image_files'][current_index])
         images_separation=image_size-w-current_line_width*2
