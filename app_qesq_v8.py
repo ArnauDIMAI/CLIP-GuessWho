@@ -19,142 +19,139 @@ from streamlit import caching
 
 ## --------------- FUNCTIONS ---------------
 
-def Predict_1_vs_0():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if st.session_state['init_data']['image_current_probs'][i,1]>st.session_state['init_data']['image_current_probs'][i,0]:
-            st.session_state['init_data']['image_current_predictions'].append(1)
+def Predict_1_vs_0(prediccion_probs):
+    current_result=[]
+    for i in range(len(prediccion_probs[:,0])):
+        if prediccion_probs[i,1]>prediccion_probs[i,0]:
+            current_result.append(1)
         else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
-    
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    del i
-    
-def Predict_0_vs_1():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if st.session_state['init_data']['image_current_probs'][i,0]>st.session_state['init_data']['image_current_probs'][i,1]:
-            st.session_state['init_data']['image_current_predictions'].append(1)
-        else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
+            current_result.append(0)
 
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    del i    
+    return np.array(current_result)
     
-def Predict_1_vs_2():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if st.session_state['init_data']['image_current_probs'][i,1]>st.session_state['init_data']['image_current_probs'][i,2]:
-            st.session_state['init_data']['image_current_predictions'].append(1)
+def Predict_0_vs_1(prediccion_probs):
+    current_result=[]
+    for i in range(len(prediccion_probs[:,0])):
+        if prediccion_probs[i,0]>prediccion_probs[i,1]:
+            current_result.append(1)
         else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
+            current_result.append(0)
 
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    del i
+    return np.array(current_result)
     
-def Predict_bald():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+def Predict_1_vs_2(prediccion_probs):
+    current_result=[]
+    for i in range(len(prediccion_probs[:,0])):
+        if prediccion_probs[i,1]>prediccion_probs[i,2]:
+            current_result.append(1)
+        else:
+            current_result.append(0)
+
+    return np.array(current_result)
     
-        if st.session_state['init_data']['image_current_probs'][i,1]>st.session_state['init_data']['image_current_probs'][i,2]:
-            if st.session_state['init_data']['image_current_probs'][i,3]>st.session_state['init_data']['image_current_probs'][i,0]:
-                st.session_state['init_data']['image_current_predictions'].append(1)
+def Predict_bald(prediccion_probs):
+    current_result=[]
+    for i in range(len(prediccion_probs[:,0])):
+    
+        if prediccion_probs[i,1]>prediccion_probs[i,2]:
+            if prediccion_probs[i,3]>prediccion_probs[i,0]:
+                current_result.append(1)
             else:
-                st.session_state['init_data']['image_current_predictions'].append(0)
+                current_result.append(0)
         else:
-            if st.session_state['init_data']['image_current_probs'][i,4]>st.session_state['init_data']['image_current_probs'][i,0]:
-                st.session_state['init_data']['image_current_predictions'].append(1)
+            if prediccion_probs[i,4]>prediccion_probs[i,0]:
+                current_result.append(1)
             else:
-                st.session_state['init_data']['image_current_predictions'].append(0)    
+                current_result.append(0)    
 
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    del i
+    return np.array(current_result)
     
-def Predict_hair_color():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==0:
-            st.session_state['init_data']['image_current_predictions'].append(1)        
+def Predict_hair_color(prediccion_probs):
+    current_result=[]
+    for i in range(len(prediccion_probs[:,0])):
+        if np.argmax(prediccion_probs[i,:])==0:
+            current_result.append(1)        
         else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
+            current_result.append(0)
 
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    del i
-                                    
-def Token_img():
-    st.session_state['init_data']['image_current_probs']=np.zeros((st.session_state['init_data']['n_images'],st.session_state['init_data']['n_tokens']))
-    for i in range(st.session_state['init_data']['n_images']):
-        CLIP_get_probs_only(i)
-    del i
+    return np.array(current_result)
+
+def Token_img(n_images,n_tokens,current_image_files,current_images_discarted,clip_text, clip_model, clip_transform, clip_device):
+    prediccion_probs=np.zeros((n_images,n_tokens))
+    for i in range(n_images):
+        prediccion_probs[i,:]=CLIP_get_probs_only(current_image_files[i], clip_text, clip_model, clip_transform, clip_device)
+
+    return prediccion_probs
     
-def CLIP_get_probs_only(i):
-    img_proeprocessed = st.session_state['init_data']['clip_transform'](Image.fromarray(st.session_state['init_data']['current_image_files'][i])).unsqueeze(0).to(st.session_state['init_data']['clip_device'])
-    img_features = st.session_state['init_data']['clip_model'].encode_image(img_proeprocessed)
-    txt_features = st.session_state['init_data']['clip_model'].encode_text(st.session_state['init_data']['clip_text'])
-    img_logits, img_logits_txt = st.session_state['init_data']['clip_model'](img_proeprocessed, st.session_state['init_data']['clip_text'])
-    st.session_state['init_data']['image_current_probs'][i,:]=np.round(img_logits.detach().numpy()[0],2)
-    del img_proeprocessed,img_features,txt_features,img_logits,img_logits_txt
-   
-def Image_discarding():
-    for i in range(len(st.session_state['init_data']['current_images_discarted'])):
-        if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-            st.session_state['init_data']['current_images_discarted'][i]=1
+def CLIP_get_probs_only(img_file, img_txt, img_model, img_transf, img_device):
+    img_proeprocessed = img_transf(Image.fromarray(img_file)).unsqueeze(0).to(img_device)
+    img_features = img_model.encode_image(img_proeprocessed)
+    txt_features = img_model.encode_text(img_txt)
+    img_logits, img_logits_txt = img_model(img_proeprocessed, img_txt)
+    image_p=img_logits.detach().numpy()[0]
 
-    previous_names=st.session_state['init_data']['current_image_names']
-    st.session_state['init_data']['current_image_names']=[]
-    previous_files=st.session_state['init_data']['current_image_files']     
-    st.session_state['init_data']['current_image_files']=[] 
-    previous_predictions=st.session_state['init_data']['image_current_predictions'] 
-    st.session_state['init_data']['image_current_predictions']=[]
+    return np.round(image_p,2)
+
+def Image_discarding(image_current_predictions,current_winner_index,current_images_discarted, n_images, image_files,image_names):
+    for i in range(len(current_images_discarted)):
+        if current_images_discarted[i]==0 and image_current_predictions[i]!=image_current_predictions[current_winner_index]:
+            current_images_discarted[i]=1
+
+    n_images2=np.sum(current_images_discarted==0)        
+    image_files2=[]
+    image_names2=[]
+    image_current_predictions2=[]
     current_index=0
+    new_winner_index=0
     new_index=0
-    for i in range(st.session_state['init_data']['n_images']):
-        if st.session_state['init_data']['current_images_discarted'][current_index]==0:
-            st.session_state['init_data']['current_image_files'].append(previous_files[current_index])
-            st.session_state['init_data']['current_image_names'].append(previous_names[current_index])
-            st.session_state['init_data']['image_current_predictions'].append(previous_predictions[current_index])
-            if current_index==st.session_state['init_data']['current_winner_index']:
-                st.session_state['init_data']['current_winner_index']=new_index
+    for i in range(n_images):
+        if current_images_discarted[current_index]==0:
+            image_files2.append(image_files[current_index])
+            image_names2.append(image_names[current_index])
+            image_current_predictions2.append(image_current_predictions[current_index])
+            if current_index==current_winner_index:
+                new_winner_index=new_index
                 
             new_index+=1
             
         current_index+=1
-            
-    st.session_state['init_data']['n_images']=np.sum(st.session_state['init_data']['current_images_discarted']==0)                     
-    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names']) 
-    st.session_state['init_data']['current_images_discarted']=np.zeros(st.session_state['init_data']['n_images'])
-    del previous_names,previous_files,previous_predictions,current_index,new_index,i
-      
-def Show_images():
-    st.session_state['init_data']['highlighted_images']=[]     
-    for current_index in range(st.session_state['init_data']['n_images']):
-        if st.session_state['init_data']['show_results']:
+                               
+    return image_current_predictions2, np.zeros(n_images2), image_files2, np.array(image_names2), n_images2, new_winner_index
+    
+def Show_images(show_results,current_image_files, image_current_predictions,
+                current_winner_index, n_images):
+    highlighted_images=[]     
+    for current_index in range(n_images):
+        if show_results:
             current_line_width=4
-            if st.session_state['init_data']['image_current_predictions'][current_index]==st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
+            if image_current_predictions[current_index]==image_current_predictions[current_winner_index]:
                 current_color=np.array([0,255,0])
             else:
                 current_color=np.array([255,0,0]) 
         else:
             current_line_width=2
             current_color=np.zeros(3)  
-        image_size=240
-        w,h,c = np.shape(st.session_state['init_data']['current_image_files'][current_index])
-        images_separation=image_size-w-current_line_width*2
-        image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
-        image_highlighted[current_line_width:w+current_line_width,current_line_width:w+current_line_width,:]=st.session_state['init_data']['current_image_files'][current_index]
-        image_highlighted[:current_line_width,:w+2*current_line_width,:]=current_color
-        image_highlighted[w+current_line_width:,:w+2*current_line_width,:]=current_color
-        image_highlighted[:,w+current_line_width:w+2*current_line_width,:]=current_color
-        image_highlighted[:,:current_line_width,:]=current_color
-        st.session_state['init_data']['highlighted_images'].append(image_highlighted)
-    
-    ## result to array      
-    st.session_state['init_data']['highlighted_images']=np.array(st.session_state['init_data']['highlighted_images'])/255
-    del image_highlighted,current_index,current_line_width,current_color,image_size,w,h,c
+                 
+        highlighted_images.append(Highlight_Image(current_image_files[current_index],current_line_width,current_color))
+           
+    return np.array(highlighted_images)/255
 
-def Load_Images_Randomly(n_images):
-    st.session_state['init_data']['current_image_files']=[]
-    st.session_state['init_data']['current_image_names']=[]
+
+def Highlight_Image(image,thickness,color):
+    image_size=240
+    w,h,c = np.shape(image)
+    images_separation=image_size-w-thickness*2
+    image_highlighted=np.zeros([h+thickness*2,image_size,c])+255
+    image_highlighted[thickness:w+thickness,thickness:w+thickness,:]=image
+    image_highlighted[:thickness,:w+2*thickness,:]=color
+    image_highlighted[w+thickness:,:w+2*thickness,:]=color
+    image_highlighted[:,w+thickness:w+2*thickness,:]=color
+    image_highlighted[:,:thickness,:]=color
+    return image_highlighted
+
+def Load_Images_randomly(n_images):
+    image_files=[]
+    image_names=[]
     image_index=[]
         
     archive = zipfile.ZipFile('guess_who_images.zip', 'r')
@@ -171,29 +168,45 @@ def Load_Images_Randomly(n_images):
    # Iterate over the file names
     for current_index in image_index:
         image_current_path=listOfFileNames[current_index]
-        st.session_state['init_data']['current_image_files'].append(np.array(Image.open(BytesIO(archive.read(image_current_path)))))
-        st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
+        image_files.append(np.array(Image.open(BytesIO(archive.read(image_current_path)))))
+        image_names.append(image_current_path[-10:-4])
                 
-    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
-    del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
+    return image_files, np.array(image_names)
+   
+## Tokenization process
+def Token_process_query(clip_tokens):
+    n_tokens=len(clip_tokens)
+
+    clip_device = "cuda" if torch.cuda.is_available() else "cpu"
+    clip_model, clip_transform = clip.load("ViT-B/32", device=clip_device, jit=False)
+    clip_text = clip.tokenize(clip_tokens).to(clip_device)
     
-def Token_process_query():
-    ## Tokenization process
-    st.session_state['init_data']['n_tokens']=len(st.session_state['init_data']['current_querys'])
-    st.session_state['init_data']['clip_device'] = "cuda" if torch.cuda.is_available() else "cpu"
-    st.session_state['init_data']['clip_model'], st.session_state['init_data']['clip_transform'] = clip.load("ViT-B/32", device=st.session_state['init_data']['clip_device'], jit=False)
-    st.session_state['init_data']['clip_text'] = clip.tokenize(st.session_state['init_data']['current_querys']).to(st.session_state['init_data']['clip_device'])
+    return n_tokens,clip_tokens,clip_device,clip_model, clip_transform, clip_text
     
-def Show_Info():
+def Show_Info(feature_options):
     st.sidebar.markdown('#### Questions List:')
-    st.sidebar.write(st.session_state['init_data']['feature_questions'])
+    st.sidebar.write(feature_options)
+    
+    # gives a single float value
+    # st.sidebar.write(psutil.cpu_percent())
+    
+    # gives an object with many fields
+    # st.sidebar.write(psutil.virtual_memory())
+    
     st.sidebar.write(st.session_state['init_data'])
 
 # ---------------   CACHE   ---------------
 
 # @st.cache(allow_output_mutation=True,max_entries=2,ttl=3600) 
 def load_data(total_images_number):
-    st.session_state['init_data']={
+    path_info='D:/Datasets/Celeba/'
+    N_images=total_images_number
+    n_images=N_images
+    current_querys=['A picture of a person','A picture of a person']
+    n_tokens,clip_tokens,clip_device,clip_model, clip_transform, clip_text = Token_process_query(current_querys)
+    current_image_files, current_image_names =Load_Images_randomly(N_images)
+    
+    Init_Data={
         'images_selected':False,
         'button_question':False,
         'button_query1':False,
@@ -212,24 +225,24 @@ def load_data(total_images_number):
         'user_input':'A picture of a person',
         'user_input_querys1':'A picture of a person',
         'user_input_querys2':'A picture of a person',
-        'current_querys':['A picture of a person','A picture of a person'],
+        'current_querys':current_querys,
         'selected_winner':'Winner not selected',
         'current_winner_index':-1,
-        'N_images':total_images_number,
-        'n_images':total_images_number,
-        'n_tokens':2,
-        'current_image_files':[],
-        'highlighted_images':[],
-        'current_images_discarted':np.zeros((total_images_number)),
-        'winner_options':[],
-        'current_image_names':[],
-        'highlighted_image_names':[],
-        'clip_tokens':['A picture of a person','A picture of a person'],
-        'clip_device':0,
-        'clip_model':0, 
-        'clip_transform':0, 
-        'clip_text':0,
-        'path_info':'D:/Datasets/Celeba/',
+        'N_images':N_images,
+        'n_images':n_images,
+        'n_tokens':n_tokens,
+        'current_image_files':current_image_files,
+        'highlighted_images':current_image_files,
+        'current_images_discarted':np.zeros((N_images)),
+        'winner_options':current_image_names,
+        'current_image_names':current_image_names,
+        'highlighted_image_names':current_image_names,
+        'clip_tokens':clip_tokens,
+        'clip_device':clip_device,
+        'clip_model':clip_model, 
+        'clip_transform':clip_transform, 
+        'clip_text':clip_text,
+        'path_info':path_info,
         'path_imgs':'D:/Datasets/Celeba/img_celeba/',
         'querys_list':['A picture of a man', 'A picture of a woman', 'A picture of an attractive person', 'A picture of a young person', 
             'A picture of a person with receding hairline', 'A picture of a chubby person ', 'A picture of a person who is smiling', 'A picture of a bald person',
@@ -264,14 +277,11 @@ def load_data(total_images_number):
                     'Are you wearing NECKTIE?', 'Is your image BLURRY?'],
         'previous_discarding_images_number':0,
         'function_predict':Predict_0_vs_1,
-        'image_current_probs':np.zeros((total_images_number,2)),
-        'image_current_predictions':np.zeros((total_images_number))+2}
+        'image_current_probs':np.zeros((N_images,n_tokens)),
+        'image_current_predictions':np.zeros((N_images))+2
+    }
+    return Init_Data
     
-    Load_Images_Randomly(total_images_number)
-    Token_process_query()
-    del total_images_number
-    
-
 st.set_page_config(
     layout="wide",
     page_icon='Logo DIMAI.png',
@@ -298,7 +308,7 @@ Feature_Options=['Ask a Question', 'Create your own query', 'Create your own 2 q
 
 ## Load data to play
 if 'init_data' not in st.session_state:
-    load_data(20)
+    st.session_state['init_data'] = load_data(20)
  
 ## Title
 if st.session_state['init_data']['finished_game']:
@@ -308,7 +318,7 @@ else:
 
 ## GAME
 if Reset_App:
-    load_data(Total_Images_Number)
+    st.session_state['init_data'] = load_data(Total_Images_Number)
     Restart_App = st.button('GO TO IMAGES SELECTION TO START A NEW GAME', key='Restart_App')
 else:                    
     ## FINISHED GAME BUTTON TO RELOAD GAME
@@ -331,7 +341,8 @@ else:
             ## Button - randomly change Celeba images
             Random_Images = st.button('CHANGE IMAGES', key='Random_Images')
             if Random_Images:
-                Load_Images_Randomly(st.session_state['init_data']['N_images'])
+                [ st.session_state['init_data']['current_image_files'],
+                  st.session_state['init_data']['current_image_names'] ] = Load_Images_randomly(st.session_state['init_data']['N_images'])
                 st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
                 
             ## Button - start game
@@ -462,9 +473,21 @@ else:
                             st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list'][st.session_state['init_data']['questions_index']],'A picture of a person']
                             st.session_state['init_data']['function_predict']=Predict_0_vs_1
                     
-                        Token_process_query()
-                        Token_img()
-                        st.session_state['init_data']['function_predict']()
+                        [ st.session_state['init_data']['n_tokens'],
+                          st.session_state['init_data']['clip_tokens'],
+                          st.session_state['init_data']['clip_device'],
+                          st.session_state['init_data']['clip_model'],                
+                          st.session_state['init_data']['clip_transform'],
+                          st.session_state['init_data']['clip_text'] ]=Token_process_query(st.session_state['init_data']['current_querys'])
+                        st.session_state['init_data']['image_current_probs'] = Token_img(st.session_state['init_data']['n_images'],
+                                                                                    st.session_state['init_data']['n_tokens'],
+                                                                                    st.session_state['init_data']['current_image_files'],
+                                                                                    st.session_state['init_data']['current_images_discarted'],
+                                                                                    st.session_state['init_data']['clip_text'], 
+                                                                                    st.session_state['init_data']['clip_model'], 
+                                                                                    st.session_state['init_data']['clip_transform'], 
+                                                                                    st.session_state['init_data']['clip_device'])
+                        st.session_state['init_data']['image_current_predictions']=st.session_state['init_data']['function_predict'](st.session_state['init_data']['image_current_probs'])
                         st.session_state['init_data']['show_results']=True
                         
             ## SHOW ELEMENTS - 1 QUERY MOD
@@ -495,9 +518,21 @@ else:
                         if User_Input!='A picture of a person':
                             st.session_state['init_data']['current_querys']=['A Picture of a person',User_Input]
                             st.session_state['init_data']['function_predict']=Predict_1_vs_0
-                            Token_process_query()
-                            Token_img()
-                            st.session_state['init_data']['function_predict']()
+                            [ st.session_state['init_data']['n_tokens'],
+                              st.session_state['init_data']['clip_tokens'],
+                              st.session_state['init_data']['clip_device'],
+                              st.session_state['init_data']['clip_model'],
+                              st.session_state['init_data']['clip_transform'],
+                              st.session_state['init_data']['clip_text'] ]=Token_process_query(st.session_state['init_data']['current_querys'])
+                            st.session_state['init_data']['image_current_probs'] = Token_img(st.session_state['init_data']['n_images'],
+                                                                                        st.session_state['init_data']['n_tokens'],
+                                                                                        st.session_state['init_data']['current_image_files'],
+                                                                                        st.session_state['init_data']['current_images_discarted'],
+                                                                                        st.session_state['init_data']['clip_text'], 
+                                                                                        st.session_state['init_data']['clip_model'], 
+                                                                                        st.session_state['init_data']['clip_transform'], 
+                                                                                        st.session_state['init_data']['clip_device'])
+                            st.session_state['init_data']['image_current_predictions']=st.session_state['init_data']['function_predict'](st.session_state['init_data']['image_current_probs'])
                             st.session_state['init_data']['show_results']=True
                             
                         else:
@@ -535,9 +570,21 @@ else:
                         if User_Input_Querys1!=User_Input_Querys2:
                             st.session_state['init_data']['current_querys']=[User_Input_Querys1,User_Input_Querys2]     
                             st.session_state['init_data']['function_predict']=Predict_0_vs_1
-                            Token_process_query()
-                            Token_img()
-                            st.session_state['init_data']['function_predict']()
+                            [ st.session_state['init_data']['n_tokens'],
+                              st.session_state['init_data']['clip_tokens'],
+                              st.session_state['init_data']['clip_device'],
+                              st.session_state['init_data']['clip_model'],
+                              st.session_state['init_data']['clip_transform'],
+                              st.session_state['init_data']['clip_text'] ]=Token_process_query(st.session_state['init_data']['current_querys'])
+                            st.session_state['init_data']['image_current_probs'] = Token_img(st.session_state['init_data']['n_images'],
+                                                                                        st.session_state['init_data']['n_tokens'],
+                                                                                        st.session_state['init_data']['current_image_files'],
+                                                                                        st.session_state['init_data']['current_images_discarted'],
+                                                                                        st.session_state['init_data']['clip_text'], 
+                                                                                        st.session_state['init_data']['clip_model'], 
+                                                                                        st.session_state['init_data']['clip_transform'], 
+                                                                                        st.session_state['init_data']['clip_device'])
+                            st.session_state['init_data']['image_current_predictions']=st.session_state['init_data']['function_predict'](st.session_state['init_data']['image_current_probs'])
                             st.session_state['init_data']['show_results']=True
                             
                         else:
@@ -626,14 +673,28 @@ else:
 
      
     ## CREATE IMAGES TO SHOW
-    Show_images()
+    st.session_state['init_data']['highlighted_images']=Show_images(st.session_state['init_data']['show_results'],
+                                                st.session_state['init_data']['current_image_files'],
+                                                st.session_state['init_data']['image_current_predictions'],
+                                                st.session_state['init_data']['current_winner_index'], 
+                                                st.session_state['init_data']['n_images'])
     st.session_state['init_data']['highlighted_image_names']=st.session_state['init_data']['current_image_names']
 
 
    ## APPLY DISCARDING
     if st.session_state['init_data']['show_results']:        
         st.session_state['init_data']['previous_discarding_images_number']=st.session_state['init_data']['n_images']
-        Image_discarding()
+        [ st.session_state['init_data']['image_current_predictions'],
+          st.session_state['init_data']['current_images_discarted'],
+          st.session_state['init_data']['current_image_files'],
+          st.session_state['init_data']['current_image_names'],
+          st.session_state['init_data']['n_images'],
+          st.session_state['init_data']['current_winner_index'] ] = Image_discarding(st.session_state['init_data']['image_current_predictions'],
+                                                                                st.session_state['init_data']['current_winner_index'],
+                                                                                st.session_state['init_data']['current_images_discarted'],
+                                                                                st.session_state['init_data']['n_images'],
+                                                                                st.session_state['init_data']['current_image_files'],
+                                                                                st.session_state['init_data']['current_image_names'])
                    
         ## penalty - game not finished                                                       
         if st.session_state['init_data']['n_images']>1:
@@ -666,11 +727,11 @@ else:
 
     ## RELOAD GAME
     if st.session_state['init_data']['reload_game']:
-        load_data(st.session_state['init_data']['N_images']) 
+        st.session_state['init_data'] = load_data(Total_Images_Number) 
         
         
 ## SHOW EXTRA INFO
-Show_Info() 
+Show_Info(st.session_state['init_data']['feature_questions']) 
         
 
 ## CLEAR RESOURCES
