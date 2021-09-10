@@ -300,7 +300,7 @@ Reset_App = st.sidebar.button('RESET GAME', key='Reset_App')
 ## Images number (Images number)
 # st.sidebar.markdown('# Number of images')
 # Total_Images_Number=st.sidebar.number_input('Select the number of images of the game and press "RESET GAME"', min_value=5, max_value=40, value=20, 
-                                                                    step=1, format='%d', key='Total_Images_Number', help=None)
+#                                                                   step=1, format='%d', key='Total_Images_Number', help=None)
 
 ## INITIALIZATIONS
  
