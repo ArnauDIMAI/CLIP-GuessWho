@@ -2,16 +2,18 @@
 
 ## Used Imports
 import os
-import io
+# import io
 import zipfile
 import random
+import torch
 import numpy as np
 import streamlit as st
 import clip
 import gc
+import cv2
 # import psutil  ## show info (cpu, memeory)
 
-from io import BytesIO
+# from io import BytesIO
 from PIL import Image
 from zipfile import ZipFile 
 # from streamlit import caching
@@ -186,7 +188,14 @@ def Select_Images_Randomly(n_images):
 def Load_Image(current_index):
     archive = zipfile.ZipFile('guess_who_images.zip', 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
-    image_file=np.array(Image.open(BytesIO(archive.read(image_current_path))))
+    # image_file = cv2.imread(archive.read(image_current_path),cv2.COLOR_BGR2RGB
+    image_file = cv2.imdecode(np.frombuffer(archive.read(image_current_path), np.uint8), -1)
+    image_file=cv2.cvtColor(image_file, cv2.COLOR_BGR2RGB)
+    # st.write(type(image_file))
+    # st.write(image_file)
+    # image_file2=np.array(Image.open(BytesIO(archive.read(image_current_path))))
+    # st.write(type(image_file2))
+    # st.write(image_file2)
     del image_current_path,archive
     return image_file
 
