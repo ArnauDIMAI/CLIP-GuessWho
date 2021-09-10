@@ -5,7 +5,7 @@ import os
 import io
 import zipfile
 import random
-import torch
+# import torch
 import numpy as np
 import streamlit as st
 import clip
