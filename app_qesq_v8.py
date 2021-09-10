@@ -193,7 +193,7 @@ def Show_Info(feature_options):
     # gives an object with many fields
     # st.sidebar.write(psutil.virtual_memory())
     
-    st.sidebar.write(st.session_state['init_data'])
+    # st.sidebar.write(st.session_state['init_data'])
 
 # ---------------   CACHE   ---------------
 
@@ -740,8 +740,8 @@ caching.clear_cache()
 torch.cuda.empty_cache()
 
     
-# gives a single float value
-st.sidebar.write(psutil.cpu_percent())
+## gives a single float value
+# st.sidebar.write(psutil.cpu_percent())
 
-# gives an object with many fields
-st.sidebar.write(psutil.virtual_memory())
+## gives an object with many fields
+# st.sidebar.write(psutil.virtual_memory())
