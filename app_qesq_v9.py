@@ -185,9 +185,10 @@ def Select_Images_Randomly(n_images):
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
 
 def Load_Image(current_index):
+    archive = zipfile.ZipFile('guess_who_images.zip', 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
     image_file=np.array(Image.open(BytesIO(archive.read(image_current_path))))
-    del image_current_path
+    del image_current_path,archive
     return image_file
 
 def Show_Info():
