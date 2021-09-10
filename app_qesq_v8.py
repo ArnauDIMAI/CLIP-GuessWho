@@ -290,6 +290,7 @@ st.set_page_config(
 )
 
 ## --------------- PROGRAMA ---------------
+gc.enable()  # garbage collection
 
 ## SIDEBAR
 st.sidebar.markdown('# OPTIONS PANEL')
