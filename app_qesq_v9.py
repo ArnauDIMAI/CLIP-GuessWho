@@ -87,7 +87,7 @@ def CLIP_Process():
     st.session_state['init_data']['image_current_probs']=np.zeros((st.session_state['init_data']['n_images'],n_tokens))
     for i in range(st.session_state['init_data']['n_images']):
         current_image_file = Load_Image(i)
-        img_preprocessed = clip_transform(Image.fromarray(current_image_file).unsqueeze(0).to(clip_device)
+        img_preprocessed = clip_transform(Image.fromarray(current_image_file).unsqueeze(0).to(clip_device))
         img_features = clip_model.encode_image(img_preprocessed)
         txt_features = clip_model.encode_text(clip_text)
         img_logits, img_logits_txt = clip_model(img_preprocessed, clip_text)
