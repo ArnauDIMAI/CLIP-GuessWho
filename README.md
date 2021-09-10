@@ -1,5 +1,7 @@
 # GUESS WHO
-[[Github]](https://github.com/ArnauDIMAI/CLIP-GuessWho) [[App]](https://github.com/ArnauDIMAI/CLIP-GuessWho) [[CLIP]](https://openai.com/blog/clip/) [[Celeba]](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)
+Main Links: [[Github]](https://github.com/ArnauDIMAI/CLIP-GuessWho) [[App]](https://github.com/ArnauDIMAI/CLIP-GuessWho)
+
+Related Links: [[CLIP]](https://openai.com/blog/clip/) [[Celeba]](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)
 
 The aim of the game, as in the original one, is to find a specific image from a group of different images of a person's face. To discover the image, the player must ask questions that can be answered with a binary response, such as "Yes and No". After every question made by the player, the images that don't share the same answer that the winning one are discarded automatically. The answer to the player's questions, and thus, the process of discarding the images will be established by CLIP. When all the images but one have been discarded, the game is over.
 
