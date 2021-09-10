@@ -2,16 +2,16 @@
 
 ## Used Imports
 import os
-import io.BytesIO
+import io
 import zipfile
 import random
-# import torch
 import numpy as np
 import streamlit as st
 import clip
 import gc
 # import psutil  ## show info (cpu, memeory)
 
+from io import BytesIO
 from PIL import Image
 from zipfile import ZipFile 
 # from streamlit import caching
