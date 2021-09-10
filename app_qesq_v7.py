@@ -297,9 +297,9 @@ st.sidebar.markdown('# OPTIONS PANEL')
 ## Reset App APP
 Reset_App = st.sidebar.button('RESET GAME', key='Reset_App')
 
-## Images number
-st.sidebar.markdown('# Number of images')
-Total_Images_Number=st.sidebar.number_input('Select the number of images of the game and press "RESET GAME"', min_value=5, max_value=40, value=20, 
+## Images number (Images number)
+# st.sidebar.markdown('# Number of images')
+# Total_Images_Number=st.sidebar.number_input('Select the number of images of the game and press "RESET GAME"', min_value=5, max_value=40, value=20, 
                                                                     step=1, format='%d', key='Total_Images_Number', help=None)
 
 ## INITIALIZATIONS
@@ -318,7 +318,8 @@ else:
 
 ## GAME
 if Reset_App:
-    st.session_state['init_data'] = load_data(Total_Images_Number)
+    # st.session_state['init_data'] = load_data(Total_Images_Number) ## (Images number)
+    st.session_state['init_data'] = load_data(20) ## (Images number)
     Restart_App = st.button('GO TO IMAGES SELECTION TO START A NEW GAME', key='Restart_App')
 else:                    
     ## FINISHED GAME BUTTON TO RELOAD GAME
@@ -727,7 +728,8 @@ else:
 
     ## RELOAD GAME
     if st.session_state['init_data']['reload_game']:
-        st.session_state['init_data'] = load_data(Total_Images_Number) 
+        st.session_state['init_data'] = load_data(20) ## (Images number)
+        # st.session_state['init_data'] = load_data(Total_Images_Number) ## (Images number)
         
         
 ## SHOW EXTRA INFO
