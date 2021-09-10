@@ -195,7 +195,7 @@ def Show_Info():
     st.sidebar.write(st.session_state['init_data']['feature_questions'])
     st.sidebar.write(st.session_state['init_data'])
 
-def load_data(total_images_number):
+def Load_Data(total_images_number):
     st.session_state['init_data']={
         'images_selected':False,
         'show_results':False,
@@ -260,7 +260,6 @@ def load_data(total_images_number):
         'image_current_predictions':np.zeros((total_images_number))+2}
     
     Select_Images_Randomly(total_images_number)
-    Token_process_query()
     del total_images_number
 
 
@@ -285,7 +284,7 @@ def Main_Program():
 
     ## Load data to play
     if 'init_data' not in st.session_state:
-        load_data(20)
+        Load_Data(20)
      
     ## Title
     if st.session_state['init_data']['finished_game']:
@@ -295,7 +294,7 @@ def Main_Program():
 
     ## GAME
     if Reset_App:
-        load_data(Total_Images_Number)
+        Load_Data(Total_Images_Number)
         Restart_App = st.button('GO TO IMAGES SELECTION TO START A NEW GAME', key='Restart_App')
     else:                    
         ## FINISHED GAME BUTTON TO RELOAD GAME
@@ -480,7 +479,6 @@ def Main_Program():
                             if User_Input!='A picture of a person':
                                 st.session_state['init_data']['current_querys']=['A Picture of a person',User_Input]
                                 st.session_state['init_data']['function_predict']=Predict_1_vs_0
-                                Token_process_query()
                                 CLIP_Process()
                                 st.session_state['init_data']['function_predict']()
                                 st.session_state['init_data']['show_results']=True
@@ -650,7 +648,7 @@ def Main_Program():
 
         ## RELOAD GAME
         if st.session_state['init_data']['reload_game']:
-            load_data(st.session_state['init_data']['N_images']) 
+            Load_Data(st.session_state['init_data']['N_images']) 
             
             
     ## SHOW EXTRA INFO
