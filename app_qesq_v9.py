@@ -266,7 +266,7 @@ def load_data(total_images_number):
 
 ## --------------- MAIN FUCTION ---------------
 
-def Main_Program()
+def Main_Program():
 
     ## SIDEBAR
     st.sidebar.markdown('# OPTIONS PANEL')
