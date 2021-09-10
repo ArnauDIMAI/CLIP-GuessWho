@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ## Used Imports
-import os
+import os.BytesIO
 import io
 import zipfile
 import random
@@ -12,7 +12,6 @@ import clip
 import gc
 # import psutil  ## show info (cpu, memeory)
 
-from io import BytesIO
 from PIL import Image
 from zipfile import ZipFile 
 # from streamlit import caching
