@@ -92,7 +92,6 @@ def CLIP_Process():
         txt_features = clip_model.encode_text(clip_text)
         img_logits, img_logits_txt = clip_model(img_preprocessed, clip_text)
         st.session_state['init_data']['image_current_probs'][i,:]=np.round(img_logits.detach().numpy()[0],2)
-        gc.collect()
         
     del i,n_tokens,clip_device,clip_model,clip_transform,clip_text,current_image_file,img_preprocessed,img_features,txt_features,img_logits,img_logits_txt
     gc.collect()
