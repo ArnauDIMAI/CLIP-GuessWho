@@ -645,7 +645,7 @@ def Main_Program():
 
         ## SHOW CURRENT IMAGES
         st.image(Showed_Images, use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])
-        del Showed_images
+        del Showed_Images
 
         ## RELOAD GAME
         if st.session_state['init_data']['reload_game']:
