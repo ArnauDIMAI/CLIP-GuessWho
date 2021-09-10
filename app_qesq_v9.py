@@ -667,7 +667,7 @@ st.set_page_config(
 )
 
 ## CLEAR RESOURCES
-main_program()
+Main_Program()
 gc.collect()
 # caching.clear_cache()
 # torch.cuda.empty_cache()
