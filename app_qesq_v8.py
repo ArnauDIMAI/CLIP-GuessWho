@@ -346,7 +346,7 @@ else:
                 st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
                 
             ## Button - start game
-            st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start playing.</h2>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start the game.</h2>", unsafe_allow_html=True)
             Use_Images = st.button('START GAME', key='Use_Images')
             
             if Use_Images:
