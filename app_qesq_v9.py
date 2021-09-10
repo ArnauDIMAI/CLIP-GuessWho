@@ -79,7 +79,7 @@ def Predict_hair_color():
 def CLIP_Process():
     ## Tokenization process
     n_tokens=len(st.session_state['init_data']['current_querys'])
-    clip_device = "cuda" if torch.cuda.is_available() else "cpu"
+    clip_device = "cpu"
     clip_model, clip_transform = clip.load("ViT-B/32", device=clip_device, jit=False)
     clip_text = clip.tokenize(st.session_state['init_data']['current_querys']).to(clip_device)
     
