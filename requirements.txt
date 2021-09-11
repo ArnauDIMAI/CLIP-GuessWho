@@ -1,9 +1,9 @@
 ftfy
 regex
 numpy
-opencv-python-headless
 pip==21.2.4
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torch==1.9.0+cpu
 torchvision==0.10.0+cpu
-psutil
+# opencv-python-headless
+# psutil
