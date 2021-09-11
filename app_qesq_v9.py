@@ -78,23 +78,22 @@ def Predict_hair_color():
     
 def CLIP_Process():
     ## Tokenization process
+    clip_model, clip_transform=Load_CLIP()
+    clip_text = clip.tokenize(st.session_state['init_data']['current_querys']).to("cpu")
     n_tokens=len(st.session_state['init_data']['current_querys'])
-    clip_device = "cpu"
-    clip_model, clip_transform = clip.load("ViT-B/32", device=clip_device, jit=False)
-    clip_text = clip.tokenize(st.session_state['init_data']['current_querys']).to(clip_device)
     
     ## Image Process
     st.session_state['init_data']['image_current_probs']=np.zeros((st.session_state['init_data']['n_images'],n_tokens))
     for i in range(st.session_state['init_data']['n_images']):
         current_image_file = Load_Image(i)
-        img_preprocessed = clip_transform(Image.fromarray(current_image_file)).unsqueeze(0).to(clip_device)
+        img_preprocessed = clip_transform(Image.fromarray(current_image_file)).unsqueeze(0).to("cpu")
         img_features = clip_model.encode_image(img_preprocessed)
         txt_features = clip_model.encode_text(clip_text)
         img_logits, img_logits_txt = clip_model(img_preprocessed, clip_text)
         st.session_state['init_data']['image_current_probs'][i,:]=np.round(img_logits.detach().numpy()[0],2)
         gc.collect()
         
-    del i,n_tokens,clip_device,clip_model,clip_transform,clip_text,current_image_file,img_preprocessed,img_features,txt_features,img_logits,img_logits_txt
+    del i,n_tokens,clip_model,clip_transform,clip_text,current_image_file,img_preprocessed,img_features,txt_features,img_logits,img_logits_txt
     gc.collect()
     
        
@@ -655,7 +654,11 @@ def Main_Program():
             
     ## SHOW EXTRA INFO
     Show_Info() 
-        
+ 
+## --------------- CACHE FUCTION ---------------
+@st.cache(ttl=12*3600)
+def Load_CLIP():
+	  return clip.load("ViT-B/32", device="cpu", jit=False) ) 
 
 ## --------------- STREAMLIT APP ---------------
 
