@@ -658,7 +658,7 @@ def Main_Program():
 ## --------------- CACHE FUCTION ---------------
 @st.cache(ttl=12*3600)
 def Load_CLIP():
-	  return clip.load("ViT-B/32", device="cpu", jit=False) ) 
+	  return clip.load("ViT-B/32", device="cpu", jit=False)
 
 ## --------------- STREAMLIT APP ---------------
 
