@@ -10,7 +10,7 @@ import numpy as np
 import streamlit as st
 import clip
 import gc
-import psutil
+# import psutil
 
 from io import BytesIO
 from PIL import Image
