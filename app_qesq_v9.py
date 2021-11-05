@@ -192,6 +192,11 @@ def Load_Images_from_path(introduced_path,n_images):
     image_current_path=''
     path_head=''
     path_tail=''
+    st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+introduced_path+"</h3>",
+            unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path2: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+os.path.normpath(introduced_path)+"</h3>",
+            unsafe_allow_html=True)
+
     path_list = os.listdir(os.path.normpath(introduced_path))
     listOfFileNames=[]
     for current_path in path_list:
@@ -398,7 +403,7 @@ def Main_Program():
                     User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
                     Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
 		    
-                    st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input_Path+"</h3>",
+                    # st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input_Path+"</h3>",
                                 unsafe_allow_html=True)
 
                     if Use_Path:
