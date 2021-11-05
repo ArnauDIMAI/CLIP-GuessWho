@@ -235,6 +235,56 @@ def Load_Images_from_path(introduced_path,n_images):
         
     del path_list,image_index,listOfFileNames,image_index_all,current_index,image_current_path,path_head,path_tail
 
+def Load_Images_from_path2(introduced_file_list,n_images):
+    if introduced_path[-1]=='\\' or introduced_path[-1]=='/':
+        introduced_path=introduced_path[:-1]
+    current_index=1
+    image_files=[]
+    image_names=[]
+    image_index=[]
+    image_index_all=[]
+    image_current_path=''
+    path_head=''
+    path_tail=''
+    path_list = os.listdir(os.path.normpath(introduced_path))
+    listOfFileNames=[]
+    for current_path in introduced_file_list:
+        if current_path[-4:]=='.jpg' or current_path[-4:]=='.png':
+            listOfFileNames.append(current_path)
+
+    if len(listOfFileNames)<n_images:
+        ## error
+        st.markdown("<h2 style='text-align:left; float:left; color:red; margin:0px;'>Not enough images ('.png' or '.jpg' files) in the introduced path</h2>",
+                    unsafe_allow_html=True)
+        image_files=Data_Init['init_data'][0]['current_images']
+        image_names=Data_Init['init_data'][0]['current_image_names']
+        [fig, axs]=Data_Init['init_data'][0]['current_figure']
+
+    else:
+        st.session_state['init_data']['image_current_paths']=[]
+        st.session_state['init_data']['current_image_names']=[]
+            
+        image_index_all=list(range(len(listOfFileNames)))
+        image_index.append(random.choice(image_index_all))
+        image_index_all.remove(image_index[0])
+        while len(image_index)<n_images:
+            image_index.append(random.choice(image_index_all))
+            image_index_all.remove(image_index[current_index])
+            current_index+=1
+            
+       # Iterate over the file names
+        for current_index in image_index:
+            image_current_path=listOfFileNames[current_index]
+            st.session_state['init_data']['image_current_paths'].append(image_current_path)
+            path_head, path_tail = os.path.split(image_current_path)
+            st.session_state['init_data']['current_image_names'].append(path_tail)
+                    
+        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
+        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
+        
+    del path_list,image_index,listOfFileNames,image_index_all,current_index,image_current_path,path_head,path_tail
+
+
 def Load_Image(current_index):
     archive = zipfile.ZipFile('guess_who_images.zip', 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
@@ -400,8 +450,12 @@ def Main_Program():
                                 unsafe_allow_html=True)
 
                     ## specific path - elements
-                    User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
-                    Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
+                    Uploaded_Files = st.file_uploader("Select images to play", type=["jpg","png"], 
+                                                        accept_multiple_files=True)
+
+                    
+                    # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
+                    # Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
 		    
                     # st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input_Path+"</h3>",
                                 # unsafe_allow_html=True)
