@@ -395,7 +395,7 @@ def Main_Program():
                                 unsafe_allow_html=True)
 
                     ## specific path - elements
-                    User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='User_Input_Path', help=None)
+                    User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
                     Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
 		
                     st.markdown("<h style='text-align:left; float:left; color:black; margin:0px;'>User_Input_Path</h3>",
