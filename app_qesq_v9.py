@@ -222,7 +222,7 @@ def Load_Images_from_path(introduced_path,n_images):
         for current_index in image_index:
             image_current_path=listOfFileNames[current_index]
             st.session_state['init_data']['image_current_paths'].append(image_current_path)
-            path_head, path_tail = os.path.split(image_current_path)
+            path_head, path_tail = os.path.split(os.path.normpath(image_current_path))
             st.session_state['init_data']['current_image_names'].append(path_tail)
                     
         st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
