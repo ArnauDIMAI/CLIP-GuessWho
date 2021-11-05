@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# -*- coding: utf-8 -*-
+
 ## Used Imports
 import os
 import io
@@ -236,8 +238,6 @@ def Load_Images_from_path(introduced_path,n_images):
     del path_list,image_index,listOfFileNames,image_index_all,current_index,image_current_path,path_head,path_tail
 
 def Load_Images_from_path2(introduced_file_list,n_images):
-    if introduced_path[-1]=='\\' or introduced_path[-1]=='/':
-        introduced_path=introduced_path[:-1]
     current_index=1
     image_files=[]
     image_names=[]
