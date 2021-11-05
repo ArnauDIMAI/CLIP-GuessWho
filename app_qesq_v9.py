@@ -246,7 +246,6 @@ def Load_Images_from_path2(introduced_file_list,n_images):
     image_current_path=''
     path_head=''
     path_tail=''
-    path_list = os.listdir(os.path.normpath(introduced_path))
     listOfFileNames=[]
     for current_path in introduced_file_list:
         if current_path[-4:]=='.jpg' or current_path[-4:]=='.png':
@@ -282,7 +281,7 @@ def Load_Images_from_path2(introduced_file_list,n_images):
         st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
         st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
         
-    del path_list,image_index,listOfFileNames,image_index_all,current_index,image_current_path,path_head,path_tail
+    del image_index,listOfFileNames,image_index_all,current_index,image_current_path,path_head,path_tail
 
 
 def Load_Image(current_index):
