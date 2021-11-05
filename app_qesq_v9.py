@@ -455,13 +455,21 @@ def Main_Program():
 
                     
                     # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
+                    Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
+		    
+                    ## specific path - elements
+                    # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
                     # Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
 		    
                     # st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input_Path+"</h3>",
                                 # unsafe_allow_html=True)
 
+                    # if Use_Path:
+                        # Load_Images_from_path(User_Input_Path,st.session_state['init_data']['N_images'])
+                        # st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']                    
+
                     if Use_Path:
-                        Load_Images_from_path(User_Input_Path,st.session_state['init_data']['N_images'])
+                        Load_Images_from_path2(Uploaded_Files,st.session_state['init_data']['N_images'])
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']                    
                         
                     ## Button - start game
