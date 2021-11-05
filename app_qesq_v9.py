@@ -404,7 +404,7 @@ def Main_Program():
                     Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
 		    
                     # st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input_Path+"</h3>",
-                                unsafe_allow_html=True)
+                                # unsafe_allow_html=True)
 
                     if Use_Path:
                         Load_Images_from_path(User_Input_Path,st.session_state['init_data']['N_images'])
