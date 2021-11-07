@@ -76,7 +76,7 @@ def Predict_hair_color():
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
     
-def CLIP_Process():
+def CLIP_Process(zip_file):
     ## Tokenization process
     clip_model, clip_transform=Load_CLIP()
     clip_text = clip.tokenize(st.session_state['init_data']['current_querys']).to("cpu")
@@ -85,7 +85,7 @@ def CLIP_Process():
     ## Image Process
     st.session_state['init_data']['image_current_probs']=np.zeros((st.session_state['init_data']['n_images'],n_tokens))
     for i in range(st.session_state['init_data']['n_images']):
-        current_image_file = Load_Image(i)
+        current_image_file = Load_Image(i,zip_file)
         img_preprocessed = clip_transform(Image.fromarray(current_image_file)).unsqueeze(0).to("cpu")
         img_logits, img_logits_txt = clip_model(img_preprocessed, clip_text)
         st.session_state['init_data']['image_current_probs'][i,:]=np.round(img_logits.detach().numpy()[0],2)
@@ -126,7 +126,7 @@ def Image_discarding():
     st.session_state['init_data']['current_images_discarted']=np.zeros(st.session_state['init_data']['n_images'])
     del previous_names,previous_files,previous_predictions,current_index,new_index,i
       
-def Show_images():
+def Show_images(zip_file):
     showed_images=[]     
     for current_index in range(st.session_state['init_data']['n_images']):
         if st.session_state['init_data']['show_results']:
@@ -139,7 +139,7 @@ def Show_images():
             current_line_width=2
             current_color=np.zeros(3)  
         image_size=240
-        current_image_file=Load_Image(current_index)
+        current_image_file=Load_Image(current_index, zip_file)
         w,h,c = np.shape(current_image_file)
         images_separation=image_size-w-current_line_width*2
         image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
@@ -312,8 +312,8 @@ def Load_Images_from_specific_path(introduced_zip,n_images):
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
 
 
-def Load_Image(current_index):
-    archive = zipfile.ZipFile('guess_who_images.zip', 'r')
+def Load_Image(current_index, zip_file):
+    archive = zipfile.ZipFile(zip_file, 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
     image_file=np.array(Image.open(BytesIO(archive.read(image_current_path))))
     del image_current_path,archive
@@ -344,6 +344,7 @@ def Load_Data(total_images_number):
         'current_winner_index':-1,
         'N_images':total_images_number,
         'n_images':total_images_number,
+        'zip_file':'guess_who_images.zip',
         'Showed_image_names':[],
         'current_images_discarted':np.zeros((total_images_number)),
         'winner_options':[],
@@ -449,6 +450,7 @@ def Main_Program():
             
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use default random images':
+                    st.session_state['init_data']['zip_file']='guess_who_images.zip'
 
                     ## Text - select Celeba images
                     st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>", unsafe_allow_html=True)
@@ -472,6 +474,7 @@ def Main_Program():
                     
                 ## Select images source - Celeba specific path
                 if Selected_Images_Source=='Use images from specific path':
+                    
                     ## specific path - text
                     st.markdown("<h style='text-align:left; float:left; color:black; margin:0px;'>To use images from specific path, press 'Use Path'.</h3>",
                                 unsafe_allow_html=True)
@@ -481,6 +484,8 @@ def Main_Program():
                                                         # accept_multiple_files=True)
                     Uploaded_File = st.file_uploader("Select images to play", type=[".zip"], 
                                                         accept_multiple_files=True)
+                                                        
+                    st.session_state['init_data']['zip_file']=Uploaded_File
                     
                     # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
                     Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
@@ -633,7 +638,7 @@ def Main_Program():
                                 st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list'][st.session_state['init_data']['questions_index']],'A picture of a person']
                                 st.session_state['init_data']['function_predict']=Predict_0_vs_1
                         
-                            CLIP_Process()
+                            CLIP_Process(st.session_state['init_data']['zip_file'])
                             st.session_state['init_data']['function_predict']()
                             st.session_state['init_data']['show_results']=True
                             
@@ -665,7 +670,7 @@ def Main_Program():
                             if User_Input!='A picture of a person':
                                 st.session_state['init_data']['current_querys']=['A Picture of a person',User_Input]
                                 st.session_state['init_data']['function_predict']=Predict_1_vs_0
-                                CLIP_Process()
+                                CLIP_Process(st.session_state['init_data']['zip_file'])
                                 st.session_state['init_data']['function_predict']()
                                 st.session_state['init_data']['show_results']=True
                                 
@@ -704,7 +709,7 @@ def Main_Program():
                             if User_Input_Querys1!=User_Input_Querys2:
                                 st.session_state['init_data']['current_querys']=[User_Input_Querys1,User_Input_Querys2]     
                                 st.session_state['init_data']['function_predict']=Predict_0_vs_1
-                                CLIP_Process()
+                                CLIP_Process(st.session_state['init_data']['zip_file'])
                                 st.session_state['init_data']['function_predict']()
                                 st.session_state['init_data']['show_results']=True
                                 
@@ -794,7 +799,7 @@ def Main_Program():
 
          
         ## CREATE IMAGES TO SHOW
-        Showed_Images=Show_images()
+        Showed_Images=Show_images(st.session_state['init_data']['zip_file'])
         st.session_state['init_data']['Showed_image_names']=st.session_state['init_data']['current_image_names']
 
 
