@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# -*- coding: utf-8 -*-
-
 ## Used Imports
 import os
 import io
@@ -246,6 +244,7 @@ def Load_Images_from_path2(introduced_file_list,n_images):
     image_current_path=''
     path_head=''
     path_tail=''
+    path_list = os.listdir(os.path.normpath(introduced_path))
     listOfFileNames=[]
     for current_path in introduced_file_list:
         if current_path[-4:]=='.jpg' or current_path[-4:]=='.png':
@@ -281,7 +280,33 @@ def Load_Images_from_path2(introduced_file_list,n_images):
         st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
         st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
         
-    del image_index,listOfFileNames,image_index_all,current_index,image_current_path,path_head,path_tail
+    del path_list,image_index,listOfFileNames,image_index_all,current_index,image_current_path,path_head,path_tail
+
+def Load_Images_from_specific_path(introduced_zip,n_images):
+    st.session_state['init_data']['image_current_paths']=[]
+    st.session_state['init_data']['current_image_names']=[]
+    image_index=[]
+        
+    archive = zipfile.ZipFile(introduced_zip, 'r')
+    listOfFileNames = archive.namelist()        
+    image_index_all=list(range(len(listOfFileNames)))
+    image_index.append(random.choice(image_index_all))
+    image_index_all.remove(image_index[0])
+    current_index=1
+    while len(image_index)<n_images:
+        image_index.append(random.choice(image_index_all))
+        image_index_all.remove(image_index[current_index])
+        current_index+=1
+        
+   # Iterate over the file names
+    for current_index in image_index:
+        image_current_path=listOfFileNames[current_index]
+        st.session_state['init_data']['image_current_paths'].append(image_current_path)
+        st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
+                
+    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
+    st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
+    del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
 
 
 def Load_Image(current_index):
@@ -449,9 +474,10 @@ def Main_Program():
                                 unsafe_allow_html=True)
 
                     ## specific path - elements
-                    Uploaded_Files = st.file_uploader("Select images to play", type=["jpg","png"], 
+                    # Uploaded_Files = st.file_uploader("Select images to play", type=["jpg","png"], 
+                                                        # accept_multiple_files=True)
+                    Uploaded_File = st.file_uploader("Select images to play", type=[".zip"], 
                                                         accept_multiple_files=True)
-
                     
                     # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
                     Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
@@ -467,9 +493,14 @@ def Main_Program():
                         # Load_Images_from_path(User_Input_Path,st.session_state['init_data']['N_images'])
                         # st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']                    
 
+                    # if Use_Path:
+                        # Load_Images_from_path2(Uploaded_Files,st.session_state['init_data']['N_images'])
+                        # st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']   
+                        
                     if Use_Path:
-                        Load_Images_from_path2(Uploaded_Files,st.session_state['init_data']['N_images'])
+                        Load_Images_from_specific_path(Uploaded_File,st.session_state['init_data']['N_images'])
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']                    
+                 
                         
                     ## Button - start game
                     st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start the game.</h2>", unsafe_allow_html=True)
