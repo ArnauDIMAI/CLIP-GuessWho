@@ -485,7 +485,7 @@ def Main_Program():
                     Uploaded_File = st.file_uploader("Select images to play", type=[".zip"], 
                                                         accept_multiple_files=True)
 						
-                    if uploaded_file is not None:
+                    if Uploaded_File is not None:
                     	st.write(type(Uploaded_File[0]))
                     	st.session_state['init_data']['zip_file']=Uploaded_File[0]
                     
