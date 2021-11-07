@@ -481,11 +481,15 @@ def Main_Program():
 
                     ## specific path - elements
                     # Uploaded_Files = st.file_uploader("Select images to play", type=["jpg","png"], 
-                                                        # accept_multiple_files=True)
+                                                        # accept_multiple_files=True, 'guess_who_images.zip')
                     Uploaded_File = st.file_uploader("Select images to play", type=[".zip"], 
                                                         accept_multiple_files=True)
-                                                        
-                    st.session_state['init_data']['zip_file']=Uploaded_File
+			
+                    st.write(type(Uploaded_File))
+			
+                    if type(Uploaded_Files)=type([]):   
+                    	st.write(type([Uploaded_File[0]))
+                    	st.session_state['init_data']['zip_file']=Uploaded_File[0]
                     
                     # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
                     Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
