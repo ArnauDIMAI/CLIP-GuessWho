@@ -486,8 +486,6 @@ def Main_Program():
                                                         accept_multiple_files=True)
 						
                     if Uploaded_File is not None:
-                        if type(Uploaded_File)==type([]):
-                            if len(Uploaded_File)>0:
                         st.write(type(Uploaded_File.getvalue()))
                         st.session_state['init_data']['zip_file']=Uploaded_File.getvalue()
                     
