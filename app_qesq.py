@@ -287,6 +287,9 @@ def Load_Images_from_specific_path(introduced_zip,n_images):
     st.session_state['init_data']['current_image_names']=[]
     image_index=[]
         
+    st.sidebar.write(type(introduced_zip))
+#     st.sidebar.write(type(introduced_zip))
+
     archive = zipfile.ZipFile(introduced_zip, 'r')
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
