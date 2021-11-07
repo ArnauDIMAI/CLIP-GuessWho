@@ -488,7 +488,7 @@ def Main_Program():
                     st.write(type(Uploaded_File))
 			
                     if type(Uploaded_Files)==type([]):   
-                    	st.write(type([Uploaded_File[0]))
+                    	st.write(type(Uploaded_File[0]))
                     	st.session_state['init_data']['zip_file']=Uploaded_File[0]
                     
                     # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
