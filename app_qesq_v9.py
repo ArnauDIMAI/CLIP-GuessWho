@@ -484,10 +484,9 @@ def Main_Program():
                                                         # accept_multiple_files=True, 'guess_who_images.zip')
                     Uploaded_File = st.file_uploader("Select images to play", type=[".zip"], 
                                                         accept_multiple_files=True)
-			
-                    st.write(type(Uploaded_File[0]))
-			
-                    if type(Uploaded_Files[0])==type([]): 
+						
+                    if len(Uploaded_Files)>0:   
+                    	st.write(type(Uploaded_File[0]))
                     	st.session_state['init_data']['zip_file']=Uploaded_File[0]
                     
                     # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
