@@ -483,7 +483,7 @@ def Main_Program():
                     # Uploaded_Files = st.file_uploader("Select images to play", type=["jpg","png"], 
                                                         # accept_multiple_files=True, 'guess_who_images.zip')
                     Uploaded_File = st.file_uploader("Select images to play", type=[".zip"], 
-                                                        accept_multiple_files=True)
+                                                        accept_multiple_files=False)
 						
                     if Uploaded_File is not None:
                         st.write(type(Uploaded_File.getvalue()))
