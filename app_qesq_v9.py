@@ -487,7 +487,7 @@ def Main_Program():
 			
                     st.write(type(Uploaded_File))
 			
-                    if type(Uploaded_Files)=type([]):   
+                    if type(Uploaded_Files)==type([]):   
                     	st.write(type([Uploaded_File[0]))
                     	st.session_state['init_data']['zip_file']=Uploaded_File[0]
                     
