@@ -156,13 +156,13 @@ def Show_images(zip_file):
     del image_highlighted,current_index,current_line_width,current_color,image_size,current_image_file,w,h,c
     return showed_images
 
-def Select_Images_Randomly(introduced_path,n_images):
+def Select_Images_Randomly(zip_file,n_images):
     st.session_state['init_data']['image_current_paths']=[]
     st.session_state['init_data']['current_image_names']=[]
     image_index=[]
         
     # archive = zipfile.ZipFile('guess_who_images.zip', 'r')
-    archive = zipfile.ZipFile(PureWindowsPath(introduced_path), 'r')
+    archive = zipfile.ZipFile(PureWindowsPath(zip_file), 'r')
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
     image_index.append(random.choice(image_index_all))
@@ -184,7 +184,7 @@ def Select_Images_Randomly(introduced_path,n_images):
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
 
 def Load_Image(current_index, zip_file):
-    archive = zipfile.ZipFile(zip_file, 'r')
+    archive = zipfile.ZipFile(PureWindowsPath(zip_file), 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
     image_file=Image.open(BytesIO(archive.read(image_current_path)))
     if not (image_file.size[0] == 224 and image_file.size[1] == 224): 
