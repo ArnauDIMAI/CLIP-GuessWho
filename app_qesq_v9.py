@@ -362,7 +362,7 @@ def Main_Program():
                         # st.write(type(Uploaded_File.getvalue()))
                         st.session_state['init_data']['zip_file']= Path(User_Input_Path)
 		    
-                    st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['zip_file']+"</h3>",
+                    st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+str(st.session_state['init_data']['zip_file'])+"</h3>",
                                 unsafe_allow_html=True)
                         
                     if Use_Path:
