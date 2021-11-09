@@ -380,6 +380,8 @@ def Main_Program():
 
                     if Uploaded_File is not None:
                         st.session_state['init_data']['zip_file']= Uploaded_File
+                        Select_Images_Randomly()
+                        st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
                         
                     ## Button - randomly change Celeba images
                     Random_Images = st.button('CHANGE IMAGES', key='Random_Images')
