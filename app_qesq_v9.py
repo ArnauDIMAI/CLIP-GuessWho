@@ -190,8 +190,8 @@ def Load_Image(current_index, zip_file):
     return image_file
 
 def Show_Info():
-    st.sidebar.markdown('#### Questions List:')
-    st.sidebar.write(st.session_state['init_data']['feature_questions'])
+    # st.sidebar.markdown('#### Questions List:')
+    # st.sidebar.write(st.session_state['init_data']['feature_questions'])
     st.sidebar.write(st.session_state['init_data'])
 
 def Load_Data(total_images_number):
@@ -704,7 +704,7 @@ def Main_Program():
             
             
     ## SHOW EXTRA INFO
-    # Show_Info() 
+    Show_Info() 
  
 ## --------------- CACHE FUCTION ---------------
 @st.cache(ttl=12*3600)
