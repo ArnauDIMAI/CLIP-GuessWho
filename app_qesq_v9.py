@@ -162,7 +162,7 @@ def Select_Images_Randomly(zip_file,n_images):
     image_index=[]
         
     # archive = zipfile.ZipFile('guess_who_images.zip', 'r')
-    archive = zipfile.ZipFile(PureWindowsPath(zip_file), 'r')
+    archive = zipfile.ZipFile(zip_file, 'r')
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
     image_index.append(random.choice(image_index_all))
@@ -184,7 +184,7 @@ def Select_Images_Randomly(zip_file,n_images):
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
 
 def Load_Image(current_index, zip_file):
-    archive = zipfile.ZipFile(PureWindowsPath(zip_file), 'r')
+    archive = zipfile.ZipFile(zip_file, 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
     image_file=Image.open(BytesIO(archive.read(image_current_path)))
     if not (image_file.size[0] == 224 and image_file.size[1] == 224): 
@@ -218,7 +218,7 @@ def Load_Data(total_images_number):
         'N_images':total_images_number,
         'n_images':total_images_number,
         # 'zip_file':'guess_who_images.zip',
-        'zip_file':'D:\Datasets\img_celeba_20.zip',
+        'zip_file':'D:\\Datasets\\img_celeba_20.zip',
         'Showed_image_names':[],
         'current_images_discarted':np.zeros((total_images_number)),
         'winner_options':[],
@@ -264,7 +264,7 @@ def Load_Data(total_images_number):
         'image_current_predictions':np.zeros((total_images_number))+2}
     
     # Select_Images_Randomly('guess_who_images.zip',total_images_number)
-    Select_Images_Randomly('D:\Datasets\img_celeba_20.zip',total_images_number)
+    Select_Images_Randomly('D:\\Datasets\\img_celeba_20.zip',total_images_number)
     del total_images_number
 
 
@@ -326,7 +326,7 @@ def Main_Program():
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use default random images':
                     # st.session_state['init_data']['zip_file']='guess_who_images.zip'
-                    st.session_state['init_data']['zip_file']='D:\Datasets\img_celeba_20.zip'
+                    st.session_state['init_data']['zip_file']='D:\\Datasets\\img_celeba_20.zip'
 
                     ## Default source text
                     st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>",
