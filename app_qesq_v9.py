@@ -389,7 +389,7 @@ def Main_Program():
                         Select_Images_Randomly()
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
                     
-                    if st.session_state['init_data']['zip_file']<>'guess_who_images.zip':
+                    if not st.session_state['init_data']['zip_file']=='guess_who_images.zip':
                     
                         ## Button - start game
                         st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start the game.</h2>", unsafe_allow_html=True)
