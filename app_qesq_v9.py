@@ -14,7 +14,7 @@ import gc
 from io import BytesIO
 from PIL import Image
 from zipfile import ZipFile 
-from pathlib import Path, PurePath
+from pathlib import Path, PurePath, PureWindowsPath
 # from streamlit import caching
 
 ## --------------- USED FUNCTIONS ---------------
@@ -161,7 +161,7 @@ def Select_Images_Randomly(introduced_path,n_images):
     image_index=[]
         
     # archive = zipfile.ZipFile('guess_who_images.zip', 'r')
-    archive = zipfile.ZipFile(PurePath(introduced_path), 'r')
+    archive = zipfile.ZipFile(PureWindowsPath(introduced_path), 'r')
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
     image_index.append(random.choice(image_index_all))
