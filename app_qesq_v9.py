@@ -5,7 +5,6 @@ import os
 import io
 import zipfile
 import random
-# import torch
 import numpy as np
 import streamlit as st
 import clip
@@ -155,12 +154,13 @@ def Show_images(zip_file):
     del image_highlighted,current_index,current_line_width,current_color,image_size,current_image_file,w,h,c
     return showed_images
 
-def Select_Images_Randomly(n_images):
+def Select_Images_Randomly(introduced_path,n_images):
     st.session_state['init_data']['image_current_paths']=[]
     st.session_state['init_data']['current_image_names']=[]
     image_index=[]
         
-    archive = zipfile.ZipFile('guess_who_images.zip', 'r')
+    # archive = zipfile.ZipFile('guess_who_images.zip', 'r')
+    archive = zipfile.ZipFile(introduced_path, 'r')
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
     image_index.append(random.choice(image_index_all))
@@ -180,137 +180,6 @@ def Select_Images_Randomly(n_images):
     st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
     st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
-   
-def Load_Images_from_path(introduced_path,n_images):
-    if introduced_path[-1]=='\\' or introduced_path[-1]=='/':
-        introduced_path=introduced_path[:-1]
-    current_index=1
-    image_files=[]
-    image_names=[]
-    image_index=[]
-    image_index_all=[]
-    image_current_path=''
-    path_head=''
-    path_tail=''
-    st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+introduced_path+"</h3>",
-            unsafe_allow_html=True)
-    st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path2: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+os.path.normpath(introduced_path)+"</h3>",
-            unsafe_allow_html=True)
-
-    path_list = os.listdir(os.path.normpath(introduced_path))
-    listOfFileNames=[]
-    for current_path in path_list:
-        if current_path[-4:]=='.jpg' or current_path[-4:]=='.png':
-            listOfFileNames.append(current_path)
-
-    if len(listOfFileNames)<n_images:
-        ## error
-        st.markdown("<h2 style='text-align:left; float:left; color:red; margin:0px;'>Not enough images ('.png' or '.jpg' files) in the introduced path</h2>",
-                    unsafe_allow_html=True)
-        image_files=Data_Init['init_data'][0]['current_images']
-        image_names=Data_Init['init_data'][0]['current_image_names']
-        [fig, axs]=Data_Init['init_data'][0]['current_figure']
-
-    else:
-        st.session_state['init_data']['image_current_paths']=[]
-        st.session_state['init_data']['current_image_names']=[]
-            
-        image_index_all=list(range(len(listOfFileNames)))
-        image_index.append(random.choice(image_index_all))
-        image_index_all.remove(image_index[0])
-        while len(image_index)<n_images:
-            image_index.append(random.choice(image_index_all))
-            image_index_all.remove(image_index[current_index])
-            current_index+=1
-            
-       # Iterate over the file names
-        for current_index in image_index:
-            image_current_path=listOfFileNames[current_index]
-            st.session_state['init_data']['image_current_paths'].append(image_current_path)
-            path_head, path_tail = os.path.split(image_current_path)
-            st.session_state['init_data']['current_image_names'].append(path_tail)
-                    
-        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
-        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
-        
-    del path_list,image_index,listOfFileNames,image_index_all,current_index,image_current_path,path_head,path_tail
-
-def Load_Images_from_path2(introduced_file_list,n_images):
-    current_index=1
-    image_files=[]
-    image_names=[]
-    image_index=[]
-    image_index_all=[]
-    image_current_path=''
-    path_head=''
-    path_tail=''
-    path_list = os.listdir(os.path.normpath(introduced_path))
-    listOfFileNames=[]
-    for current_path in introduced_file_list:
-        if current_path[-4:]=='.jpg' or current_path[-4:]=='.png':
-            listOfFileNames.append(current_path)
-
-    if len(listOfFileNames)<n_images:
-        ## error
-        st.markdown("<h2 style='text-align:left; float:left; color:red; margin:0px;'>Not enough images ('.png' or '.jpg' files) in the introduced path</h2>",
-                    unsafe_allow_html=True)
-        image_files=Data_Init['init_data'][0]['current_images']
-        image_names=Data_Init['init_data'][0]['current_image_names']
-        [fig, axs]=Data_Init['init_data'][0]['current_figure']
-
-    else:
-        st.session_state['init_data']['image_current_paths']=[]
-        st.session_state['init_data']['current_image_names']=[]
-            
-        image_index_all=list(range(len(listOfFileNames)))
-        image_index.append(random.choice(image_index_all))
-        image_index_all.remove(image_index[0])
-        while len(image_index)<n_images:
-            image_index.append(random.choice(image_index_all))
-            image_index_all.remove(image_index[current_index])
-            current_index+=1
-            
-       # Iterate over the file names
-        for current_index in image_index:
-            image_current_path=listOfFileNames[current_index]
-            st.session_state['init_data']['image_current_paths'].append(image_current_path)
-            path_head, path_tail = os.path.split(image_current_path)
-            st.session_state['init_data']['current_image_names'].append(path_tail)
-                    
-        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
-        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
-        
-    del path_list,image_index,listOfFileNames,image_index_all,current_index,image_current_path,path_head,path_tail
-
-def Load_Images_from_specific_path(introduced_zip,n_images):
-    st.session_state['init_data']['image_current_paths']=[]
-    st.session_state['init_data']['current_image_names']=[]
-    image_index=[]
-        
-    st.sidebar.write(type(introduced_zip[0]))
-#     st.sidebar.write(type(introduced_zip))
-
-    archive = zipfile.ZipFile(introduced_zip[0], 'r')
-    listOfFileNames = archive.namelist()        
-    image_index_all=list(range(len(listOfFileNames)))
-    image_index.append(random.choice(image_index_all))
-    image_index_all.remove(image_index[0])
-    current_index=1
-    while len(image_index)<n_images:
-        image_index.append(random.choice(image_index_all))
-        image_index_all.remove(image_index[current_index])
-        current_index+=1
-        
-   # Iterate over the file names
-    for current_index in image_index:
-        image_current_path=listOfFileNames[current_index]
-        st.session_state['init_data']['image_current_paths'].append(image_current_path)
-        st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
-                
-    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
-    st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
-    del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
-
 
 def Load_Image(current_index, zip_file):
     archive = zipfile.ZipFile(zip_file, 'r')
@@ -389,7 +258,7 @@ def Load_Data(total_images_number):
         'image_current_probs':np.zeros((total_images_number,2)),
         'image_current_predictions':np.zeros((total_images_number))+2}
     
-    Select_Images_Randomly(total_images_number)
+    Select_Images_Randomly('guess_who_images.zip',total_images_number)
     del total_images_number
 
 
@@ -452,14 +321,16 @@ def Main_Program():
                 if Selected_Images_Source=='Use default random images':
                     st.session_state['init_data']['zip_file']='guess_who_images.zip'
 
-                    ## Text - select Celeba images
-                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>", unsafe_allow_html=True)
-                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to randomly modify the selected images.</h3>", unsafe_allow_html=True)
+                    ## Default source text
+                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>",
+                                unsafe_allow_html=True)
+                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to randomly modify the selected images.</h3>",
+                                unsafe_allow_html=True)
                     
                     ## Button - randomly change Celeba images
                     Random_Images = st.button('CHANGE IMAGES', key='Random_Images')
                     if Random_Images:
-                        Select_Images_Randomly(st.session_state['init_data']['N_images'])
+                        Select_Images_Randomly('guess_who_images.zip',st.session_state['init_data']['N_images'])
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
                         
                     ## Button - start game
@@ -475,40 +346,27 @@ def Main_Program():
                 ## Select images source - Celeba specific path
                 if Selected_Images_Source=='Use images from specific path':
                     
-                    ## specific path - text
-                    st.markdown("<h style='text-align:left; float:left; color:black; margin:0px;'>To use images from specific path, press 'Use Path'.</h3>",
+                    ## Specific source text
+                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>",
                                 unsafe_allow_html=True)
-
-                    ## specific path - elements
-                    # Uploaded_Files = st.file_uploader("Select images to play", type=["jpg","png"], 
-                                                        # accept_multiple_files=True, 'guess_who_images.zip')
-                    Uploaded_File = st.file_uploader("Select images to play", type=[".zip"], 
-                                                        accept_multiple_files=False)
-						
-                    if Uploaded_File is not None:
-                        st.write(type(Uploaded_File.getvalue()))
-                        st.session_state['init_data']['zip_file']=Uploaded_File.getvalue()
+                                
+                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>To use images from specific path, press 'Use Path'. Press it again to randomly modify the selected images.</h3>",
+                                unsafe_allow_html=True) 
                     
-                    # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
+						
+                    User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
                     Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
+                    
+                    if Use_Path:
+                        # st.write(type(Uploaded_File.getvalue()))
+                        st.session_state['init_data']['zip_file']=User_Input_Path
+                    
 		    
-                    ## specific path - elements
-                    # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
-                    # Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
-		    
-                    # st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input_Path+"</h3>",
-                                # unsafe_allow_html=True)
-
-                    # if Use_Path:
-                        # Load_Images_from_path(User_Input_Path,st.session_state['init_data']['N_images'])
-                        # st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']                    
-
-                    # if Use_Path:
-                        # Load_Images_from_path2(Uploaded_Files,st.session_state['init_data']['N_images'])
-                        # st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']   
+                    st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input_Path+"</h3>",
+                                unsafe_allow_html=True)
                         
                     if Use_Path:
-                        Load_Images_from_specific_path(Uploaded_File,st.session_state['init_data']['N_images'])
+                        Select_Images_Randomly(st.session_state['init_data']['zip_file'],st.session_state['init_data']['N_images'])
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']                    
                  
                         
