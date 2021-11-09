@@ -191,9 +191,9 @@ def Load_Image(current_index):
     return np.array(image_file)
 
 def Show_Info():
-    # st.sidebar.markdown('#### Questions List:')
-    # st.sidebar.write(st.session_state['init_data']['feature_questions'])
-    st.sidebar.write(st.session_state['init_data'])
+    st.sidebar.markdown('#### Questions List:')
+    st.sidebar.write(st.session_state['init_data']['feature_questions'])
+    # st.sidebar.write(st.session_state['init_data'])
 
 def Load_Data(total_images_number):
     st.session_state['init_data']={
