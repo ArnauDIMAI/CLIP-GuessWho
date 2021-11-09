@@ -138,6 +138,7 @@ def Show_images(zip_file):
         else:
             current_line_width=2
             current_color=np.zeros(3)  
+            
         image_size=240
         current_image_file=Load_Image(current_index, zip_file)
         w,h,c = np.shape(current_image_file)
@@ -185,9 +186,11 @@ def Select_Images_Randomly(introduced_path,n_images):
 def Load_Image(current_index, zip_file):
     archive = zipfile.ZipFile(zip_file, 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
-    image_file=np.array(Image.open(BytesIO(archive.read(image_current_path))))
+    image_file=Image.open(BytesIO(archive.read(image_current_path)))
+    if not (image_file.size[0] == 224 and image_file.size[1] == 224): 
+        image_file=image_file.resize((224, 224))
     del image_current_path,archive
-    return image_file
+    return np.array(image_file)
 
 def Show_Info():
     # st.sidebar.markdown('#### Questions List:')
