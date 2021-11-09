@@ -388,16 +388,18 @@ def Main_Program():
                     if Random_Images:
                         Select_Images_Randomly()
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
-                        
-                    ## Button - start game
-                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start the game.</h2>", unsafe_allow_html=True)
-                    Use_Images = st.button('START GAME', key='Use_Images')
                     
-                    if Use_Images:
-                        ## Choose winner and start game
-                        st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
-                        st.session_state['init_data']['start_game']=True
-                        st.session_state['init_data']['images_selected']=True
+                    if not st.session_state['init_data']['zip_file']=='guess_who_images.zip':
+                    
+                        ## Button - start game
+                        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start the game.</h2>", unsafe_allow_html=True)
+                        Use_Images = st.button('START GAME', key='Use_Images')
+                        
+                        if Use_Images:
+                            ## Choose winner and start game
+                            st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
+                            st.session_state['init_data']['start_game']=True
+                            st.session_state['init_data']['images_selected']=True
                         
                     
             ## RUN GAME
@@ -458,6 +460,8 @@ def Main_Program():
                                                                             'A picture of a person who is blond-haired',
                                                                             'A picture of a person who is gray-haired',
                                                                             'A picture of a person who is red-haired',
+                                                                            'A picture of a person who is green-haired',
+                                                                            'A picture of a person who is blue-haired',
                                                                             'A picture of a person who is totally bald']
                                 st.session_state['init_data']['function_predict']=Predict_hair_color
 
@@ -467,6 +471,8 @@ def Main_Program():
                                                                             'A picture of a person who is blond-haired',
                                                                             'A picture of a person who is gray-haired',
                                                                             'A picture of a person who is red-haired',
+                                                                            'A picture of a person who is green-haired',
+                                                                            'A picture of a person who is blue-haired',
                                                                             'A picture of a person who is totally bald']
                                 st.session_state['init_data']['function_predict']=Predict_hair_color
 
@@ -476,6 +482,8 @@ def Main_Program():
                                                                             'A picture of a person who is black-haired',
                                                                             'A picture of a person who is gray-haired',
                                                                             'A picture of a person who is red-haired',
+                                                                            'A picture of a person who is green-haired',
+                                                                            'A picture of a person who is blue-haired',
                                                                             'A picture of a person who is totally bald']
                                 st.session_state['init_data']['function_predict']=Predict_hair_color
                                 
@@ -485,6 +493,8 @@ def Main_Program():
                                                                             'A picture of a person who is blond-haired',
                                                                             'A picture of a person who is gray-haired',
                                                                             'A picture of a person who is black-haired',
+                                                                            'A picture of a person who is green-haired',
+                                                                            'A picture of a person who is blue-haired',
                                                                             'A picture of a person who is totally bald']
                                 st.session_state['init_data']['function_predict']=Predict_hair_color
                                 
@@ -494,19 +504,21 @@ def Main_Program():
                                                                             'A picture of a person who is blond-haired',
                                                                             'A picture of a person who is black-haired',
                                                                             'A picture of a person who is red-haired',
+                                                                            'A picture of a person who is green-haired',
+                                                                            'A picture of a person who is blue-haired',
                                                                             'A picture of a person who is totally bald']
                                 st.session_state['init_data']['function_predict']=Predict_hair_color
                                 
-                            elif Selected_Question=='Are you a man?':
-                                st.session_state['init_data']['current_querys']=['A picture of a man','A picture of a woman']
+                            elif Selected_Question=='Are you a man?' :
+                                st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person']
                                 st.session_state['init_data']['function_predict']=Predict_0_vs_1    
                                 
                             elif Selected_Question=='Are you a woman?':
-                                st.session_state['init_data']['current_querys']=['A picture of a woman','A picture of a man']
+                                st.session_state['init_data']['current_querys']=['A picture of a female person','A picture of a male person']
                                 st.session_state['init_data']['function_predict']=Predict_0_vs_1         
                                 
                             elif Selected_Question=='Do you have a beard?':
-                                st.session_state['init_data']['current_querys']=['A picture of a person with beard','A picture of a person']
+                                st.session_state['init_data']['current_querys']=['A picture of a bearded person','A picture of a person']
                                 st.session_state['init_data']['function_predict']=Predict_0_vs_1
                                 
                             elif Selected_Question=='Are you YOUNG?':
