@@ -217,7 +217,8 @@ def Load_Data(total_images_number):
         'current_winner_index':-1,
         'N_images':total_images_number,
         'n_images':total_images_number,
-        'zip_file':'guess_who_images.zip',
+        # 'zip_file':'guess_who_images.zip',
+        'zip_file':'D:\Datasets\img_celeba_20.zip',
         'Showed_image_names':[],
         'current_images_discarted':np.zeros((total_images_number)),
         'winner_options':[],
@@ -262,7 +263,8 @@ def Load_Data(total_images_number):
         'image_current_probs':np.zeros((total_images_number,2)),
         'image_current_predictions':np.zeros((total_images_number))+2}
     
-    Select_Images_Randomly('guess_who_images.zip',total_images_number)
+    # Select_Images_Randomly('guess_who_images.zip',total_images_number)
+    Select_Images_Randomly('D:\Datasets\img_celeba_20.zip',total_images_number)
     del total_images_number
 
 
@@ -323,7 +325,8 @@ def Main_Program():
             
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use default random images':
-                    st.session_state['init_data']['zip_file']='guess_who_images.zip'
+                    # st.session_state['init_data']['zip_file']='guess_who_images.zip'
+                    st.session_state['init_data']['zip_file']='D:\Datasets\img_celeba_20.zip'
 
                     ## Default source text
                     st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>",
@@ -334,7 +337,7 @@ def Main_Program():
                     ## Button - randomly change Celeba images
                     Random_Images = st.button('CHANGE IMAGES', key='Random_Images')
                     if Random_Images:
-                        Select_Images_Randomly('guess_who_images.zip',st.session_state['init_data']['N_images'])
+                        Select_Images_Randomly(st.session_state['init_data']['zip_file'],st.session_state['init_data']['N_images'])
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
                         
                     ## Button - start game
