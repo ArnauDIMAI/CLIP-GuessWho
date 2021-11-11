@@ -53,13 +53,13 @@ def Predict_bald():
     st.session_state['init_data']['image_current_predictions']=[]
     for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
     
-        if st.session_state['init_data']['image_current_probs'][i,1]>st.session_state['init_data']['image_current_probs'][i,2]:
-            if st.session_state['init_data']['image_current_probs'][i,3]>st.session_state['init_data']['image_current_probs'][i,0]:
+        if st.session_state['init_data']['image_current_probs'][i,0]>st.session_state['init_data']['image_current_probs'][i,1]:
+            if st.session_state['init_data']['image_current_probs'][i,2]>st.session_state['init_data']['image_current_probs'][i,3]:
                 st.session_state['init_data']['image_current_predictions'].append(1)
             else:
                 st.session_state['init_data']['image_current_predictions'].append(0)
         else:
-            if st.session_state['init_data']['image_current_probs'][i,4]>st.session_state['init_data']['image_current_probs'][i,0]:
+            if st.session_state['init_data']['image_current_probs'][i,4]>st.session_state['init_data']['image_current_probs'][i,5]:
                 st.session_state['init_data']['image_current_predictions'].append(1)
             else:
                 st.session_state['init_data']['image_current_predictions'].append(0)    
@@ -224,24 +224,40 @@ def Load_Data(total_images_number):
         'clip_tokens':['A picture of a person','A picture of a person'],
         'path_info':'D:/Datasets/Celeba/',
         'path_imgs':'D:/Datasets/Celeba/img_celeba/',
-        'querys_list':['A picture of a man', 'A picture of a woman', 'A picture of an attractive person', 'A picture of a young person', 
-            'A picture of a person with receding hairline', 'A picture of a chubby person ', 'A picture of a person who is smiling', 'A picture of a bald person',
+        'querys_list_yes':['A picture of a male person', 'A picture of a female person', 'A picture of an attractive person', 'A picture of a chubby person', 'A picture of a young person', 
+            'A picture of a receding-hairline person  ', 'A picture of a smily person', 'A picture of a bald person',
             'A picture of a person with black hair', 'A picture of a person with brown hair', 'A picture of a person with blond hair', 'A picture of a person with red hair', 
             'A picture of a person with gray hair', 'A picture of a person with straight hair', 'A picture of a person with wavy hair', 
-            'A picture of a person who does not wear a beard', 'A picture of a person with mustache', 'A picture of a person with sideburns', 
+            'A picture of a glabrous person', 'A picture of a mustachioed person', 'A picture of a person with bushy sideburns', 
             'A picture of a person with goatee', 'A picture of a person with heavy makeup', 'A picture of a person with eyeglasses ',             
-            'A picture of a person with bushy eyebrows', 'A picture of a person with a double chin', 
-            'A picture of a person with high cheekbones', 'A picture of a person with slightly open mouth', 
-            'A picture of a person with narrow eyes', 'A picture of a person with an oval face', 
-            'A picture of a person wiht pale skin', 'A picture of a person with pointy nose', 'A picture of a person with rosy cheeks', 
-            "A picture of a person with five o'clock shadow", 'A picture of a person with arched eyebrows', 'A picture of a person with bags under the eyes', 
-            'A picture of a person with bangs', 'A picture of a person with big lips', 'A picture of a person with big nose',            
+            'A picture of a person with bushy eyebrows', 'A picture of a double chin person', 
+            'A picture of a person with high cheekbones', 'A picture of a person with opened mouth', 
+            'A picture of a person with narrow eyes', 'A picture of a person with an oval-shaped face', 
+            'A picture of a person wiht pale skin', 'A picture of a pointy-nosed person ', 'A picture of a person with colored cheeks', 
+            "A picture of a five o'clock shadow person", 'A picture of a rounded eyebrows person', 'A picture of a person with bags under the eyes', 
+            'A picture of a person with bangs', 'A picture of a wide-liped person', 'A picture of a big-nosed person',            
             'A picture of a person with earrings', 'A picture of a person with hat', 
-            'A picture of a person with lipstick', 'A picture of a person with necklace', 
-            'A picture of a person with necktie', 'A blurry picture of a person'
+            'A picture of a person with lipstick', 'A picture of a necklaced person', 
+            'A picture of a necktied person'
             ],
-        'feature_questions':['Are you a MAN?', 'Are you a WOMAN?', 'Are you an ATTRACTIVE person?', 'Are you YOUNG?',
-                    'Are you a person with RECEDING HAIRLINES?', 'Are you a CHUBBY person?', 'Are you SMILING?','Are you BALD?', 
+        'querys_list_no':['A picture of a female person', 'A picture of a male person', 'A picture of an ugly person', 'A picture of a slender person', 'A picture of a aged person', 
+            'A picture of a hairy person', 'A picture of a person', 'A picture of a hairy person',
+            'A picture of a person', 'A picture of a person', 'A picture of a person', 'A picture of a person', 
+            'A picture of a person', 'A picture of a person with wavy hair', 'A picture of a person with straight hair', 
+            'A picture of a unshaved person', 'A picture of a person', 'A picture of a person with shaved sideburns', 
+            'A picture of a person', 'A picture of a person with light makeup', 'A picture of a person ',             
+            'A picture of a person with sparse eyebrows', 'A picture of a person with a double chin', 
+            'A picture of a person with low cheekbones', 'A picture of a person with closed mouth', 
+            'A picture of a person with wide eyes', 'A picture of a person with a normal-shaped face', 
+            'A picture of a person wiht tanned skin', 'A picture of a flat-nosed person', 'A picture of a person with pale cheeks', 
+            "A picture of a shaved or unshaved person", 'A picture of a person a straight eyebrows person', 'A picture of a person with with smooth skin under the eyes', 
+            'A picture of a person', 'A picture of a narrow-liped person', 'A picture of a small-nosed person',            
+            'A picture of a person', 'A picture of a person with hair', 
+            'A picture of a person with natural lips', 'A picture of a person', 
+            'A picture of a person'
+            ],
+        'feature_questions':['Are you a MAN?', 'Are you a WOMAN?', 'Are you an ATTRACTIVE person?', 'Are you an CHUBBY person?', 'Are you YOUNG?',
+                    'Are you a person with RECEDING HAIRLINES?', 'Are you SMILING?','Are you BALD?', 
                     'Do you have BLACK HAIR?', 'Do you have BROWN HAIR?', 'Do you have BLOND HAIR?', 'Do you have RED HAIR?',
                     'Do you have GRAY HAIR?', 'Do you have STRAIGHT HAIR?', 'Do you have WAVY HAIR?',
                     'Do you have a BEARD?', 'Do you have a MUSTACHE?', 'Do you have SIDEBURNS?',
@@ -254,7 +270,7 @@ def Load_Data(total_images_number):
                     'Do you have BANGS?', 'Do you have a BIG LIPS?', 'Do you have a BIG NOSE?',
                     'Are you wearing EARRINGS?', 'Are you wearing a HAT?', 
                     'Are you wearing LIPSTICK?', 'Are you wearing NECKLACE?', 
-                    'Are you wearing NECKTIE?', 'Is your image BLURRY?'],
+                    'Are you wearing NECKTIE?'],
         'previous_discarding_images_number':0,
         'function_predict':Predict_0_vs_1,
         'image_current_probs':np.zeros((total_images_number,2)),
@@ -450,8 +466,9 @@ def Main_Program():
                     else:
                         if Check_Question:
                             if Selected_Question=='Are you bald?':
-                                st.session_state['init_data']['current_querys']=['A picture of a person','A picture of a man','A picture of a woman',
-                                                                            'A picture of a yes bald man','A picture of a bald person']
+                                st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
+                                                                            'A picture of a bald man','A picture of a haired man', 
+                                                                            'A picture of a bald woman','A picture of a haired woman']
                                 st.session_state['init_data']['function_predict']=Predict_bald
                                 
                             elif Selected_Question=='Do you have BLACK HAIR?':
@@ -509,24 +526,10 @@ def Main_Program():
                                                                             'A picture of a person who is totally bald']
                                 st.session_state['init_data']['function_predict']=Predict_hair_color
                                 
-                            elif Selected_Question=='Are you a man?' :
-                                st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person']
-                                st.session_state['init_data']['function_predict']=Predict_0_vs_1    
-                                
-                            elif Selected_Question=='Are you a woman?':
-                                st.session_state['init_data']['current_querys']=['A picture of a female person','A picture of a male person']
-                                st.session_state['init_data']['function_predict']=Predict_0_vs_1         
-                                
-                            elif Selected_Question=='Do you have a beard?':
-                                st.session_state['init_data']['current_querys']=['A picture of a bearded person','A picture of a person']
-                                st.session_state['init_data']['function_predict']=Predict_0_vs_1
-                                
-                            elif Selected_Question=='Are you YOUNG?':
-                                st.session_state['init_data']['current_querys']=['A picture of a young person','A picture of an aged person']
-                                st.session_state['init_data']['function_predict']=Predict_0_vs_1
-
+                           
                             elif  not st.session_state['init_data']['show_results']:
-                                st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list'][st.session_state['init_data']['questions_index']],'A picture of a person']
+                                st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index']],
+                                                                                st.session_state['init_data']['querys_list_no'][st.session_state['init_data']['questions_index']]]
                                 st.session_state['init_data']['function_predict']=Predict_0_vs_1
                         
                             CLIP_Process()
