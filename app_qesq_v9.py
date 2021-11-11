@@ -48,7 +48,17 @@ def Predict_1_vs_2():
             st.session_state['init_data']['image_current_predictions'].append(0)
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    
+
+def Predict_0_vs_all():
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==0:
+            st.session_state['init_data']['image_current_predictions'].append(1)        
+        else:
+            st.session_state['init_data']['image_current_predictions'].append(0)
+
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
+     
 def Predict_bald():
     st.session_state['init_data']['image_current_predictions']=[]
     for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
@@ -65,17 +75,7 @@ def Predict_bald():
                 st.session_state['init_data']['image_current_predictions'].append(0)    
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    
-def Predict_hair_color():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==0:
-            st.session_state['init_data']['image_current_predictions'].append(1)        
-        else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
-
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    
+   
 def CLIP_Process():
     ## Tokenization process
     clip_model, clip_transform=Load_CLIP()
@@ -468,63 +468,63 @@ def Main_Program():
                             if Selected_Question=='Are you bald?':
                                 st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
                                                                             'A picture of a bald man','A picture of a haired man', 
-                                                                            'A picture of a skinhead woman','A picture of a woman']
+                                                                            'A picture of a bald person','A picture of a person']
                                 st.session_state['init_data']['function_predict']=Predict_bald
                                 
                             elif Selected_Question=='Do you have BLACK HAIR?':
-                                st.session_state['init_data']['current_querys']=['A picture of a person who is black-haired',
-                                                                            'A picture of a person who is tawny-haired',
-                                                                            'A picture of a person who is blond-haired',
-                                                                            'A picture of a person who is gray-haired',
-                                                                            'A picture of a person who is red-haired',
-                                                                            'A picture of a person who is green-haired',
-                                                                            'A picture of a person who is blue-haired',
-                                                                            'A picture of a person who is totally bald']
-                                st.session_state['init_data']['function_predict']=Predict_hair_color
+                                st.session_state['init_data']['current_querys']=['A picture of a black-haired person',
+                                                                            'A picture of a tawny-haired person',
+                                                                            'A picture of a blond-haired person',
+                                                                            'A picture of a gray-haired person',
+                                                                            'A picture of a red-haired person',
+                                                                            'A picture of a green-haired person',
+                                                                            'A picture of a blue-haired person',
+                                                                            'A picture of a bald-head person']
+                                st.session_state['init_data']['function_predict']=Predict_0_vs_all
 
                             elif Selected_Question=='Do you have BROWN HAIR?':
-                                st.session_state['init_data']['current_querys']=['A picture of a person who is tawny-haired',
-                                                                            'A picture of a person who is black-haired',
-                                                                            'A picture of a person who is blond-haired',
-                                                                            'A picture of a person who is gray-haired',
-                                                                            'A picture of a person who is red-haired',
-                                                                            'A picture of a person who is green-haired',
-                                                                            'A picture of a person who is blue-haired',
-                                                                            'A picture of a person who is totally bald']
-                                st.session_state['init_data']['function_predict']=Predict_hair_color
+                                st.session_state['init_data']['current_querys']=['A picture of a tawny-haired person',
+                                                                            'A picture of a black-haired person',
+                                                                            'A picture of a blond-haired person',
+                                                                            'A picture of a gray-haired person',
+                                                                            'A picture of a red-haired person',
+                                                                            'A picture of a green-haired person',
+                                                                            'A picture of a blue-haired person',
+                                                                            'A picture of a bald-head person']
+                                st.session_state['init_data']['function_predict']=Predict_0_vs_all
 
                             elif Selected_Question=='Do you have BLOND HAIR?':
-                                st.session_state['init_data']['current_querys']=['A picture of a person who is blond-haired',
-                                                                            'A picture of a person who is tawny-haired',
-                                                                            'A picture of a person who is black-haired',
-                                                                            'A picture of a person who is gray-haired',
-                                                                            'A picture of a person who is red-haired',
-                                                                            'A picture of a person who is green-haired',
-                                                                            'A picture of a person who is blue-haired',
-                                                                            'A picture of a person who is totally bald']
-                                st.session_state['init_data']['function_predict']=Predict_hair_color
+                                st.session_state['init_data']['current_querys']=['A picture of a blond-haired person',
+                                                                            'A picture of a tawny-haired person',
+                                                                            'A picture of a black-haired person',
+                                                                            'A picture of a gray-haired person',
+                                                                            'A picture of a red-haired person',
+                                                                            'A picture of a green-haired person',
+                                                                            'A picture of a blue-haired person',
+                                                                            'A picture of a bald-head person']
+                                st.session_state['init_data']['function_predict']=Predict_0_vs_all
                                 
                             elif Selected_Question=='Do you have RED HAIR?':
-                                st.session_state['init_data']['current_querys']=['A picture of a person who is red-haired',
-                                                                            'A picture of a person who is tawny-haired',
-                                                                            'A picture of a person who is blond-haired',
-                                                                            'A picture of a person who is gray-haired',
-                                                                            'A picture of a person who is black-haired',
-                                                                            'A picture of a person who is green-haired',
-                                                                            'A picture of a person who is blue-haired',
-                                                                            'A picture of a person who is totally bald']
-                                st.session_state['init_data']['function_predict']=Predict_hair_color
+                                st.session_state['init_data']['current_querys']=['A picture of a red-haired person',
+                                                                            'A picture of a tawny-haired person',
+                                                                            'A picture of a blond-haired person',
+                                                                            'A picture of a gray-haired person',
+                                                                            'A picture of a black-haired person',
+                                                                            'A picture of a green-haired person',
+                                                                            'A picture of a blue-haired person',
+                                                                            'A picture of a bald-head person']
+                                st.session_state['init_data']['function_predict']=Predict_0_vs_all
                                 
                             elif Selected_Question=='Do you have GRAY HAIR?':
-                                st.session_state['init_data']['current_querys']=['A picture of a person who is gray-haired',
-                                                                            'A picture of a person who is tawny-haired',
-                                                                            'A picture of a person who is blond-haired',
-                                                                            'A picture of a person who is black-haired',
-                                                                            'A picture of a person who is red-haired',
-                                                                            'A picture of a person who is green-haired',
-                                                                            'A picture of a person who is blue-haired',
-                                                                            'A picture of a person who is totally bald']
-                                st.session_state['init_data']['function_predict']=Predict_hair_color
+                                st.session_state['init_data']['current_querys']=['A picture of a gray-haired person',
+                                                                            'A picture of a tawny-haired person',
+                                                                            'A picture of a blond-haired person',
+                                                                            'A picture of a black-haired person',
+                                                                            'A picture of a red-haired person',
+                                                                            'A picture of a green-haired person',
+                                                                            'A picture of a blue-haired person',
+                                                                            'A picture of a bald-head person']
+                                st.session_state['init_data']['function_predict']=Predict_0_vs_all
                                 
                            
                             elif  not st.session_state['init_data']['show_results']:
