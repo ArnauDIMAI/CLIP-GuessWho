@@ -468,7 +468,7 @@ def Main_Program():
                             if Selected_Question=='Are you bald?':
                                 st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
                                                                             'A picture of a bald man','A picture of a haired man', 
-                                                                            'A picture of a bald-haired woman','A picture of a woman']
+                                                                            'A picture of a bald-haired woman','A picture of a haired woman']
                                 st.session_state['init_data']['function_predict']=Predict_bald
                                 
                             elif Selected_Question=='Do you have BLACK HAIR?':
