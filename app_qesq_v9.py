@@ -224,7 +224,7 @@ def Load_Data(total_images_number):
         'clip_tokens':['A picture of a person','A picture of a person'],
         'path_info':'D:/Datasets/Celeba/',
         'path_imgs':'D:/Datasets/Celeba/img_celeba/',
-        'querys_list_yes':['A picture of a male person', 'A picture of a female person', 'A picture of an attractive person', 'A picture of a chubby person', 'A picture of a young person', 
+        'querys_list_yes':['A picture of a male person', 'A picture of a female person', 'A picture of an attractive person', 'A picture of a fat person', 'A picture of a young person', 
             'A picture of a receding-hairline person  ', 'A picture of a smily person', 'A picture of a bald person',
             'A picture of a person with black hair', 'A picture of a person with brown hair', 'A picture of a person with blond hair', 'A picture of a person with red hair', 
             'A picture of a person with gray hair', 'A picture of a person with straight hair', 'A picture of a person with wavy hair', 
