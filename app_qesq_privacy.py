@@ -338,7 +338,7 @@ def Main_Program():
                                                             index=0, key='Selected_Images_Source', help=None)
             
                 ## Select images source - Celeba default
-                if Selected_Images_Source=='Use default random images':
+                if Selected_Images_Source=='Use Celeba dataset random images':
                     st.session_state['init_data']['zip_file']='guess_who_images.zip'
 
                     ## Default source text
