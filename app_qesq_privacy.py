@@ -366,7 +366,7 @@ def Main_Program():
                 ## Select images source - Friends default
                 if Selected_Images_Source=='Use friends random images':
                 
-                    if st.session_state['init_data']['zip_file']=!'guess_who_images_friends.zip':
+                    if st.session_state['init_data']['zip_file']!='guess_who_images_friends.zip':
                         st.session_state['init_data']['zip_file']='guess_who_images_friends.zip'
                         Select_Images_Randomly()
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
@@ -396,7 +396,7 @@ def Main_Program():
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use family random images':
                 
-                    if st.session_state['init_data']['zip_file']=!'guess_who_images_family.zip':
+                    if st.session_state['init_data']['zip_file']!='guess_who_images_family.zip':
                         st.session_state['init_data']['zip_file']='guess_who_images_family.zip'
                         Select_Images_Randomly()
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
