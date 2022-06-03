@@ -154,31 +154,69 @@ def Show_images():
     showed_images=np.array(showed_images)/255
     del image_highlighted,current_index,current_line_width,current_color,image_size,current_image_file,w,h,c
     return showed_images
-
+    
+    
+def find_same_name(index_name,names_list):
+    current_name=names_list[index_name]
+    name_find=current_name.find('-')
+    fixed_name=current_name[:name_find]
+    index_list=[]
+    x=0
+    for current_name in names_list:
+        name_find=current_name.find('-')
+        if fixed_name==current_name[:name_find]: index_list.append(x)
+        x=x+1
+    return index_list
+    
+    
 def Select_Images_Randomly():
     st.session_state['init_data']['image_current_paths']=[]
     st.session_state['init_data']['current_image_names']=[]
     image_index=[]
+    image_delete=[]
         
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
     image_index.append(random.choice(image_index_all))
-    image_index_all.remove(image_index[0])
-    current_index=1
-    while len(image_index)<st.session_state['init_data']['n_images']:
-        image_index.append(random.choice(image_index_all))
-        image_index_all.remove(image_index[current_index])
-        current_index+=1
+    
+    if st.session_state['init_data']['images_with_name']:        
+        image_delete=find_same_name(image_index[0]),listOfFileNames)
+        image_index_all.remove(image_delete)
+        current_index=1 
+        while len(image_index)<st.session_state['init_data']['n_images']:
+            image_index.append(random.choice(image_index_all))  
+            image_delete=find_same_name(image_index[current_index],listOfFileNames)
+            image_index_all.remove(image_delete)          
+            current_index+=1
+            
+       # Iterate over the file names
+        for current_index in image_index:
+            image_current_path=listOfFileNames[current_index]
+            st.session_state['init_data']['image_current_paths'].append(image_current_path)
+            st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
+                    
+        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
+        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
+
+    else:
+        image_index_all.remove(image_index[0])
+        current_index=1
         
-   # Iterate over the file names
-    for current_index in image_index:
-        image_current_path=listOfFileNames[current_index]
-        st.session_state['init_data']['image_current_paths'].append(image_current_path)
-        st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
-                
-    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
-    st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
+        while len(image_index)<st.session_state['init_data']['n_images']:
+            image_index.append(random.choice(image_index_all))
+            image_index_all.remove(image_index[current_index])
+            current_index+=1
+            
+       # Iterate over the file names
+        for current_index in image_index:
+            image_current_path=listOfFileNames[current_index]
+            st.session_state['init_data']['image_current_paths'].append(image_current_path)
+            st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
+                    
+        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
+        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
+        
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
     
     
@@ -229,6 +267,7 @@ def Load_Data(total_images_number):
         'start_game':False,
         'finished_game':False,
         'reload_game':False,
+        'images_with_name':False,
         'award':100,
         'token_type':0,
         'questions_index':0,
@@ -368,6 +407,7 @@ def Main_Program():
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use Celeba dataset random images':
                 
+                    st.session_state['init_data']['images_with_name']=False
                     st.session_state['init_data']['zip_file']='guess_who_images.zip'
                     if st.session_state['init_data']['zip_file']!=st.session_state['init_data']['previous_zip_file']:
                         st.session_state['init_data']['previous_zip_file']=st.session_state['init_data']['zip_file']
@@ -398,7 +438,8 @@ def Main_Program():
                         
                 ## Select images source - Friends default
                 if Selected_Images_Source=='Use friends random images':
-
+                
+                    st.session_state['init_data']['images_with_name']=True
                     st.session_state['init_data']['zip_file']='fri.zip'
                     if st.session_state['init_data']['zip_file']!=st.session_state['init_data']['previous_zip_file']:
                         st.session_state['init_data']['previous_zip_file']=st.session_state['init_data']['zip_file']
@@ -430,6 +471,7 @@ def Main_Program():
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use family random images':
                 
+                    st.session_state['init_data']['images_with_name']=True
                     st.session_state['init_data']['zip_file']='fam.zip'
                     if st.session_state['init_data']['zip_file']!=st.session_state['init_data']['previous_zip_file']:
                         st.session_state['init_data']['previous_zip_file']=st.session_state['init_data']['zip_file']
@@ -461,6 +503,7 @@ def Main_Program():
                 ## Select images source - Celeba specific path
                 if Selected_Images_Source=='Use images from specific path':
                     
+                    st.session_state['init_data']['images_with_name']=False
                     ## Specific source text
                     st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>",
                                 unsafe_allow_html=True)
