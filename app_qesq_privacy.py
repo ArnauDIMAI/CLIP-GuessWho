@@ -180,14 +180,20 @@ def Select_Images_Randomly():
     image_index_all=list(range(len(listOfFileNames)))
     image_index.append(random.choice(image_index_all))
     
-    if st.session_state['init_data']['images_with_name']:        
+    if st.session_state['init_data']['images_with_name']:      
+        print(image_index[0]) 
+        print(listOfFileNames)
         image_delete=find_same_name(image_index[0],listOfFileNames)
         image_index_all.remove(image_delete)
         current_index=1 
         while len(image_index)<st.session_state['init_data']['n_images']:
             image_index.append(random.choice(image_index_all))  
-            image_delete=find_same_name(image_index[current_index],listOfFileNames)
+            image_delete=find_same_name(image_index[current_index],listOfFileNames)  
+            print(image_index[0]) 
+            print(listOfFileNames)
             image_index_all.remove(image_delete)          
+            print(image_index[0]) 
+            print(listOfFileNames)
             current_index+=1
             
        # Iterate over the file names
