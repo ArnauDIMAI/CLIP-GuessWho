@@ -184,18 +184,17 @@ def Select_Images_Randomly():
         image_delete=find_same_name(image_index[0],listOfFileNames)
         for i in image_delete:
             image_index_all.remove(i)    
-        print('index',image_index[0]) 
-        print('list',image_delete)
+
         current_index=1 
-        while len(image_index)<st.session_state['init_data']['n_images']:
+        while len(image_index)<st.session_state['init_data']['n_images']:  
+            print('index',image_index[0]) 
+            print('list',image_delete)
+            print('list',image_index_all)
             image_index.append(random.choice(image_index_all))  
             image_delete=find_same_name(image_index[current_index],listOfFileNames)  
-            print(image_index[0]) 
-            print(image_delete)
             for i in image_delete:
                 image_index_all.remove(i)
-            print(image_index[0]) 
-            print(image_delete)
+
             current_index+=1
             
        # Iterate over the file names
