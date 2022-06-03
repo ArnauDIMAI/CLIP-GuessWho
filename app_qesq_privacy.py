@@ -180,6 +180,33 @@ def Select_Images_Randomly():
     st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
     st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
+    
+    
+def Select_Images_Randomly_name_management():
+    st.session_state['init_data']['image_current_paths']=[]
+    st.session_state['init_data']['current_image_names']=[]
+    image_index=[]
+        
+    archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
+    listOfFileNames = archive.namelist()        
+    image_index_all=list(range(len(listOfFileNames)))
+    image_index.append(random.choice(image_index_all))
+    image_index_all.remove(image_index[0])
+    current_index=1
+    while len(image_index)<st.session_state['init_data']['n_images']:
+        image_index.append(random.choice(image_index_all))
+        image_index_all.remove(image_index[current_index])
+        current_index+=1
+        
+   # Iterate over the file names
+    for current_index in image_index:
+        image_current_path=listOfFileNames[current_index]
+        st.session_state['init_data']['image_current_paths'].append(image_current_path)
+        st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
+                
+    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
+    st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
+    del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
   
 def Load_Image(current_index):
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
@@ -372,7 +399,7 @@ def Main_Program():
                 ## Select images source - Friends default
                 if Selected_Images_Source=='Use friends random images':
 
-                    st.session_state['init_data']['zip_file']='guess_who_images_friends.zip'
+                    st.session_state['init_data']['zip_file']='fri.zip'
                     if st.session_state['init_data']['zip_file']!=st.session_state['init_data']['previous_zip_file']:
                         st.session_state['init_data']['previous_zip_file']=st.session_state['init_data']['zip_file']
                         Select_Images_Randomly()
@@ -403,7 +430,7 @@ def Main_Program():
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use family random images':
                 
-                    st.session_state['init_data']['zip_file']='guess_who_images_family.zip'
+                    st.session_state['init_data']['zip_file']='fam.zip'
                     if st.session_state['init_data']['zip_file']!=st.session_state['init_data']['previous_zip_file']:
                         st.session_state['init_data']['previous_zip_file']=st.session_state['init_data']['zip_file']
                         Select_Images_Randomly()
