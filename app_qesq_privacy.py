@@ -266,7 +266,7 @@ def Load_Image(current_index):
 def Show_Info():
     st.sidebar.markdown('#### Questions List:')
     st.sidebar.write(st.session_state['init_data']['feature_questions'])
-    # st.sidebar.write(st.session_state['init_data'])
+    st.sidebar.write(st.session_state['init_data'])
 
 def Load_Data(total_images_number):
     st.session_state['init_data']={
@@ -410,7 +410,7 @@ def Main_Program():
                                                             'Use friends random images',
                                                             'Use family random images',
                                                             'Use images from specific path'],
-                                                            index=0, key='Selected_Images_Source', help=None)
+                                                            index=1, key='Selected_Images_Source', help=None)
             
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use Celeba dataset random images':
