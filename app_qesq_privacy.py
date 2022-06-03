@@ -161,11 +161,10 @@ def find_same_name(index,names_list):
     name_find=current_name.find('-')
     fixed_name=current_name[:name_find]
     index_list=[]
-    x=0
-    for current_name in names_list:
-        name_find=current_name.find('-')
-        if fixed_name==current_name[:name_find]: index_list.append(x)
-        x=x+1
+    for i in range(0,len(names_list)):
+        name_find=names_list[i].find('-')
+        if fixed_name==current_name[:name_find]:
+            index_list.append(i)
     return index_list
     
     
