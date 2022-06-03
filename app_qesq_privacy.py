@@ -156,8 +156,8 @@ def Show_images():
     return showed_images
     
     
-def find_same_name(index_name,names_list):
-    current_name=names_list[index_name]
+def find_same_name(index,names_list):
+    current_name=names_list[index]
     name_find=current_name.find('-')
     fixed_name=current_name[:name_find]
     index_list=[]
