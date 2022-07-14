@@ -178,6 +178,7 @@ def Select_Images_Randomly():
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
     st.markdown('#### FIRST:')
+    st.write(st.session_state['init_data']['zip_file'])
     st.markdown('#### ListOfNames')
     st.write(listOfFileNames)
     st.markdown('#### ImageIndexAll')
