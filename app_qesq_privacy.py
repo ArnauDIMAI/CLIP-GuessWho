@@ -198,9 +198,6 @@ def Select_Images_Randomly():
         for i in image_delete:
             image_index_all.remove(i)  
             
-        print('index0',image_index) 
-        print('list0',image_delete)
-        print('list all0',image_index_all)
         current_index=1 
         while len(image_index)<st.session_state['init_data']['n_images']:  
 
@@ -210,9 +207,7 @@ def Select_Images_Randomly():
                 image_index_all.remove(i)
 
             current_index+=1
-            print('index',image_index) 
-            print('list',image_delete)
-            print('list all',image_index_all)
+            
        # Iterate over the file names
         for current_index in image_index:
             image_current_path=listOfFileNames[current_index]
