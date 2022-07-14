@@ -190,10 +190,11 @@ def Select_Images_Randomly():
     image_index_all=list(range(len(listOfFileNames)))
     
     st.markdown('#### FIRST:')
+    st.write(listOfFileElements)
+    st.markdown('#### FIRST:')
     st.write(listOfFileNames)
-
-    image_index.append(random.choice(image_index_all))
     
+    image_index.append(random.choice(image_index_all))
     
     if st.session_state['init_data']['images_with_name']:  
         image_delete=find_same_name(image_index[0],listOfFileNames)
@@ -244,10 +245,6 @@ def Select_Images_Randomly():
         st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
        
 
-    markdown('#### LAST:')
-    st.sidebar.write(image_index)
-    st.sidebar.write(image_index_all)
-    Show_Info()       
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
     
     
