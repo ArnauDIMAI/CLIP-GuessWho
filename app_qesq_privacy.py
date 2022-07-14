@@ -159,6 +159,7 @@ def Show_images():
         image_highlighted[:,w+current_line_width:w+2*current_line_width,:]=current_color
         image_highlighted[:,:current_line_width,:]=current_color
         showed_images.append(image_highlighted)
+        st.image(image_highlighted, use_column_width=False) 
     
     ## result to array      
     showed_images=np.array(showed_images)/255
