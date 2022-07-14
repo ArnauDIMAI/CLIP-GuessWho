@@ -190,9 +190,11 @@ def Select_Images_Randomly():
     image_index_all=list(range(len(listOfFileNames)))
     
     st.markdown('#### FIRST:')
-    st.write(listOfFileElements)
+    st.write(type(listOfFileElements))
+    st.write(type(listOfFileElements[0]))
     st.markdown('#### FIRST:')
-    st.write(listOfFileNames)
+    st.write(type(listOfFileNames))
+    st.write(type(listOfFileNames[0]))
     
     image_index.append(random.choice(image_index_all))
     
