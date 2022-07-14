@@ -142,26 +142,21 @@ def Show_images():
         current_image_file=Load_Image(current_index)
         
         
-        st.image(current_image_file, use_column_width=False) 
+        st.image(current_image_file/255, use_column_width=False) 
         
         w,h,c = np.shape(current_image_file)
         st.write(w,h,c)
         st.write(type(current_image_file))
         
-        images_separation=image_size-w-current_line_width*2
         image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
-        
-        
         image_highlighted[current_line_width:w+current_line_width,current_line_width:w+current_line_width,:]=current_image_file
-        
-        
         image_highlighted[:current_line_width,:w+2*current_line_width,:]=current_color
         image_highlighted[w+current_line_width:,:w+2*current_line_width,:]=current_color
         image_highlighted[:,w+current_line_width:w+2*current_line_width,:]=current_color
         image_highlighted[:,:current_line_width,:]=current_color
         showed_images.append(image_highlighted)
         
-        st.image(image_highlighted, use_column_width=False) 
+        st.image(image_highlighted/255, use_column_width=False) 
     
     ## result to array      
     showed_images=np.array(showed_images)/255
@@ -280,6 +275,7 @@ def Load_Image(current_index):
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
     image_file=Image.open(BytesIO(archive.read(image_current_path)))
+    st.write(type(image_file))
     if not (image_file.size[0] == 224 and image_file.size[1] == 224): 
         image_file=image_file.resize((224, 224))
     del image_current_path,archive
