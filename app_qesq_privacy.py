@@ -210,7 +210,7 @@ def Select_Images_Randomly():
         for current_index in image_index:
             image_current_path=listOfFileNames[current_index]
             st.session_state['init_data']['image_current_paths'].append(image_current_path)
-            st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
+            st.session_state['init_data']['current_image_names'].append(os.path.basename(image_current_path))
                     
         st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
         st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
