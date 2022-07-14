@@ -1,151 +1,10 @@
-# -*- coding: utf-8 -*-
 
-## Used Imports
-import os
-import io
-import zipfile
-import random
-import numpy as np
-import streamlit as st
-import clip
-import gc
-# import psutil  ## show info (cpu, memeory)
-
-from io import BytesIO
-from PIL import Image
-from zipfile import ZipFile 
-from pathlib import Path, PurePath, PureWindowsPath
-# from streamlit import caching
-
-## --------------- USED FUNCTIONS ---------------
-
-def Predict_1_vs_0():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if st.session_state['init_data']['image_current_probs'][i,1]>st.session_state['init_data']['image_current_probs'][i,0]:
-            st.session_state['init_data']['image_current_predictions'].append(1)
-        else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
-    
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    
-def Predict_0_vs_1():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if st.session_state['init_data']['image_current_probs'][i,0]>st.session_state['init_data']['image_current_probs'][i,1]:
-            st.session_state['init_data']['image_current_predictions'].append(1)
-        else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
-
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    
-def Predict_1_vs_2():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if st.session_state['init_data']['image_current_probs'][i,1]>st.session_state['init_data']['image_current_probs'][i,2]:
-            st.session_state['init_data']['image_current_predictions'].append(1)
-        else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
-
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-
-def Predict_0_vs_all():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==0:
-            st.session_state['init_data']['image_current_predictions'].append(1)        
-        else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
-
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-     
-def Predict_bald():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-    
-        if st.session_state['init_data']['image_current_probs'][i,0]>st.session_state['init_data']['image_current_probs'][i,1]:
-            if st.session_state['init_data']['image_current_probs'][i,2]>st.session_state['init_data']['image_current_probs'][i,3]:
-                st.session_state['init_data']['image_current_predictions'].append(1)
-            else:
-                st.session_state['init_data']['image_current_predictions'].append(0)
-        else:
-            if st.session_state['init_data']['image_current_probs'][i,4]>st.session_state['init_data']['image_current_probs'][i,5]:
-                st.session_state['init_data']['image_current_predictions'].append(1)
-            else:
-                st.session_state['init_data']['image_current_predictions'].append(0)    
-
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-   
-def CLIP_Process():
-    ## Tokenization process
-    clip_model, clip_transform=Load_CLIP()
-    clip_text = clip.tokenize(st.session_state['init_data']['current_querys']).to("cpu")
-    n_tokens=len(st.session_state['init_data']['current_querys'])
-    
-    ## Image Process
-    st.session_state['init_data']['image_current_probs']=np.zeros((st.session_state['init_data']['n_images'],n_tokens))
-    for i in range(st.session_state['init_data']['n_images']):
-        current_image_file = Load_Image(i)
-        img_preprocessed = clip_transform(Image.fromarray(current_image_file)).unsqueeze(0).to("cpu")
-        img_logits, img_logits_txt = clip_model(img_preprocessed, clip_text)
-        st.session_state['init_data']['image_current_probs'][i,:]=np.round(img_logits.detach().numpy()[0],2)
-        gc.collect()
         
-    del i,n_tokens,clip_model,clip_transform,clip_text,current_image_file,img_preprocessed,img_logits,img_logits_txt
-    gc.collect()
-       
-def Image_discarding():
-    for i in range(len(st.session_state['init_data']['current_images_discarted'])):
-        if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-            st.session_state['init_data']['current_images_discarted'][i]=1
-
-    previous_names=st.session_state['init_data']['current_image_names']
-    st.session_state['init_data']['current_image_names']=[]
-    previous_files=st.session_state['init_data']['image_current_paths']     
-    st.session_state['init_data']['image_current_paths']=[] 
-    previous_predictions=st.session_state['init_data']['image_current_predictions'] 
-    st.session_state['init_data']['image_current_predictions']=[]
-    current_index=0
-    new_index=0
-    for i in range(st.session_state['init_data']['n_images']):
-        if st.session_state['init_data']['current_images_discarted'][current_index]==0:
-            st.session_state['init_data']['image_current_paths'].append(previous_files[current_index])
-            st.session_state['init_data']['current_image_names'].append(previous_names[current_index])
-            st.session_state['init_data']['image_current_predictions'].append(previous_predictions[current_index])
-            if current_index==st.session_state['init_data']['current_winner_index']:
-                st.session_state['init_data']['current_winner_index']=new_index
-                
-            new_index+=1
-            
-        current_index+=1
-            
-    st.session_state['init_data']['n_images']=np.sum(st.session_state['init_data']['current_images_discarted']==0)                     
-    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])                   
-    st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths']) 
-    st.session_state['init_data']['current_images_discarted']=np.zeros(st.session_state['init_data']['n_images'])
-    del previous_names,previous_files,previous_predictions,current_index,new_index,i
-      
-def Show_images():
-    showed_images=[]     
-    for current_index in range(st.session_state['init_data']['n_images']):
-        if st.session_state['init_data']['show_results']:
-            current_line_width=4
-            if st.session_state['init_data']['image_current_predictions'][current_index]==st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                current_color=np.array([0,255,0])
-            else:
-                current_color=np.array([255,0,0]) 
-        else:
-            current_line_width=2
-            current_color=np.zeros(3)  
-            
-        image_size=240
-        current_image_file=Load_Image(current_index)
-        
-        
-        print(np.shape(current_image_file))
-        print(current_image_file)
+        st.image(current_image_file, use_column_width=False)    
         
         w,h,c = np.shape(current_image_file)
+        print(w,h,v)
+        
         images_separation=image_size-w-current_line_width*2
         image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
         
@@ -839,7 +698,6 @@ def Main_Program():
 
          
         ## CREATE IMAGES TO SHOW
-        st.image(Load_Image(0), use_column_width=False)
         Showed_Images=Show_images()
         st.session_state['init_data']['Showed_image_names']=st.session_state['init_data']['current_image_names']
 
