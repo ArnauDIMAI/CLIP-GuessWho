@@ -175,7 +175,7 @@ def find_list_elements(x,x_list):
             x_list=find_list_elements(x_element,x_list)
         
     elif type(x)=='string':
-        if x[-4:]=='.jpg' or if x[-4:]== '.png':
+        if x[-4:]=='.jpg' or x[-4:]== '.png':
             x_list.append(x)
     
     return x_list
