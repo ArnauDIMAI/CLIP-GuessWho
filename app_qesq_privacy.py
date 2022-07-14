@@ -178,7 +178,8 @@ def Select_Images_Randomly():
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
     st.markdown('#### FIRST:')
-    st.sidebar.write(image_index_all)
+    st.write(image_index_all)
+    st.markdown('#### FIRST END')
     Show_Info()
     image_index.append(random.choice(image_index_all))
     
@@ -275,6 +276,7 @@ def Load_Image(current_index):
     return np.array(image_file)
 
 def Show_Info():
+    st.sidebar.markdown('## INFO')
     st.sidebar.write(st.session_state['init_data'])
     st.sidebar.markdown('#### Questions List:')
     st.sidebar.write(st.session_state['init_data']['feature_questions'])
