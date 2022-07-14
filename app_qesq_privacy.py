@@ -140,13 +140,16 @@ def Show_images():
             
         image_size=240
         current_image_file=Load_Image(current_index)
+        
+        
+        print(np.shape(current_image_file))
+        print(np.shape(image_highlighted))
+        
         w,h,c = np.shape(current_image_file)
         images_separation=image_size-w-current_line_width*2
         image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
         image_highlighted[current_line_width:w+current_line_width,current_line_width:w+current_line_width,:]=current_image_file
         
-        print(np.shape(current_image_file))
-        print(np.shape(image_highlighted))
         
         image_highlighted[:current_line_width,:w+2*current_line_width,:]=current_color
         image_highlighted[w+current_line_width:,:w+2*current_line_width,:]=current_color
