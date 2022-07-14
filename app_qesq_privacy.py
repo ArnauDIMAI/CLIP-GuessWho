@@ -146,6 +146,7 @@ def Show_images():
         
         w,h,c = np.shape(current_image_file)
         st.write(w,h,c)
+        st.write(type(current_image_file))
         
         images_separation=image_size-w-current_line_width*2
         image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
