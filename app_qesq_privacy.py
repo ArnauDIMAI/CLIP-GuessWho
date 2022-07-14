@@ -144,6 +144,10 @@ def Show_images():
         images_separation=image_size-w-current_line_width*2
         image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
         image_highlighted[current_line_width:w+current_line_width,current_line_width:w+current_line_width,:]=current_image_file
+        
+        print(np.shape(current_image_file))
+        print(mp.shape(image_highlighted))
+        
         image_highlighted[:current_line_width,:w+2*current_line_width,:]=current_color
         image_highlighted[w+current_line_width:,:w+2*current_line_width,:]=current_color
         image_highlighted[:,w+current_line_width:w+2*current_line_width,:]=current_color
@@ -187,6 +191,8 @@ def Select_Images_Randomly():
     listOfFileNames = archive.namelist()     
     # listOfFileNames = find_list_elements(listOfFileElements,[])     
     image_index_all=list(range(len(listOfFileNames)))
+    st.markdown('#### FIRST:')
+    st.write(image_index_all)
     
     image_index.append(random.choice(image_index_all))
     
