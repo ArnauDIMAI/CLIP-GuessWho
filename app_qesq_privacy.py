@@ -187,8 +187,6 @@ def Select_Images_Randomly():
     listOfFileNames = archive.namelist()     
     # listOfFileNames = find_list_elements(listOfFileElements,[])     
     image_index_all=list(range(len(listOfFileNames)))
-    st.markdown('#### FIRST:')
-    st.write(image_index_all)
     
     image_index.append(random.choice(image_index_all))
     
