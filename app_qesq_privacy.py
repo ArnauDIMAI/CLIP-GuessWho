@@ -146,7 +146,7 @@ def Show_images():
         image_highlighted[current_line_width:w+current_line_width,current_line_width:w+current_line_width,:]=current_image_file
         
         print(np.shape(current_image_file))
-        print(mp.shape(image_highlighted))
+        print(np.shape(image_highlighted))
         
         image_highlighted[:current_line_width,:w+2*current_line_width,:]=current_color
         image_highlighted[w+current_line_width:,:w+2*current_line_width,:]=current_color
