@@ -185,16 +185,11 @@ def Select_Images_Randomly():
     image_delete=[]
         
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
-    listOfFileElements = archive.namelist()     
-    listOfFileNames = find_list_elements(listOfFileElements,[])     
+    listOfFileNames = archive.namelist()     
+    # listOfFileNames = find_list_elements(listOfFileElements,[])     
     image_index_all=list(range(len(listOfFileNames)))
-    
     st.markdown('#### FIRST:')
-    st.write(type(listOfFileElements))
-    st.write(type(listOfFileElements[0]))
-    st.markdown('#### FIRST:')
-    st.write(type(listOfFileNames))
-    st.write(type(listOfFileNames[0]))
+    st.write(image_index_all)
     
     image_index.append(random.choice(image_index_all))
     
