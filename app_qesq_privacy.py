@@ -157,13 +157,12 @@ def Show_images():
     
     
 def find_same_name(index,names_list):
-    current_name=names_list[index]
-    name_find=current_name.find('-')
-    fixed_name=current_name[:name_find]
+    name_find=names_list[index].find('-')
+    fixed_name=names_list[index][:name_find]
     index_list=[]
     for i in range(0,len(names_list)):
         name_find=names_list[i].find('-')
-        if fixed_name==current_name[:name_find]:
+        if fixed_name==names_list[i][:name_find]:
             index_list.append(i)
     return index_list
     
