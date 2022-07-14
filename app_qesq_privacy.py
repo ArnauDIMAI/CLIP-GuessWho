@@ -177,12 +177,11 @@ def Select_Images_Randomly():
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     listOfFileNames = archive.namelist()        
     image_index_all=list(range(len(listOfFileNames)))
-    image_index.append(random.choice(image_index_all))
-    
     markdown('#### FIRST:')
-    st.sidebar.write(image_index)
     st.sidebar.write(image_index_all)
     Show_Info()
+    image_index.append(random.choice(image_index_all))
+    
     
     if st.session_state['init_data']['images_with_name']:  
         image_delete=find_same_name(image_index[0],listOfFileNames)
