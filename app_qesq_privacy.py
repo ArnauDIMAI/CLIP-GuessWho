@@ -145,7 +145,7 @@ def Show_images():
         st.image(current_image_file, use_column_width=False) 
         
         w,h,c = np.shape(current_image_file)
-        print(w,h,c)
+        np.write(w,h,c)
         
         images_separation=image_size-w-current_line_width*2
         image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
@@ -159,6 +159,7 @@ def Show_images():
         image_highlighted[:,w+current_line_width:w+2*current_line_width,:]=current_color
         image_highlighted[:,:current_line_width,:]=current_color
         showed_images.append(image_highlighted)
+        
         st.image(image_highlighted, use_column_width=False) 
     
     ## result to array      
