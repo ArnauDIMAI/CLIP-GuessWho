@@ -275,7 +275,9 @@ def Load_Image(current_index):
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
     image_file=Image.open(BytesIO(archive.read(image_current_path)))
+    image_file = image_file.convert('RGB')  
     st.write(type(image_file))
+    
     if not (image_file.size[0] == 224 and image_file.size[1] == 224): 
         image_file=image_file.resize((224, 224))
     del image_current_path,archive
