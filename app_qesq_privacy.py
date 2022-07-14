@@ -168,6 +168,18 @@ def find_same_name(index,names_list):
     return index_list
     
     
+def find_list_elements(x,x_list)
+    
+    if type(x)=='list':
+        for x_element in x:
+            find_list_elements(x_element,x_list)
+        
+    elif type(x)=='string':
+        if x[-4:]=='.jpg' or if x[-4:]== '.png':
+            x_list.append(x)
+    
+    return x_list
+    
 def Select_Images_Randomly():
     st.session_state['init_data']['image_current_paths']=[]
     st.session_state['init_data']['current_image_names']=[]
@@ -175,8 +187,10 @@ def Select_Images_Randomly():
     image_delete=[]
         
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
-    listOfFileNames = archive.namelist()        
+    listOfFileElements = archive.namelist()     
+    listOfFileNames = find_list_elements(listOfFileElements,[])     
     image_index_all=list(range(len(listOfFileNames)))
+    
     st.markdown('#### FIRST:')
     st.write(st.session_state['init_data']['zip_file'])
     st.markdown('#### archive')
