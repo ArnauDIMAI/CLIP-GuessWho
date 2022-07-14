@@ -388,7 +388,7 @@ def Main_Program():
 
     ## Load data to play
     if 'init_data' not in st.session_state:
-        Load_Data(20)
+        Load_Data(Total_Images_Number)
      
     ## Title
     if st.session_state['init_data']['finished_game']:
@@ -490,6 +490,8 @@ def Main_Program():
                         
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use family random images':
+                    if Total_Images_Number>13:
+                        Total_Images_Number=13
                 
                     st.session_state['init_data']['images_with_name']=True
                     st.session_state['init_data']['zip_file']='fam.zip'
