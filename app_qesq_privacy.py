@@ -839,7 +839,7 @@ def Main_Program():
 
          
         ## CREATE IMAGES TO SHOW
-        st.image(Load_Image(0), use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'][0])
+        st.image(Load_Image(0), use_column_width=False)
         Showed_Images=Show_images()
         st.session_state['init_data']['Showed_image_names']=st.session_state['init_data']['current_image_names']
 
