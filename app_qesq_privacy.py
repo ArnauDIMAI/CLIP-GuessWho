@@ -168,11 +168,11 @@ def find_same_name(index,names_list):
     return index_list
     
     
-def find_list_elements(x,x_list)
+def find_list_elements(x,x_list):
     
     if type(x)=='list':
         for x_element in x:
-            find_list_elements(x_element,x_list)
+            x_list=find_list_elements(x_element,x_list)
         
     elif type(x)=='string':
         if x[-4:]=='.jpg' or if x[-4:]== '.png':
