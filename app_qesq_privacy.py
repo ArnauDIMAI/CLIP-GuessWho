@@ -169,15 +169,13 @@ def find_same_name(index,names_list):
     
     
 def find_list_elements(x,x_list):
-    
-    if type(x)=='list':
+    if type(x)==list:
         for x_element in x:
             x_list=find_list_elements(x_element,x_list)
         
-    elif type(x)=='string':
+    elif type(x)==str:
         if x[-4:]=='.jpg' or x[-4:]== '.png':
             x_list.append(x)
-    
     return x_list
     
 def Select_Images_Randomly():
