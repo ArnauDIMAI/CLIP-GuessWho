@@ -17,6 +17,8 @@ from zipfile import ZipFile
 from pathlib import Path, PurePath, PureWindowsPath
 # from streamlit import caching
 
+import streamlit.components.v1 as components
+
 ## --------------- USED FUNCTIONS ---------------
 
 def Predict_1_vs_0():
@@ -139,9 +141,9 @@ def Show_images():
             current_color=np.zeros(3)  
             
         image_size=240
-        current_image_file=Load_Image(current_index)
+        current_image_file=Load_Image(current_index)        
         w,h,c = np.shape(current_image_file)
-        images_separation=image_size-w-current_line_width*2
+        
         image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
         image_highlighted[current_line_width:w+current_line_width,current_line_width:w+current_line_width,:]=current_image_file
         image_highlighted[:current_line_width,:w+2*current_line_width,:]=current_color
@@ -149,13 +151,97 @@ def Show_images():
         image_highlighted[:,w+current_line_width:w+2*current_line_width,:]=current_color
         image_highlighted[:,:current_line_width,:]=current_color
         showed_images.append(image_highlighted)
-    
+        
     ## result to array      
     showed_images=np.array(showed_images)/255
     del image_highlighted,current_index,current_line_width,current_color,image_size,current_image_file,w,h,c
     return showed_images
-
+    
+    
+def find_same_name(index,names_list):
+    name_find=names_list[index].find('-')
+    fixed_name=names_list[index][:name_find]
+    index_list=[]
+    for i in range(0,len(names_list)):
+        name_find=names_list[i].find('-')
+        if fixed_name==names_list[i][:name_find]:
+            index_list.append(i)
+    return index_list
+    
+    
+def find_list_elements(x,x_list):
+    if type(x)==list:
+        for x_element in x:
+            x_list=find_list_elements(x_element,x_list)
+        
+    elif type(x)==str:
+        if x[-4:]=='.jpg' or x[-4:]== '.png':
+            x_list.append(x)
+    return x_list
+    
 def Select_Images_Randomly():
+    st.session_state['init_data']['image_current_paths']=[]
+    st.session_state['init_data']['current_image_names']=[]
+    image_index=[]
+    image_delete=[]
+        
+    archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
+    listOfFileNames = archive.namelist()     
+    # listOfFileNames = find_list_elements(listOfFileElements,[])     
+    image_index_all=list(range(len(listOfFileNames)))
+    
+    image_index.append(random.choice(image_index_all))
+    
+    if st.session_state['init_data']['images_with_name']:  
+        image_delete=find_same_name(image_index[0],listOfFileNames)
+        
+        for i in image_delete:
+            image_index_all.remove(i)  
+            
+        current_index=1 
+        while len(image_index)<st.session_state['init_data']['n_images']:  
+
+            image_index.append(random.choice(image_index_all))  
+            image_delete=find_same_name(image_index[current_index],listOfFileNames)  
+            for i in image_delete:
+                image_index_all.remove(i)
+
+            current_index+=1
+            
+       # Iterate over the file names
+        for current_index in image_index:
+            image_current_path=listOfFileNames[current_index]
+            st.session_state['init_data']['image_current_paths'].append(image_current_path)
+            current_name = os.path.basename(image_current_path)
+            current_name = current_name[:current_name.find('-')-1]
+            st.session_state['init_data']['current_image_names'].append(current_name)
+                    
+        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
+        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
+
+    else:
+        image_index_all.remove(image_index[0])
+        current_index=1
+        
+        while len(image_index)<st.session_state['init_data']['n_images']:
+            image_index.append(random.choice(image_index_all))
+            image_index_all.remove(image_index[current_index])
+            current_index+=1
+            
+       # Iterate over the file names
+        for current_index in image_index:
+            image_current_path=listOfFileNames[current_index]
+            st.session_state['init_data']['image_current_paths'].append(image_current_path)
+            st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
+                    
+        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
+        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
+       
+
+    del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
+    
+    
+def Select_Images_Randomly_name_management():
     st.session_state['init_data']['image_current_paths']=[]
     st.session_state['init_data']['current_image_names']=[]
     image_index=[]
@@ -185,15 +271,18 @@ def Load_Image(current_index):
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
     image_file=Image.open(BytesIO(archive.read(image_current_path)))
+    image_file = image_file.convert('RGB')  
+    
     if not (image_file.size[0] == 224 and image_file.size[1] == 224): 
         image_file=image_file.resize((224, 224))
     del image_current_path,archive
     return np.array(image_file)
 
 def Show_Info():
+    st.sidebar.markdown('## INFO')
+    st.sidebar.write(st.session_state['init_data'])
     st.sidebar.markdown('#### Questions List:')
     st.sidebar.write(st.session_state['init_data']['feature_questions'])
-    # st.sidebar.write(st.session_state['init_data'])
 
 def Load_Data(total_images_number):
     st.session_state['init_data']={
@@ -202,6 +291,7 @@ def Load_Data(total_images_number):
         'start_game':False,
         'finished_game':False,
         'reload_game':False,
+        'images_with_name':False,
         'award':100,
         'token_type':0,
         'questions_index':0,
@@ -216,6 +306,7 @@ def Load_Data(total_images_number):
         'N_images':total_images_number,
         'n_images':total_images_number,
         'zip_file':'guess_who_images.zip',
+        'previous_zip_file':'guess_who_images.zip',
         'Showed_image_names':[],
         'current_images_discarted':np.zeros((total_images_number)),
         'winner_options':[],
@@ -284,6 +375,12 @@ def Load_Data(total_images_number):
 
 def Main_Program():
 
+
+    ZIP_guess_who_images = components.declare_component(
+	  "guess_who_images.zip",
+	  url="https://drive.google.com/file/d/1rer4jYdncNzQB9VPclVtUve5eayiTCuV/view?usp=sharing"
+    )	
+	
     ## SIDEBAR
     st.sidebar.markdown('# OPTIONS PANEL')
 
@@ -301,7 +398,7 @@ def Main_Program():
 
     ## Load data to play
     if 'init_data' not in st.session_state:
-        Load_Data(20)
+        Load_Data(Total_Images_Number)
      
     ## Title
     if st.session_state['init_data']['finished_game']:
@@ -331,13 +428,21 @@ def Main_Program():
                 ## Select images source
                 st.sidebar.markdown('## Image selection source:')
                 Selected_Images_Source=st.sidebar.selectbox('(Choose between default random images or specific source path)', 
-                                                            ['Use default random images',
-                                                            'Use images from specific path'], 
+                                                            ['Use Celeba dataset random images',
+                                                            'Use friends random images',
+                                                            'Use images from specific path'],
                                                             index=0, key='Selected_Images_Source', help=None)
             
                 ## Select images source - Celeba default
-                if Selected_Images_Source=='Use default random images':
-                    st.session_state['init_data']['zip_file']='guess_who_images.zip'
+                if Selected_Images_Source=='Use Celeba dataset random images':
+                
+                    st.session_state['init_data']['images_with_name']=False
+			
+                    st.session_state['init_data']['zip_file']=ZIP_guess_who_images
+                    if st.session_state['init_data']['zip_file']!=st.session_state['init_data']['previous_zip_file']:
+                        st.session_state['init_data']['previous_zip_file']=st.session_state['init_data']['zip_file']
+                        Select_Images_Randomly()
+                        st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
 
                     ## Default source text
                     st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>",
@@ -360,39 +465,51 @@ def Main_Program():
                         st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
                         st.session_state['init_data']['start_game']=True
                         st.session_state['init_data']['images_selected']=True
+                        
+                ## Select images source - Friends default
+                if Selected_Images_Source=='Use friends random images':
+                
+                    st.session_state['init_data']['images_with_name']=True
+                    st.session_state['init_data']['zip_file']='frifam.zip'
+                    if st.session_state['init_data']['zip_file']!=st.session_state['init_data']['previous_zip_file']:
+                        st.session_state['init_data']['previous_zip_file']=st.session_state['init_data']['zip_file']
+                        Select_Images_Randomly()
+                        st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']                    
+                    
+                    ## Default source text
+                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>",
+                                unsafe_allow_html=True)
+                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to randomly modify the selected images.</h3>",
+                                unsafe_allow_html=True)
+                    
+                    ## Button - randomly change Celeba images
+                    Random_Images = st.button('CHANGE IMAGES', key='Random_Images')
+                    if Random_Images:
+                        Select_Images_Randomly()
+                        st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
+                        
+                    ## Button - start game
+                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start the game.</h2>", unsafe_allow_html=True)
+                    Use_Images = st.button('START GAME', key='Use_Images')
+                    
+                    if Use_Images:
+                        ## Choose winner and start game
+                        st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
+                        st.session_state['init_data']['start_game']=True
+                        st.session_state['init_data']['images_selected']=True              
                     
                 ## Select images source - Celeba specific path
                 if Selected_Images_Source=='Use images from specific path':
                     
+                    st.session_state['init_data']['images_with_name']=False
                     ## Specific source text
                     st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>",
                                 unsafe_allow_html=True)
                                 
                     st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>To use images from specific path, press 'Use Path'. Press it again to randomly modify the selected images.</h3>",
                                 unsafe_allow_html=True) 
-                    
-						
-                    # User_Input_Path = st.text_input('Write the images source path:', 'C:/folder_1',key='user_input_path', help=None)
-                    # Use_Path = st.button('USE PATH OR RELOAD IMAGES', key='Use_Path')
-                    
-                    # if Use_Path:
-                        ## st.write(type(Uploaded_File.getvalue()))
-                        # st.session_state['init_data']['zip_file']= Path(User_Input_Path)
-		    
-                    # st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current path: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+str(st.session_state['init_data']['zip_file'])+"</h3>",
-                                # unsafe_allow_html=True)   
-                        
-                    # if Use_Path:
-                        # Select_Images_Randomly_from_path(st.session_state['init_data']['zip_file'],st.session_state['init_data']['N_images'])
-                        # st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']                    
-                 
                         
                     Uploaded_File = st.file_uploader("Select images to play", type=[".zip"],accept_multiple_files=False, key="Uploaded_file")                    
-                    # Use_Uplodaded_file = st.button('USE PATH OR RELOAD IMAGES', key='Use_Uplodaded_File')
-
-                    # if Use_Uplodaded_file:
-                        # Select_Images_Randomly_from_path(st.session_state['init_data']['zip_file'],st.session_state['init_data']['N_images'])
-                        # st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']                    
 
                     if Uploaded_File is not None:
                         st.session_state['init_data']['zip_file']= Uploaded_File
@@ -405,7 +522,7 @@ def Main_Program():
                         Select_Images_Randomly()
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
                     
-                    if not st.session_state['init_data']['zip_file']=='guess_who_images.zip':
+                    if not (st.session_state['init_data']['zip_file']=='guess_who_images.zip' or st.session_state['init_data']['zip_file']=='frifam.zip'):
                     
                         ## Button - start game
                         st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start the game.</h2>", unsafe_allow_html=True)
@@ -738,7 +855,7 @@ def Main_Program():
             
             
     ## SHOW EXTRA INFO
-    Show_Info() 
+    # Show_Info() 
  
 ## --------------- CACHE FUCTION ---------------
 @st.cache(ttl=12*3600)
