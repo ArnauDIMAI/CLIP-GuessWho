@@ -4,6 +4,7 @@
 import os
 import io
 import zipfile
+import requests
 import random
 import numpy as np
 import streamlit as st
