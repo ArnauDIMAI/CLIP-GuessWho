@@ -423,7 +423,7 @@ def Main_Program():
                                                             ['Use Celeba dataset random images',
                                                             'Use friends random images',
                                                             'Use images from specific path'],
-                                                            index=0, key='Selected_Images_Source', help=None)
+                                                            index=1, key='Selected_Images_Source', help=None)
             
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use Celeba dataset random images':
