@@ -846,7 +846,7 @@ def Main_Program():
             
             
     ## SHOW EXTRA INFO
-    Show_Info() 
+    # Show_Info() 
  
 ## --------------- CACHE FUCTION ---------------
 @st.cache(ttl=12*3600)
