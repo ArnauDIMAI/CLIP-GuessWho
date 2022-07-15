@@ -437,10 +437,10 @@ def Main_Program():
                 if Selected_Images_Source=='Use Celeba dataset random images':
                 
                     st.session_state['init_data']['images_with_name']=False                
-                    url = "https://drive.google.com/file/d/1rer4jYdncNzQB9VPclVtUve5eayiTCuV/view?usp=sharing"
-		    open_url = requests.get(url)
-		    with open("log20031231_2.zip", "wb") as code:
-		        code.write(open_url.content)
+                    url = "https://drive.google.com/file/d/1rer4jYdncNzQB9VPclVtUve5eayiTCuV/view?usp=sharing"                
+                    open_url = requests.get(url)                
+                    with open("log20031231_2.zip", "wb") as code:                
+                    	code.write(open_url.content)
 			
                     st.session_state['init_data']['zip_file']="log20031231_2.zip"
 		
