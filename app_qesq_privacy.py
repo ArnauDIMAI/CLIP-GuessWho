@@ -420,9 +420,8 @@ def Main_Program():
                 Selected_Images_Source=st.sidebar.selectbox('(Choose between default random images or specific source path)', 
                                                             ['Use Celeba dataset random images',
                                                             'Use friends random images',
-                                                            'Use family random images',
                                                             'Use images from specific path'],
-                                                            index=1, key='Selected_Images_Source', help=None)
+                                                            index=0, key='Selected_Images_Source', help=None)
             
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use Celeba dataset random images':
@@ -460,7 +459,7 @@ def Main_Program():
                 if Selected_Images_Source=='Use friends random images':
                 
                     st.session_state['init_data']['images_with_name']=True
-                    st.session_state['init_data']['zip_file']='fri.zip'
+                    st.session_state['init_data']['zip_file']='frifam.zip'
                     if st.session_state['init_data']['zip_file']!=st.session_state['init_data']['previous_zip_file']:
                         st.session_state['init_data']['previous_zip_file']=st.session_state['init_data']['zip_file']
                         Select_Images_Randomly()
@@ -486,41 +485,7 @@ def Main_Program():
                         ## Choose winner and start game
                         st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
                         st.session_state['init_data']['start_game']=True
-                        st.session_state['init_data']['images_selected']=True
-                        
-                ## Select images source - Celeba default
-                if Selected_Images_Source=='Use family random images':
-                    if Total_Images_Number>13:
-                        Total_Images_Number=13
-                
-                    st.session_state['init_data']['images_with_name']=True
-                    st.session_state['init_data']['zip_file']='fam.zip'
-                    if st.session_state['init_data']['zip_file']!=st.session_state['init_data']['previous_zip_file']:
-                        st.session_state['init_data']['previous_zip_file']=st.session_state['init_data']['zip_file']
-                        Select_Images_Randomly()
-                        st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']                    
-
-                    ## Default source text
-                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>1. Choose the images you like.</h2>",
-                                unsafe_allow_html=True)
-                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to randomly modify the selected images.</h3>",
-                                unsafe_allow_html=True)
-                    
-                    ## Button - randomly change Celeba images
-                    Random_Images = st.button('CHANGE IMAGES', key='Random_Images')
-                    if Random_Images:
-                        Select_Images_Randomly()
-                        st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
-                        
-                    ## Button - start game
-                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start the game.</h2>", unsafe_allow_html=True)
-                    Use_Images = st.button('START GAME', key='Use_Images')
-                    
-                    if Use_Images:
-                        ## Choose winner and start game
-                        st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
-                        st.session_state['init_data']['start_game']=True
-                        st.session_state['init_data']['images_selected']=True
+                        st.session_state['init_data']['images_selected']=True              
                     
                 ## Select images source - Celeba specific path
                 if Selected_Images_Source=='Use images from specific path':
@@ -546,7 +511,7 @@ def Main_Program():
                         Select_Images_Randomly()
                         st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
                     
-                    if not (st.session_state['init_data']['zip_file']=='guess_who_images.zip' or st.session_state['init_data']['zip_file']=='guess_who_images_friends.zip' or st.session_state['init_data']['zip_file']=='guess_who_images_family.zip'):
+                    if not (st.session_state['init_data']['zip_file']=='guess_who_images.zip' or st.session_state['init_data']['zip_file']=='frifam.zip':
                     
                         ## Button - start game
                         st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to start the game.</h2>", unsafe_allow_html=True)
