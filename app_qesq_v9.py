@@ -376,10 +376,10 @@ def Load_Data(total_images_number):
 def Main_Program():
 
 
-    ZIP_guess_who_images = components.declare_component(
-	  "guess_who_images.zip",
-	  url="https://drive.google.com/file/d/1rer4jYdncNzQB9VPclVtUve5eayiTCuV/view?usp=sharing"
-    )	
+    # ZIP_guess_who_images = components.declare_component(
+    #	  "guess_who_images.zip",
+    #	  url="https://drive.google.com/file/d/1rer4jYdncNzQB9VPclVtUve5eayiTCuV/view?usp=sharing"
+    #)	
 	
     ## SIDEBAR
     st.sidebar.markdown('# OPTIONS PANEL')
@@ -438,7 +438,7 @@ def Main_Program():
                 
                     st.session_state['init_data']['images_with_name']=False
 			
-                    st.session_state['init_data']['zip_file']=ZIP_guess_who_images
+                    st.session_state['init_data']['zip_file']='https://drive.google.com/file/d/1rer4jYdncNzQB9VPclVtUve5eayiTCuV/view?usp=sharing'
                     if st.session_state['init_data']['zip_file']!=st.session_state['init_data']['previous_zip_file']:
                         st.session_state['init_data']['previous_zip_file']=st.session_state['init_data']['zip_file']
                         Select_Images_Randomly()
