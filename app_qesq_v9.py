@@ -4,7 +4,7 @@
 import os
 import io
 import zipfile
-import requests
+import requests as req
 import random
 import numpy as np
 import streamlit as st
@@ -439,7 +439,7 @@ def Main_Program():
                 
                     st.session_state['init_data']['images_with_name']=False
                     url = "https://drive.google.com/file/d/1rer4jYdncNzQB9VPclVtUve5eayiTCuV/view?usp=sharing"
-                    open_url = requests.get(url)                
+                    open_url = req.get(url)                
                     with open("log20031231_2.zip", "wb") as code:                
                     	code.write(open_url.content)
 			
