@@ -194,7 +194,7 @@ def Select_Images_Randomly():
     st.session_state['init_data']['zip_file'] = "zipFile.zip"
     open(st.session_state['init_data']['zip_file'], "wb").write(current_URL_result.content)
 
-    archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
+    archive = zipfile.ZipFile(current_URL_result.content, 'r')
     listOfFileNames = archive.namelist()     
     # listOfFileNames = find_list_elements(listOfFileElements,[])     
     image_index_all=list(range(len(listOfFileNames)))
