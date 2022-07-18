@@ -192,7 +192,7 @@ def Select_Images_Randomly():
 
     current_URL_result = requests.get(current_URL)
     st.session_state['init_data']['zip_file'] = "zipFile.zip"
-    zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'w')
+    # zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'w')
     with ZipFile(st.session_state['init_data']['zip_file'], 'w') as myzip:
         myzip.write(current_URL_result.content)
         myzip.close
