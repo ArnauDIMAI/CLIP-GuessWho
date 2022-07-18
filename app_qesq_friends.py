@@ -9,9 +9,6 @@ import numpy as np
 import streamlit as st
 import clip
 import gc
-#import wget
-import requests
-
 
 # import psutil  ## show info (cpu, memeory)
 
@@ -187,12 +184,6 @@ def Select_Images_Randomly():
     image_index=[]
     image_delete=[]
     
-    current_URL = "https://drive.google.com/file/d/1b-x_RvEMte2tKZkXzjXZdk6rpx1duLIJ/view?usp=sharing"
-    # st.session_state['init_data']['zip_file'] = wget.download(current_URL)
-
-    current_URL_result = requests.get(current_URL)
-    st.session_state['init_data']['zip_file'] = current_URL_result.content
-
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     listOfFileNames = archive.namelist()     
     # listOfFileNames = find_list_elements(listOfFileElements,[])     
