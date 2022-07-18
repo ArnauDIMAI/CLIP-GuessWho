@@ -9,6 +9,7 @@ import numpy as np
 import streamlit as st
 import clip
 import gc
+import wget
 # import psutil  ## show info (cpu, memeory)
 
 from io import BytesIO
@@ -182,6 +183,10 @@ def Select_Images_Randomly():
     st.session_state['init_data']['current_image_names']=[]
     image_index=[]
     image_delete=[]
+    
+    current_URL = "https://drive.google.com/file/d/1b-x_RvEMte2tKZkXzjXZdk6rpx1duLIJ/view?usp=sharing"
+    st.session_state['init_data']['zip_file'] = wget.download(current_URL)
+
         
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     listOfFileNames = archive.namelist()     
@@ -423,7 +428,7 @@ def Main_Program():
                                                             ['Use Celeba dataset random images',
                                                             'Use friends random images',
                                                             'Use images from specific path'],
-                                                            index=1, key='Selected_Images_Source', help=None)
+                                                            index=0, key='Selected_Images_Source', help=None)
             
                 ## Select images source - Celeba default
                 if Selected_Images_Source=='Use Celeba dataset random images':
