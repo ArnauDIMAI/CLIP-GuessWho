@@ -301,7 +301,7 @@ def Load_Data():
         'status':0,
         'award1':100,
         'award2':100,
-        'N_images':20
+        'N_images':20,
         'n_images':20,
         '2_players':False,
         'Selected_Images_Source':'Use Celeba dataset random images'
