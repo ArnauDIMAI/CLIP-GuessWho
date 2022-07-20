@@ -522,7 +522,7 @@ def Main_Program():
         if Accept_Images:
             ## Choose winner and start game
             st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
-            st.session_state['init_data']['status']==st.session_state['init_data']['status']+10
+            st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
 
 
     ## --------------- SELECT WINNER IMAGE ---------------
@@ -530,7 +530,7 @@ def Main_Program():
     ## Player 1 case
     if st.session_state['init_data']['status']==20:
         st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
-        st.session_state['init_data']['status']==st.session_state['init_data']['status']+10
+        st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
 
     ##Player 2 case
     if st.session_state['init_data']['status']==120:
@@ -554,7 +554,7 @@ def Main_Program():
             st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to start the game.</h3>", unsafe_allow_html=True)
             Start_Game = st.button('START GAME', key='Start_Game')
             if Start_Game:
-                st.session_state['init_data']['status']==st.session_state['init_data']['status']+10
+                st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
 
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
