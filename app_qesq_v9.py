@@ -1451,7 +1451,7 @@ def Main_Program():
             ## --------------- PLAYER 1: CHECK FINISHED GAME ---------------
             if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and (not st.session_state['init_data']['finished_game']):
                 st.session_state['init_data']['finished_game']=True
-                st.session_state['init_data']['change_player']=False')
+                st.session_state['init_data']['change_player']=False
                 if st.session_state['init_data']['N_players']>1:
                     st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
                 else:
