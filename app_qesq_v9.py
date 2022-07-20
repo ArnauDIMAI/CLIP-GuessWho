@@ -1342,14 +1342,18 @@ def Main_Program():
             if st.session_state['init_data']['token_type2']==-3:
                 if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]:
                     st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
-
-            ## Button - next player
-            Next_Player = st.button('NEXT PLAYER', key='next_player')
-            
-            ## Check current question
-            if Next_Player:
+        
+        
+    ## --------------- BUTTON NEXT ---------------
+    if st.session_state['init_data']['show_results']:
+        if st.session_state['init_data']['N_players']>1:
+            Next_Screen = st.button('NEXT PLAYER', key='next_screen')
+            if Next_Screen:
                 st.session_state['init_data']['change_player']=True
-                
+            
+        else:
+            Next_Screen = st.button('NEXT QUERY', key='next_screen')
+           
                 
     ## --------------- CREATE IMAGES TO SHOW ---------------
     if st.session_state['init_data']['status']>0:
@@ -1409,10 +1413,10 @@ def Main_Program():
                 st.session_state['init_data']['award1']=st.session_state['init_data']['award1']-5
 
             ## Button - next player
-            Next_Player = st.button('NEXT PLAYER', key='next_player')
+            Next_Screen = st.button('NEXT PLAYER', key='next_player')
             
             ## Check current question
-            if Next_Player:
+            if Next_Screen:
                 st.session_state['init_data']['change_player']=True
 
 
