@@ -588,7 +588,7 @@ def Main_Program():
     ## 2 player case - Player 1 OK
     if st.session_state['init_data']['status']==121 and (not st.session_state['init_data']['finished_game']):
         st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Press the button to hide the selection.</h3>", unsafe_allow_html=True)
-        Next_Player_Selection2 = st.button('ACCEPT SELECTION', key='Next_Player_Selection2')
+        Next_Player_Selection2 = st.button('NEXT PLAYER', key='Next_Player_Selection2')
         if Next_Player_Selection2:
             st.session_state['init_data']['status']=st.session_state['init_data']['status']+1                
 
@@ -607,16 +607,16 @@ def Main_Program():
         if Player_1_Image!='Not selected':
             st.session_state['init_data']['current_winner_index']=Image_Names_List.index(Player_1_Image)-1
             st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to validate the selection.</h3>", unsafe_allow_html=True)
-            Next_Player_Selection2 = st.button('ACCEPT SELECTION', key='Next_Player_Selection2')
-            if Next_Player_Selection2:
+            Next_Player_Selection = st.button('ACCEPT SELECTION', key='Next_Player_Selection')
+            if Next_Player_Selection:
                 st.session_state['init_data']['status']=st.session_state['init_data']['status']+1
 
  
     ## 2 player case - Player 2 OK
     if st.session_state['init_data']['status']==123 and (not st.session_state['init_data']['finished_game']):
         st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Press the button to hide the selection.</h3>", unsafe_allow_html=True)
-        Next_Player_Selection = st.button('ACCEPT SELECTION', key='Next_Player_Selection')
-        if Next_Player_Selection:
+        Next_Player_Selection2 = st.button('START GAME', key='Next_Player_Selection2')
+        if Next_Player_Selection2:
             st.session_state['init_data']['status']=st.session_state['init_data']['status']+7
 
 
