@@ -431,14 +431,12 @@ def Main_Program():
 
     ## --------------- INITIALIZATIONS ---------------
     if st.session_state['init_data']['status']==0:
-        st.markdown("<h1 style='text-align:left; float:left; color:gray; margin:0px;'>Select the number of players and the images to play with</h1>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select 1 or 2 players and the number of images to use</h2>", unsafe_allow_html=True)
          
         ## Number of players
-        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Number of players:</h2>", unsafe_allow_html=True)
         N_players=st.number_input('Select the number of images', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_players', help=None)
             
         ## Number of images
-        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Number of images:</h2>", unsafe_allow_html=True)
         st.session_state['init_data']['N_images']=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
 
         ## Type of images
@@ -448,9 +446,11 @@ def Main_Program():
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
-        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Selected options: "+str(N_players)+" players, "+str(st.session_state['init_data']['N_images'])+
-                    " images, "+Selected_Images_Source+".</h2>", unsafe_allow_html=True)
-                                      
+        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_players)+"</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "+str(st.session_state['init_data']['N_images'])+"</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:left; float:left; color:black; margin:0px;'>Images to use: "+Selected_Images_Source+".</h3>", unsafe_allow_html=True)
+           
         ## Start game button
         st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Press the button to start playing after select the game options.</h2>", unsafe_allow_html=True)
         Use_Images = st.button('START GAME', key='Use_Images')
@@ -1467,6 +1467,8 @@ def Main_Program():
 
 
     ## --------------- RESET APP ---------------
+    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Restart the Game:</h2>", unsafe_allow_html=True)
+
     st.session_state['init_data']['reset_app'] = st.button('RESET GAME', key='Reset_App')
     
     if st.session_state['init_data']['reset_app']:
