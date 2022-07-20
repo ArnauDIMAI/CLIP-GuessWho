@@ -524,13 +524,13 @@ def Main_Program():
             st.session_state['init_data']['image_current_predictions']=np.zeros((N_Images))+2
             st.session_state['init_data']['Selected_Images_Source']=Selected_Images_Source
             if st.session_state['init_data']['N_players']==1:
-                st.session_state['init_data']['status']=10
+                st.session_state['init_data']['status']=1
             else:
-                st.session_state['init_data']['status']=110
+                st.session_state['init_data']['status']=11
 
 
     ## --------------- IMAGE SELECTION ---------------
-    if st.session_state['init_data']['status']==10 or st.session_state['init_data']['status']==110 and (not st.session_state['init_data']['finished_game']):
+    if (st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==11) and (not st.session_state['init_data']['finished_game']):
         ## Select zip file
         if st.session_state['init_data']['Selected_Images_Source']=='Use Celeba dataset random images':
             st.session_state['init_data']['zip_file']='guess_who_images.zip'
@@ -555,19 +555,19 @@ def Main_Program():
         if Accept_Images:
             ## Choose winner and start game
             st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
-            st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
+            st.session_state['init_data']['status']=st.session_state['init_data']['status']+1
 
 
     ## --------------- SELECT WINNER IMAGE ---------------
     
     ## 1 player case
-    if st.session_state['init_data']['status']==20 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==2 and (not st.session_state['init_data']['finished_game']):
         st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
-        st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
+        st.session_state['init_data']['status']=st.session_state['init_data']['status']+1
 
                 
     ## 2 player case - Player 1
-    if st.session_state['init_data']['status']==120 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==12 and (not st.session_state['init_data']['finished_game']):
         ## Select winner image by players
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Select the image to be discovered by the Player 2</h2>", unsafe_allow_html=True)
         Image_Names_List=['Not selected']
@@ -586,7 +586,7 @@ def Main_Program():
     
     
     ## 2 player case - Player 1 OK
-    if st.session_state['init_data']['status']==121 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==13 and (not st.session_state['init_data']['finished_game']):
         st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Press the button to hide the selection.</h3>", unsafe_allow_html=True)
         Next_Player_Selection2 = st.button('NEXT PLAYER', key='Next_Player_Selection2')
         if Next_Player_Selection2:
@@ -594,7 +594,7 @@ def Main_Program():
 
 
     ## 2 player case - Player 2
-    if st.session_state['init_data']['status']==122 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==14 and (not st.session_state['init_data']['finished_game']):
         ## Select winner image by players
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Select the image to be discovered by the Player 1</h2>", unsafe_allow_html=True)
         Image_Names_List=['Not selected']
@@ -613,15 +613,15 @@ def Main_Program():
 
  
     ## 2 player case - Player 2 OK
-    if st.session_state['init_data']['status']==123 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==15 and (not st.session_state['init_data']['finished_game']):
         st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Press the button to hide the selection.</h3>", unsafe_allow_html=True)
         Next_Player_Selection2 = st.button('START GAME', key='Next_Player_Selection2')
         if Next_Player_Selection2:
-            st.session_state['init_data']['status']=st.session_state['init_data']['status']+7
+            st.session_state['init_data']['status']=30
 
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
-    if st.session_state['init_data']['status']==30 and (not st.session_state['init_data']['finished_game']):    
+    if st.session_state['init_data']['status']<10 and (not st.session_state['init_data']['finished_game']):    
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select a type of Query to play.</h2>", unsafe_allow_html=True)
 
         ## SelectBox - Select query type (game mode)
@@ -873,19 +873,13 @@ def Main_Program():
                 if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]:
                     st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
             
-            Restart_App = st.button('GO TO IMAGES SELECTION TO START NEW GAME', key='Restart_App')
-            if st.session_state['init_data']['award2']==1 or st.session_state['init_data']['award2']==-1:
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ FINISHED WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award2'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
-            else:
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ FINISHED WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award2'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
-
         if st.session_state['init_data']['finished_game']:
             st.session_state['init_data']['reload_game']=True
             Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
             if st.session_state['init_data']['award1']==1 or st.session_state['init_data']['award1']==-1:
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ YOU WIN WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award1'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
+                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ PLAYER 1: YOU WIN WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award1'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
             else:
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ YOU WIN WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award1'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
+                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ PLAYER 1:  YOU WIN WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award1'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
         else:
             ## --------------- PLAYER 1: CHECK FINISHED GAME ---------------
             if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and (not st.session_state['init_data']['finished_game']):
@@ -895,7 +889,7 @@ def Main_Program():
         
         
     ## 2 PLAYER GAME - PLAYER 1 *********************************************************************************************************************************************************
-    if st.session_state['init_data']['status']==130 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==30 and (not st.session_state['init_data']['finished_game']):
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Select a type of Query to play.</h2>", unsafe_allow_html=True)
 
         ## SelectBox - Select query type (game mode)
@@ -1149,7 +1143,7 @@ def Main_Program():
 
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
-    if st.session_state['init_data']['status']==131 and (not st.session_state['init_data']['finished_game']):    
+    if st.session_state['init_data']['status']==130 and (not st.session_state['init_data']['finished_game']):    
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Select a type of Query to play.</h2>", unsafe_allow_html=True)
 
         ## SelectBox - Select query type (game mode)
@@ -1419,7 +1413,6 @@ def Main_Program():
     ## PLAYER 2 OR PLAYER 1 FINAL OPERATIONS
     if st.session_state['init_data']['status']>100:
     
-    
            ## --------------- PLAYER 2: APPLY DISCARDING ---------------
         if st.session_state['init_data']['show_results']:        
             st.session_state['init_data']['previous_discarding_images_number']=st.session_state['init_data']['n_images2']
@@ -1456,6 +1449,7 @@ def Main_Program():
                 Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')    
 
     else:
+    
        ## --------------- PLAYER 1: APPLY DISCARDING ---------------
         if st.session_state['init_data']['show_results']:        
             st.session_state['init_data']['previous_discarding_images_number']=st.session_state['init_data']['n_images']
