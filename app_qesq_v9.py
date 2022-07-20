@@ -1349,7 +1349,6 @@ def Main_Program():
             Next_Screen = st.button('NEXT PLAYER', key='next_screen')
             if Next_Screen:
                 st.session_state['init_data']['change_player']=True
-            
         else:
             Next_Screen = st.button('NEXT QUERY', key='next_screen')
            
@@ -1410,13 +1409,6 @@ def Main_Program():
             ## penalty - no image is discarted
             if st.session_state['init_data']['previous_discarding_images_number']==st.session_state['init_data']['n_images']:   
                 st.session_state['init_data']['award1']=st.session_state['init_data']['award1']-5
-
-            ## Button - next player
-            Next_Screen = st.button('NEXT PLAYER', key='next_player')
-            
-            ## Check current question
-            if Next_Screen:
-                st.session_state['init_data']['change_player']=True
 
 
         ## --------------- PLAYER 1: SHOW FINAL RESULTS ---------------
