@@ -418,6 +418,7 @@ def Load_Data(N):
         'reset_app':False,
         'selected_winner_index':0,
         'change_player':False,
+        'finished_game':False,
         'previous_discarding_images_number':0,
         'image_current_predictions':np.zeros((N))+2}
     
