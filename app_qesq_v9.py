@@ -394,7 +394,7 @@ def Main_Program():
     
     ## --------------- LOAD DATA ---------------
     if 'init_data' not in st.session_state:
-        Load_Data(Total_Images_Number)
+        Load_Data()
     
     
     ## --------------- CHANGE PLAYER TURN --------------- 
