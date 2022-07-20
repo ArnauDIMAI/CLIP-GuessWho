@@ -620,31 +620,6 @@ def Main_Program():
             st.session_state['init_data']['status']=st.session_state['init_data']['status']+7
 
 
-    ##Player 2 case OTIGINAL
-    #if st.session_state['init_data']['status']==120 and (not st.session_state['init_data']['finished_game']):
-        ## Select winner image by players
-    #    st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the image to be discovered by the other player</h2>", unsafe_allow_html=True)
-    #    Image_Names_List=['Not selected']
-    #    Image_Names_List.extend(st.session_state['init_data']['current_image_names'])
-                    
-    #    Player_1_Image=st.selectbox('(PLAYER 2: choose the image to be discovered by the player 1)', 
-    #                                                Image_Names_List,
-    #                                                index=0, key='Player_1_Image', help=None)    
-                           
-    #    Player_2_Image=st.selectbox('(PLAYER 1: choose the image to be discovered by the player 2)', 
-    #                                                Image_Names_List,
-    #                                                index=0, key='Player_2_Image', help=None)
-
-        ## Button - start game
-        if Player_1_Image!='Not selected' and Player_2_Image!='Not selected':
-            st.session_state['init_data']['current_winner_index']=Image_Names_List.index(Player_1_Image)-1
-            st.session_state['init_data']['current_winner_index2']=Image_Names_List.index(Player_2_Image)-1
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to start the game.</h3>", unsafe_allow_html=True)
-            Start_Game = st.button('START GAME', key='Start_Game')
-            if Start_Game:
-                st.session_state['init_data']['status']=st.session_state['init_data']['status']+5
-
-
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==30 and (not st.session_state['init_data']['finished_game']):    
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select a type of Query to play.</h2>", unsafe_allow_html=True)
