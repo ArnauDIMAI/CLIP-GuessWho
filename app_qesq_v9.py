@@ -96,34 +96,65 @@ def CLIP_Process():
     gc.collect()
        
 def Image_discarding():
-    for i in range(len(st.session_state['init_data']['current_images_discarted'])):
-        if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-            st.session_state['init_data']['current_images_discarted'][i]=1
+    if st.session_state['init_data']['status']==131:
+        for i in range(len(st.session_state['init_data']['current_images_discarted2'])):
+            if st.session_state['init_data']['current_images_discarted2'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
+                st.session_state['init_data']['current_images_discarted2'][i]=1
 
-    previous_names=st.session_state['init_data']['current_image_names']
-    st.session_state['init_data']['current_image_names']=[]
-    previous_files=st.session_state['init_data']['image_current_paths']     
-    st.session_state['init_data']['image_current_paths']=[] 
-    previous_predictions=st.session_state['init_data']['image_current_predictions'] 
-    st.session_state['init_data']['image_current_predictions']=[]
-    current_index=0
-    new_index=0
-    for i in range(st.session_state['init_data']['n_images']):
-        if st.session_state['init_data']['current_images_discarted'][current_index]==0:
-            st.session_state['init_data']['image_current_paths'].append(previous_files[current_index])
-            st.session_state['init_data']['current_image_names'].append(previous_names[current_index])
-            st.session_state['init_data']['image_current_predictions'].append(previous_predictions[current_index])
-            if current_index==st.session_state['init_data']['current_winner_index']:
-                st.session_state['init_data']['current_winner_index']=new_index
+        previous_names=st.session_state['init_data']['current_image_names']
+        st.session_state['init_data']['current_image_names']=[]
+        previous_files=st.session_state['init_data']['image_current_paths']     
+        st.session_state['init_data']['image_current_paths']=[] 
+        previous_predictions=st.session_state['init_data']['image_current_predictions'] 
+        st.session_state['init_data']['image_current_predictions']=[]
+        current_index=0
+        new_index=0
+        for i in range(st.session_state['init_data']['n_images']):
+            if st.session_state['init_data']['current_images_discarted2'][current_index]==0:
+                st.session_state['init_data']['image_current_paths'].append(previous_files[current_index])
+                st.session_state['init_data']['current_image_names'].append(previous_names[current_index])
+                st.session_state['init_data']['image_current_predictions'].append(previous_predictions[current_index])
+                if current_index==st.session_state['init_data']['current_winner_index']:
+                    st.session_state['init_data']['current_winner_index']=new_index
+                    
+                new_index+=1
                 
-            new_index+=1
-            
-        current_index+=1
-            
-    st.session_state['init_data']['n_images']=np.sum(st.session_state['init_data']['current_images_discarted']==0)                     
-    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])                   
-    st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths']) 
-    st.session_state['init_data']['current_images_discarted']=np.zeros(st.session_state['init_data']['n_images'])
+            current_index+=1
+                
+        st.session_state['init_data']['n_images']=np.sum(st.session_state['init_data']['current_images_discarted2']==0)                     
+        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])                   
+        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths']) 
+        st.session_state['init_data']['current_images_discarted2']=np.zeros(st.session_state['init_data']['n_images'])
+    else:
+        for i in range(len(st.session_state['init_data']['current_images_discarted'])):
+            if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
+                st.session_state['init_data']['current_images_discarted'][i]=1
+
+        previous_names=st.session_state['init_data']['current_image_names']
+        st.session_state['init_data']['current_image_names']=[]
+        previous_files=st.session_state['init_data']['image_current_paths']     
+        st.session_state['init_data']['image_current_paths']=[] 
+        previous_predictions=st.session_state['init_data']['image_current_predictions'] 
+        st.session_state['init_data']['image_current_predictions']=[]
+        current_index=0
+        new_index=0
+        for i in range(st.session_state['init_data']['n_images']):
+            if st.session_state['init_data']['current_images_discarted'][current_index]==0:
+                st.session_state['init_data']['image_current_paths'].append(previous_files[current_index])
+                st.session_state['init_data']['current_image_names'].append(previous_names[current_index])
+                st.session_state['init_data']['image_current_predictions'].append(previous_predictions[current_index])
+                if current_index==st.session_state['init_data']['current_winner_index']:
+                    st.session_state['init_data']['current_winner_index']=new_index
+                    
+                new_index+=1
+                
+            current_index+=1
+                
+        st.session_state['init_data']['n_images']=np.sum(st.session_state['init_data']['current_images_discarted']==0)                     
+        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])                   
+        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths']) 
+        st.session_state['init_data']['current_images_discarted']=np.zeros(st.session_state['init_data']['n_images'])
+        
     del previous_names,previous_files,previous_predictions,current_index,new_index,i
       
 def Show_images():
@@ -296,13 +327,13 @@ def Show_Info():
     st.sidebar.markdown('#### Questions List:')
     st.sidebar.write(st.session_state['init_data']['feature_questions'])
 
-def Load_Data():
+def Load_Data(N):
     st.session_state['init_data']={
         'status':0,
         'award1':100,
         'award2':100,
-        'N_images':20,
-        'n_images':20,
+        'N_images':N,
+        'n_images':N,
         '2_players':False,
         'Selected_Images_Source':'Use Celeba dataset random images',
         'zip_file':'guess_who_images.zip',
@@ -329,11 +360,12 @@ def Load_Data():
         'questions_index':0,
         'questions_index2':0,
         'show_results':False,
-        'show_results2':False,
         'current_querys':['A picture of a person','A picture of a person'],
         'current_querys2':['A picture of a person','A picture of a person'],
         'function_predict':Predict_0_vs_1,
         'function_predict2':Predict_0_vs_1,
+        'current_images_discarted':np.zeros((N)),
+        'current_images_discarted2':np.zeros((N)),
         'querys_list_yes':['A picture of a male person', 'A picture of a female person', 'A picture of an attractive person', 'A picture of a fat person', 'A picture of a young person', 
             'A picture of a receding-hairline person  ', 'A picture of a smily person', 'A picture of a bald person',
             'A picture of a person with black hair', 'A picture of a person with brown hair', 'A picture of a person with blond hair', 'A picture of a person with red hair', 
@@ -373,18 +405,15 @@ def Load_Data():
         'user_input_querys2':'A picture of a person',
         'user_input2_querys1':'A picture of a person',
         'user_input2_querys2':'A picture of a person',
-        'image_current_probs':np.zeros((total_images_number,2)),
+        'image_current_probs':np.zeros((N,2)),
         'selected_winner':'Winner not selected',
-        'selected_winner2':'Winner not selected',
         'reset_app':False,
         'selected_winner_index':0,
         'change_player':False,
         'previous_discarding_images_number':0,
-        'function_predict':Predict_0_vs_1,
-        'image_current_predictions':np.zeros((total_images_number))+2}
+        'image_current_predictions':np.zeros((N))+2}
     
     Select_Images_Randomly()
-    del total_images_number
 
 
 ## --------------- MAIN FUCTION ---------------
@@ -394,7 +423,7 @@ def Main_Program():
     
     ## --------------- LOAD DATA ---------------
     if 'init_data' not in st.session_state:
-        Load_Data()
+        Load_Data(20)
     
     
     ## --------------- CHANGE PLAYER TURN --------------- 
@@ -429,7 +458,7 @@ def Main_Program():
             
         ## Number of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Number of images:</h2>", unsafe_allow_html=True)
-        N_images=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
+        st.session_state['init_data']['N_images']=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Images to play with:</h2>", unsafe_allow_html=True)
@@ -438,15 +467,15 @@ def Main_Program():
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
-        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Selected options: "+N_players+" players, "+N_images+" images, "+Selected_Images_Source+".</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Selected options: "+N_players+" players, "+st.session_state['init_data']['N_images']+
+                    " images, "+Selected_Images_Source+".</h2>", unsafe_allow_html=True)
                                       
         ## Start game button
         st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Press the button to start playing after select the game options.</h2>", unsafe_allow_html=True)
         Use_Images = st.button('START GAME', key='Use_Images')
 
         if Use_Images:            
-            st.session_state['init_data']['N_images']=N_images
-            st.session_state['init_data']['n_images']=N_images
+            st.session_state['init_data']['n_images']=st.session_state['init_data']['N_images']
             st.session_state['init_data']['Selected_Images_Source']=Selected_Images_Source
             if N_players==1:
                 st.session_state['init_data']['2_players']=False
@@ -489,7 +518,7 @@ def Main_Program():
     
     ## Player 1 case
     if st.session_state['init_data']['status']==20:
-        st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,N_images)))
+        st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
         st.session_state['init_data']['status']==st.session_state['init_data']['status']+10
 
     ##Player 2 case
@@ -720,12 +749,11 @@ def Main_Program():
                 # st.write(st.session_state['init_data']['selected_winner'])
                 # st.write(st.session_state['init_data']['winner_options'])
                 
-            Selected_Winner=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
+            st.session_state['init_data']['selected_winner']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
                                             index=0, key='Selected_Winner', help=None)
-            st.session_state['init_data']['selected_winner']=Selected_Winner  # Save Info
             
             ## Text - Show current winner
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+Selected_Winner+"</h3>", unsafe_allow_html=True)
+            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
             
             ## Button - Use current winner
             Check_Winner = st.button('CHECK THIS WINNER', key='Check_Winner')
@@ -736,14 +764,11 @@ def Main_Program():
                 st.session_state['init_data']['show_results']=False
             else:
                 if Check_Winner:
-                    if Selected_Winner in st.session_state['init_data']['current_image_names']:
-                        st.session_state['init_data']['selected_winner_index']=np.where(Selected_Winner==st.session_state['init_data']['current_image_names'])[0]
+                    if st.session_state['init_data']['selected_winner'] in st.session_state['init_data']['current_image_names']:
+                        st.session_state['init_data']['selected_winner_index']=np.where(st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'])[0]
                         st.session_state['init_data']['image_current_predictions']=np.zeros(st.session_state['init_data']['n_images'])
                         st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['selected_winner_index']]=1    
                         st.session_state['init_data']['show_results']=True
-                        
-                        # Delete Winner elements   
-                        # del st.session_state['Selected_Winner']                                    
                     else:
                         st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Your must select a not discarded picture.</h3>", unsafe_allow_html=True)
 
@@ -827,7 +852,7 @@ def Main_Program():
 
         ## --------------- RELOAD GAME ---------------
         if st.session_state['init_data']['reload_game']:
-            Load_Data()     
+            Load_Data(st.session_state['init_data']['N_images'])     
     
         
     ## 2 PLAYER GAME - PLAYER 1 *********************************************************************************************************************************************************
@@ -1033,12 +1058,11 @@ def Main_Program():
                 # st.write(st.session_state['init_data']['selected_winner'])
                 # st.write(st.session_state['init_data']['winner_options'])
                 
-            Selected_Winner=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
+            st.session_state['init_data']['selected_winner']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
                                             index=0, key='Selected_Winner', help=None)
-            st.session_state['init_data']['selected_winner']=Selected_Winner  # Save Info
             
             ## Text - Show current winner
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+Selected_Winner+"</h3>", unsafe_allow_html=True)
+            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
             
             ## Button - Use current winner
             Check_Winner = st.button('CHECK THIS WINNER', key='Check_Winner')
@@ -1049,14 +1073,11 @@ def Main_Program():
                 st.session_state['init_data']['show_results']=False
             else:
                 if Check_Winner:
-                    if Selected_Winner in st.session_state['init_data']['current_image_names']:
-                        st.session_state['init_data']['selected_winner_index']=np.where(Selected_Winner==st.session_state['init_data']['current_image_names'])[0]
+                    if st.session_state['init_data']['selected_winner'] in st.session_state['init_data']['current_image_names']:
+                        st.session_state['init_data']['selected_winner_index']=np.where(st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'])[0]
                         st.session_state['init_data']['image_current_predictions']=np.zeros(st.session_state['init_data']['n_images'])
                         st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['selected_winner_index']]=1    
                         st.session_state['init_data']['show_results']=True
-                        
-                        # Delete Winner elements   
-                        # del st.session_state['Selected_Winner']                                    
                     else:
                         st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 1: Your must select a not discarded picture.</h3>", unsafe_allow_html=True)
 
@@ -1147,7 +1168,7 @@ def Main_Program():
 
         ## --------------- RELOAD GAME ---------------
         if st.session_state['init_data']['reload_game']:
-            Load_Data()   
+            Load_Data(st.session_state['init_data']['N_images'])   
 
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
@@ -1185,8 +1206,8 @@ def Main_Program():
             Check_Question2 = st.button('USE THIS QUESTION', key='Check_Question2')
             
             ## Check current question
-            if st.session_state['init_data']['show_results2']:
-                st.session_state['init_data']['show_results2']=False
+            if st.session_state['init_data']['show_results']:
+                st.session_state['init_data']['show_results']=False
                 
             else:
                 if Check_Question2:
@@ -1252,14 +1273,14 @@ def Main_Program():
                         st.session_state['init_data']['function_predict2']=Predict_0_vs_all
                         
                    
-                    elif  not st.session_state['init_data']['show_results2']:
+                    elif  not st.session_state['init_data']['show_results']:
                         st.session_state['init_data']['current_querys2']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index2']],
                                                                         st.session_state['init_data']['querys_list_no'][st.session_state['init_data']['questions_index2']]]
                         st.session_state['init_data']['function_predict2']=Predict_0_vs_1
                 
                     CLIP_Process()
                     st.session_state['init_data']['function_predict2']()
-                    st.session_state['init_data']['show_results2']=True
+                    st.session_state['init_data']['show_results']=True
                     
         ## --------------- SHOW ELEMENTS - 1 QUERY MOD ---------------
         if Selected_Feature2=='Create your own query':              
@@ -1281,8 +1302,8 @@ def Main_Program():
             Check_Query2 = st.button('USE MY OWN QUERY', key='Check_Query2')
             
             ## Check current question            
-            if st.session_state['init_data']['show_results2']:
-                st.session_state['init_data']['show_results2']=False
+            if st.session_state['init_data']['show_results']:
+                st.session_state['init_data']['show_results']=False
             else:
                 if Check_Query2:
                     if User_Input2!='A picture of a person':
@@ -1290,7 +1311,7 @@ def Main_Program():
                         st.session_state['init_data']['function_predict2']=Predict_1_vs_0
                         CLIP_Process()
                         st.session_state['init_data']['function_predict2']()
-                        st.session_state['init_data']['show_results2']=True
+                        st.session_state['init_data']['show_results']=True
                         
                     else:
                         st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 2: Your query must be different of 'A picture of a person'.</h3>", unsafe_allow_html=True)
@@ -1319,8 +1340,8 @@ def Main_Program():
             Check_Querys2 = st.button('USE MY OWN QUERYS', key='Check_Querys2')
             
             ## Check current querys
-            if st.session_state['init_data']['show_results2']:
-                st.session_state['init_data']['show_results2']=False
+            if st.session_state['init_data']['show_results']:
+                st.session_state['init_data']['show_results']=False
             else:
                 if Check_Querys2:
                     if User_Input2_Querys1!=User_Input2_Querys2:
@@ -1328,7 +1349,7 @@ def Main_Program():
                         st.session_state['init_data']['function_predict2']=Predict_0_vs_1
                         CLIP_Process()
                         st.session_state['init_data']['function_predict2']()
-                        st.session_state['init_data']['show_results2']=True
+                        st.session_state['init_data']['show_results']=True
                         
                     else:
                         st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 2: Your two own querys must be different.</h3>", unsafe_allow_html=True)
@@ -1346,43 +1367,39 @@ def Main_Program():
             # st.session_state['init_data']['winner_options']=['Winner not selected']
             # st.session_state['init_data']['winner_options'].extend(st.session_state['init_data']['current_image_names'])
             
-            # if st.session_state['init_data']['selected_winner2'] not in st.session_state['init_data']['winner_options']:
-                # st.write(st.session_state['init_data']['selected_winner2'])
+            # if st.session_state['init_data']['selected_winner'] not in st.session_state['init_data']['winner_options']:
+                # st.write(st.session_state['init_data']['selected_winner'])
                 # st.write(st.session_state['init_data']['winner_options2'])
                 
-            Selected_Winner2=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
-                                            index=0, key='Selected_Winner2', help=None)
-            st.session_state['init_data']['selected_winner2']=Selected_Winner2  # Save Info
+            st.session_state['init_data']['selected_winner']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
+                                            index=0, key='Selected_Winner', help=None)
             
             ## Text - Show current winner
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+Selected_Winner2+"</h3>", unsafe_allow_html=True)
+            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
             
             ## Button - Use current winner
             Check_Winner = st.button('CHECK THIS WINNER', key='Check_Winner')
             st.session_state['init_data']['button_winner']=Check_Winner  # Save Info
                                                 
             ## Check current winner
-            if st.session_state['init_data']['show_results2']:
-                st.session_state['init_data']['show_results2']=False
+            if st.session_state['init_data']['show_results']:
+                st.session_state['init_data']['show_results']=False
             else:
                 if Check_Winner:
-                    if Selected_Winner2 in st.session_state['init_data']['current_image_names']:
-                        st.session_state['init_data']['selected_winner_index']=np.where(Selected_Winner2==st.session_state['init_data']['current_image_names'])[0]
+                    if st.session_state['init_data']['selected_winner'] in st.session_state['init_data']['current_image_names']:
+                        st.session_state['init_data']['selected_winner_index']=np.where(st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'])[0]
                         st.session_state['init_data']['image_current_predictions']=np.zeros(st.session_state['init_data']['n_images'])
                         st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['selected_winner_index']]=1    
-                        st.session_state['init_data']['show_results2']=True
-                        
-                        # Delete Winner elements   
-                        # del st.session_state['selected_winner2']                                    
+                        st.session_state['init_data']['show_results']=True
                     else:
                         st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 2: Your must select a not discarded picture.</h3>", unsafe_allow_html=True)
 
 
         ## --------------- ACTIONS SHOWING RESULTS ---------------
-        if st.session_state['init_data']['show_results2']:
+        if st.session_state['init_data']['show_results']:
         
             ## Continue game
-            if not np.sum(st.session_state['init_data']['current_images_discarted']==0)==1:
+            if not np.sum(st.session_state['init_data']['current_images_discarted2']==0)==1:
                 if st.session_state['init_data']['images_selected']: 
                     st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>PLAYER 2: Press the button to continue.</h2>", unsafe_allow_html=True)
                 else:
@@ -1411,8 +1428,8 @@ def Main_Program():
                     st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input2_querys2']+"</h3>", unsafe_allow_html=True)
               
             if st.session_state['init_data']['token_type2']==-3:
-                if not st.session_state['init_data']['selected_winner2']==st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner2']+"</h3>", unsafe_allow_html=True)
+                if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]:
+                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
 
             ## Button - next player
             Next_Player = st.button('NEXT PLAYER', key='next_player')
@@ -1428,7 +1445,7 @@ def Main_Program():
 
 
        ## --------------- APPLY DISCARDING ---------------
-        if st.session_state['init_data']['show_results2']:        
+        if st.session_state['init_data']['show_results']:        
             st.session_state['init_data']['previous_discarding_images_number']=st.session_state['init_data']['n_images']
             Image_discarding()
                        
@@ -1451,7 +1468,7 @@ def Main_Program():
 
         else:
             ## --------------- CHECK FINISHED GAME ---------------
-            if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and not st.session_state['init_data']['finished_game']:
+            if np.sum(st.session_state['init_data']['current_images_discarted2']==0)==1 and not st.session_state['init_data']['finished_game']:
                 st.session_state['init_data']['finished_game']=True
                 st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
                 Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
@@ -1465,14 +1482,14 @@ def Main_Program():
 
         ## --------------- RELOAD GAME ---------------
         if st.session_state['init_data']['reload_game']:
-            Load_Data()   
+            Load_Data(st.session_state['init_data']['N_images'])   
 
 
     ## --------------- RESET APP ---------------
     st.session_state['init_data']['reset_app'] = st.button('RESET GAME', key='Reset_App')
     
     if st.session_state['init_data']['reset_app']:
-        Load_Data()
+        Load_Data(st.session_state['init_data']['N_images'])
   
   
 ## --------------- CACHE FUCTION ---------------
