@@ -455,10 +455,14 @@ def Load_Data(N):
 
 def Main_Program():
 
-    Show_Info()     
+
     ## --------------- LOAD DATA ---------------
     if 'init_data' not in st.session_state:
         Load_Data(20)
+
+
+    ## --------------- SHOW INFO --------------
+    Show_Info()     
     
     
     ## --------------- CHANGE PLAYER TURN --------------- 
@@ -1457,14 +1461,20 @@ st.set_page_config(
 )
 
 
-## --------------- CLEAR RESOURCES ---------------
+## --------------- START PRGRAM ---------------
 Main_Program()
+
+
+## --------------- SHOW INFO --------------
 Show_Info() 
+
+
+## --------------- CLEAR RESOURCES ---------------
 gc.collect()
 # caching.clear_cache()
 # torch.cuda.empty_cache()
 
     
-## --------------- SHOW INFO (cpu, memeory) ---------------
+## --------------- SHOW MORE INFO (cpu, memeory) ---------------
 # st.sidebar.write(psutil.cpu_percent()) ## show info (cpu, memeory)
 # st.sidebar.write(psutil.virtual_memory()) ## show info (cpu, memeory)
