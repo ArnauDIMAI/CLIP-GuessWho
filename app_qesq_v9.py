@@ -587,7 +587,7 @@ def Main_Program():
     
     ## 2 player case - Player 1 OK
     if st.session_state['init_data']['status']==121 and (not st.session_state['init_data']['finished_game']):
-        st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Press the button to continue.</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Press the button to hide the selection.</h3>", unsafe_allow_html=True)
         Next_Player_Selection2 = st.button('ACCEPT SELECTION', key='Next_Player_Selection2')
         if Next_Player_Selection2:
             st.session_state['init_data']['status']=st.session_state['init_data']['status']+1                
@@ -614,7 +614,7 @@ def Main_Program():
  
     ## 2 player case - Player 2 OK
     if st.session_state['init_data']['status']==123 and (not st.session_state['init_data']['finished_game']):
-        st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Press the button to continue.</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Press the button to hide the selection.</h3>", unsafe_allow_html=True)
         Next_Player_Selection = st.button('ACCEPT SELECTION', key='Next_Player_Selection')
         if Next_Player_Selection:
             st.session_state['init_data']['status']=st.session_state['init_data']['status']+7
