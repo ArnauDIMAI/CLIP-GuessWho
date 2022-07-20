@@ -402,7 +402,7 @@ def Main_Program():
         if st.session_state['init_data']['status']==130:
             st.session_state['init_data']['status']=131
         else:
-            st.session_state['init_data']['status']=130:
+            st.session_state['init_data']['status']=130
         st.session_state['init_data']['change_player']=False
         
         
