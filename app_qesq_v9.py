@@ -1399,7 +1399,8 @@ def Main_Program():
                 
                 
     ## --------------- CREATE IMAGES TO SHOW ---------------
-    Showed_Images=Show_images()
+    if st.session_state['init_data']['status']>0:
+        Showed_Images=Show_images()
     st.session_state['init_data']['Showed_image_names']=st.session_state['init_data']['current_image_names']
 
 
@@ -1476,9 +1477,9 @@ def Main_Program():
 
 
     ## --------------- SHOW CURRENT IMAGES ---------------
-    st.image(Showed_Images, use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])
-    
-    del Showed_Images
+    if st.session_state['init_data']['status']>0:
+        st.image(Showed_Images, use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])        
+        del Showed_Images
 
 
     ## --------------- RELOAD GAME ---------------
@@ -1488,9 +1489,7 @@ def Main_Program():
 
     ## --------------- RESET APP ---------------
     st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:black; margin:0px;'>Restart the Game</hr></h2>", unsafe_allow_html=True)
-
     st.session_state['init_data']['reset_app'] = st.button('RESET GAME', key='Reset_App')
-    
     if st.session_state['init_data']['reset_app']:
         Load_Data(st.session_state['init_data']['N_images'])  
 
