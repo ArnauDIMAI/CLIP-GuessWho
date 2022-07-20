@@ -489,7 +489,7 @@ def Main_Program():
     
     ## Player 1 case
     if st.session_state['init_data']['status']==20:
-        st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,N_images))
+        st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,N_images)))
         st.session_state['init_data']['status']==st.session_state['init_data']['status']+10
 
     ##Player 2 case
