@@ -441,7 +441,7 @@ def Main_Program():
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Images to play with:</h2>", unsafe_allow_html=True)
-        Selected_Images_Source=st.sidebar.selectbox('(Choose between default random images or specific source path)', 
+        Selected_Images_Source=st.selectbox('(Choose between default random images or specific source path)', 
                                                     ['Use Celeba dataset random images', 'Use friends random images', 'Use images from specific path'],
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
@@ -509,11 +509,11 @@ def Main_Program():
         Image_Names_List=['Not selected']
         Image_Names_List.extend(st.session_state['init_data']['current_image_names'])
                     
-        Player_1_Image=st.sidebar.selectbox('(PLAYER 2: choose the image to be discovered by the player 1)', 
+        Player_1_Image=st.selectbox('(PLAYER 2: choose the image to be discovered by the player 1)', 
                                                     Image_Names_List,
                                                     index=0, key='Player_1_Image', help=None)    
                            
-        Player_2_Image=st.sidebar.selectbox('(PLAYER 1: choose the image to be discovered by the player 2)', 
+        Player_2_Image=st.selectbox('(PLAYER 1: choose the image to be discovered by the player 2)', 
                                                     Image_Names_List,
                                                     index=0, key='Player_2_Image', help=None)
 
@@ -1467,7 +1467,7 @@ def Main_Program():
 
 
     ## --------------- RESET APP ---------------
-    st.markdown("<p><hr></hr><h2 style='text-align:left; float:left; color:black; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
+    st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:black; margin:0px;'>Restart the Game</hr></h2>", unsafe_allow_html=True)
 
     st.session_state['init_data']['reset_app'] = st.button('RESET GAME', key='Reset_App')
     
