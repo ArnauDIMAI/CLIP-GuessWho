@@ -449,10 +449,10 @@ def Main_Program():
         st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_players)+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "+str(st.session_state['init_data']['N_images'])+"</h3>", unsafe_allow_html=True)
-        st.markdown("<h3 style='text-align:left; float:left; color:black; margin:0px;'>Images to use: "+Selected_Images_Source+".</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "+Selected_Images_Source+"</h3>", unsafe_allow_html=True)
            
         ## Start game button
-        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Press the button to start playing after select the game options.</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Press the button to start playing after select the game options</h2>", unsafe_allow_html=True)
         Use_Images = st.button('START GAME', key='Use_Images')
 
         if Use_Images:            
@@ -1467,7 +1467,7 @@ def Main_Program():
 
 
     ## --------------- RESET APP ---------------
-    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Restart the Game:</h2>", unsafe_allow_html=True)
+    st.markdown("<p><hr></hr><h2 style='text-align:left; float:left; color:black; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
 
     st.session_state['init_data']['reset_app'] = st.button('RESET GAME', key='Reset_App')
     
