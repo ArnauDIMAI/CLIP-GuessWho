@@ -1398,15 +1398,15 @@ def Main_Program():
                        
             ## penalty - game not finished                                                       
             if st.session_state['init_data']['n_images']>1:
-                st.session_state['init_data']['award']=st.session_state['init_data']['award']-st.session_state['init_data']['n_images']
+                st.session_state['init_data']['award1']=st.session_state['init_data']['award1']-st.session_state['init_data']['n_images']
             
             ## penalty - "select winner" option used
             if st.session_state['init_data']['token_type']==-3:   
-                st.session_state['init_data']['award']=st.session_state['init_data']['award']-1-(st.session_state['init_data']['N_images']-st.session_state['init_data']['previous_discarding_images_number'])
+                st.session_state['init_data']['award1']=st.session_state['init_data']['award1']-1-(st.session_state['init_data']['N_images']-st.session_state['init_data']['previous_discarding_images_number'])
 
             ## penalty - no image is discarted
             if st.session_state['init_data']['previous_discarding_images_number']==st.session_state['init_data']['n_images']:   
-                st.session_state['init_data']['award']=st.session_state['init_data']['award']-5
+                st.session_state['init_data']['award1']=st.session_state['init_data']['award1']-5
 
             ## Button - next player
             Next_Player = st.button('NEXT PLAYER', key='next_player')
