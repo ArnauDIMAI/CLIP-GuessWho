@@ -245,7 +245,7 @@ def Select_Images_Randomly():
     
     if st.session_state['init_data']['zip_file']=='frifam.zip':
         st.session_state['init_data']['special_images_names']=True
-    else
+    else:
         st.session_state['init_data']['special_images_names']=False
     
     # current_URL = "https://drive.google.com/file/d/1b-x_RvEMte2tKZkXzjXZdk6rpx1duLIJ/view?usp=sharing"
