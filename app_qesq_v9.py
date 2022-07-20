@@ -560,25 +560,80 @@ def Main_Program():
 
     ## --------------- SELECT WINNER IMAGE ---------------
     
-    ## Player 1 case
+    ## 1 player case
     if st.session_state['init_data']['status']==20 and (not st.session_state['init_data']['finished_game']):
         st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
         st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
 
-    ##Player 2 case
+                
+    ## 2 player case - Player 1
     if st.session_state['init_data']['status']==120 and (not st.session_state['init_data']['finished_game']):
         ## Select winner image by players
-        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the image to be discovered by the other player</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Select the image to be discovered by the Player 2</h2>", unsafe_allow_html=True)
         Image_Names_List=['Not selected']
         Image_Names_List.extend(st.session_state['init_data']['current_image_names'])
-                    
-        Player_1_Image=st.selectbox('(PLAYER 2: choose the image to be discovered by the player 1)', 
+        Player_2_Image=st.selectbox('(PLAYER 1: choose an image from the list)', 
+                                                    Image_Names_List,
+                                                    index=0, key='Player_2_Image', help=None)    
+                           
+        ## Button - start game
+        if Player_2_Image!='Not selected':
+            st.session_state['init_data']['current_winner_index2']=Image_Names_List.index(Player_2_Image)-1
+            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to validate the selection.</h3>", unsafe_allow_html=True)
+            Next_Player_Selection = st.button('ACCEPT SELECTION', key='Next_Player_Selection')
+            if Next_Player_Selection:
+                st.session_state['init_data']['status']=st.session_state['init_data']['status']+1
+    
+    
+    ## 2 player case - Player 1 OK
+    if st.session_state['init_data']['status']==121 and (not st.session_state['init_data']['finished_game']):
+        st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Press the button to continue.</h3>", unsafe_allow_html=True)
+        Next_Player_Selection2 = st.button('ACCEPT SELECTION', key='Next_Player_Selection2')
+        if Next_Player_Selection2:
+            st.session_state['init_data']['status']=st.session_state['init_data']['status']+1                
+
+
+    ## 2 player case - Player 2
+    if st.session_state['init_data']['status']==122 and (not st.session_state['init_data']['finished_game']):
+        ## Select winner image by players
+        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Select the image to be discovered by the Player 1</h2>", unsafe_allow_html=True)
+        Image_Names_List=['Not selected']
+        Image_Names_List.extend(st.session_state['init_data']['current_image_names'])
+        Player_1_Image=st.selectbox('(PLAYER 2: choose an image from the list)', 
                                                     Image_Names_List,
                                                     index=0, key='Player_1_Image', help=None)    
                            
-        Player_2_Image=st.selectbox('(PLAYER 1: choose the image to be discovered by the player 2)', 
-                                                    Image_Names_List,
-                                                    index=0, key='Player_2_Image', help=None)
+        ## Button - start game
+        if Player_1_Image!='Not selected':
+            st.session_state['init_data']['current_winner_index']=Image_Names_List.index(Player_1_Image)-1
+            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to validate the selection.</h3>", unsafe_allow_html=True)
+            Next_Player_Selection2 = st.button('ACCEPT SELECTION', key='Next_Player_Selection2')
+            if Next_Player_Selection2:
+                st.session_state['init_data']['status']=st.session_state['init_data']['status']+1
+
+ 
+    ## 2 player case - Player 2 OK
+    if st.session_state['init_data']['status']==123 and (not st.session_state['init_data']['finished_game']):
+        st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Press the button to continue.</h3>", unsafe_allow_html=True)
+        Next_Player_Selection = st.button('ACCEPT SELECTION', key='Next_Player_Selection')
+        if Next_Player_Selection:
+            st.session_state['init_data']['status']=st.session_state['init_data']['status']+7
+
+
+    ##Player 2 case OTIGINAL
+    #if st.session_state['init_data']['status']==120 and (not st.session_state['init_data']['finished_game']):
+        ## Select winner image by players
+    #    st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the image to be discovered by the other player</h2>", unsafe_allow_html=True)
+    #    Image_Names_List=['Not selected']
+    #    Image_Names_List.extend(st.session_state['init_data']['current_image_names'])
+                    
+    #    Player_1_Image=st.selectbox('(PLAYER 2: choose the image to be discovered by the player 1)', 
+    #                                                Image_Names_List,
+    #                                                index=0, key='Player_1_Image', help=None)    
+                           
+    #    Player_2_Image=st.selectbox('(PLAYER 1: choose the image to be discovered by the player 2)', 
+    #                                                Image_Names_List,
+    #                                                index=0, key='Player_2_Image', help=None)
 
         ## Button - start game
         if Player_1_Image!='Not selected' and Player_2_Image!='Not selected':
@@ -587,7 +642,7 @@ def Main_Program():
             st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to start the game.</h3>", unsafe_allow_html=True)
             Start_Game = st.button('START GAME', key='Start_Game')
             if Start_Game:
-                st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
+                st.session_state['init_data']['status']=st.session_state['init_data']['status']+5
 
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
