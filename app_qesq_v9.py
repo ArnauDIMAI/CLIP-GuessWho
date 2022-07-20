@@ -366,7 +366,7 @@ def Load_Data(N):
         'N_images':N,
         'n_images':N,
         'n_images2':N,
-        '2_players':False,
+        'N_players':1,
         'Selected_Images_Source':'Use Celeba dataset random images',
         'zip_file':'guess_who_images.zip',
         'previous_zip_file':'guess_who_images.zip',
@@ -492,7 +492,7 @@ def Main_Program():
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select 1 or 2 players and the number of images to use</h2>", unsafe_allow_html=True)
          
         ## Number of players
-        N_players=st.number_input('Select the number of images', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_players', help=None)
+        N_Players=st.number_input('Select the number of images', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
             
         ## Number of images
         st.session_state['init_data']['N_images']=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
@@ -505,7 +505,7 @@ def Main_Program():
                                                     
         ## Current options selection                                           
         st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
-        st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_players)+"</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_Players)+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "+str(st.session_state['init_data']['N_images'])+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "+Selected_Images_Source+"</h3>", unsafe_allow_html=True)
            
@@ -515,12 +515,11 @@ def Main_Program():
         if Use_Images:            
             st.session_state['init_data']['n_images']=st.session_state['init_data']['N_images']
             st.session_state['init_data']['n_images2']=st.session_state['init_data']['N_images']
+            st.session_state['init_data']['N_players']=N_Players
             st.session_state['init_data']['Selected_Images_Source']=Selected_Images_Source
-            if N_players==1:
-                st.session_state['init_data']['2_players']=False
+            if st.session_state['init_data']['N_players']==1:
                 st.session_state['init_data']['status']=10
             else:
-                st.session_state['init_data']['2_players']=True
                 st.session_state['init_data']['status']=110
 
 
