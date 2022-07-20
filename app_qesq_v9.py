@@ -454,8 +454,8 @@ def Load_Data(N):
 ## --------------- MAIN FUCTION ---------------
 
 def Main_Program():
-    
-    
+
+    Show_Info()     
     ## --------------- LOAD DATA ---------------
     if 'init_data' not in st.session_state:
         Load_Data(20)
