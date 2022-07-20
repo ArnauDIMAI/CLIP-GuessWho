@@ -448,7 +448,7 @@ def Main_Program():
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
-        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Selected options: "+N_players+" players, "+st.session_state['init_data']['N_images']+
+        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Selected options: "+str(N_players)+" players, "+str(st.session_state['init_data']['N_images'])+
                     " images, "+Selected_Images_Source+".</h2>", unsafe_allow_html=True)
                                       
         ## Start game button
