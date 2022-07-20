@@ -1459,6 +1459,7 @@ st.set_page_config(
 
 ## --------------- CLEAR RESOURCES ---------------
 Main_Program()
+Show_Info() 
 gc.collect()
 # caching.clear_cache()
 # torch.cuda.empty_cache()
