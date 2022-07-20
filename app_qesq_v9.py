@@ -475,14 +475,13 @@ def Main_Program():
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
-        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
+        st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:black; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_players)+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "+str(st.session_state['init_data']['N_images'])+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "+Selected_Images_Source+"</h3>", unsafe_allow_html=True)
            
         ## Start game button
-        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Press the button to start playing after select the game options</h2>", unsafe_allow_html=True)
-        Use_Images = st.button('START GAME', key='Use_Images')
+        Use_Images = st.button('START GAME (press to start playing after select the game options)', key='Use_Images')
 
         if Use_Images:            
             st.session_state['init_data']['n_images']=st.session_state['init_data']['N_images']
@@ -1488,7 +1487,7 @@ def Main_Program():
 
 
     ## --------------- RESET APP ---------------
-    st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:black; margin:0px;'>Restart the Game</hr></h2>", unsafe_allow_html=True)
+    st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:black; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
     st.session_state['init_data']['reset_app'] = st.button('RESET GAME', key='Reset_App')
     if st.session_state['init_data']['reset_app']:
         Load_Data(st.session_state['init_data']['N_images'])  
