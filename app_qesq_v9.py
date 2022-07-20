@@ -235,50 +235,33 @@ def Select_Images_Randomly():
     
     image_index.append(random.choice(image_index_all))
     
-    if st.session_state['init_data']['images_with_name']:  
-        image_delete=find_same_name(image_index[0],listOfFileNames)
+    image_delete=find_same_name(image_index[0],listOfFileNames)
+    
+    for i in image_delete:
+        image_index_all.remove(i)  
         
+    current_index=1 
+    while len(image_index)<st.session_state['init_data']['n_images']:  
+
+        image_index.append(random.choice(image_index_all))  
+        image_delete=find_same_name(image_index[current_index],listOfFileNames)  
         for i in image_delete:
-            image_index_all.remove(i)  
-            
-        current_index=1 
-        while len(image_index)<st.session_state['init_data']['n_images']:  
+            image_index_all.remove(i)
 
-            image_index.append(random.choice(image_index_all))  
-            image_delete=find_same_name(image_index[current_index],listOfFileNames)  
-            for i in image_delete:
-                image_index_all.remove(i)
-
-            current_index+=1
-            
-       # Iterate over the file names
-        for current_index in image_index:
-            image_current_path=listOfFileNames[current_index]
-            st.session_state['init_data']['image_current_paths'].append(image_current_path)
-            current_name = os.path.basename(image_current_path)
-            current_name = current_name[:current_name.find('-')-1]
-            st.session_state['init_data']['current_image_names'].append(current_name)
-                    
-        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
-        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
-
-    else:
-        image_index_all.remove(image_index[0])
-        current_index=1
+        current_index+=1
         
-        while len(image_index)<st.session_state['init_data']['n_images']:
-            image_index.append(random.choice(image_index_all))
-            image_index_all.remove(image_index[current_index])
-            current_index+=1
-            
-       # Iterate over the file names
-        for current_index in image_index:
-            image_current_path=listOfFileNames[current_index]
-            st.session_state['init_data']['image_current_paths'].append(image_current_path)
-            st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
-                    
-        st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
-        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
+   # Iterate over the file names
+    for current_index in image_index:
+        image_current_path=listOfFileNames[current_index]
+        st.session_state['init_data']['image_current_paths'].append(image_current_path)
+        current_name = os.path.basename(image_current_path)
+        if '-' in current_name:
+            current_name = current_name[:current_name.find('-')-1]
+        else:
+        st.session_state['init_data']['current_image_names'].append(current_name)
+                
+    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
+    st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
        
 
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
