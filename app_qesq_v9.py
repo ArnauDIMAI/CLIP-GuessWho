@@ -462,7 +462,7 @@ def Main_Program():
 
 
     ## --------------- SHOW INFO --------------
-    Show_Info()     
+    # show_Info()     
     
     
     ## --------------- CHANGE PLAYER TURN --------------- 
@@ -1482,7 +1482,7 @@ Main_Program()
 
 
 ## --------------- SHOW INFO --------------
-Show_Info() 
+# Show_Info() 
 
 
 ## --------------- CLEAR RESOURCES ---------------
