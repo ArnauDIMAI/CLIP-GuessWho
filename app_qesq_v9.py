@@ -475,7 +475,7 @@ def Main_Program():
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
-        st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:black; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
+        st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_players)+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "+str(st.session_state['init_data']['N_images'])+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "+Selected_Images_Source+"</h3>", unsafe_allow_html=True)
@@ -558,7 +558,7 @@ def Main_Program():
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==30:    
-        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>Select a type of Query to play.</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select a type of Query to play.</h2>", unsafe_allow_html=True)
 
         ## SelectBox - Select query type (game mode)
         Selected_Feature=st.selectbox('Ask a question from a list, create your query or select a winner:', ['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner'], 
@@ -785,16 +785,6 @@ def Main_Program():
 
         ## --------------- ACTIONS SHOWING RESULTS ---------------
         if st.session_state['init_data']['show_results']:
-        
-            ## Continue game
-            if not np.sum(st.session_state['init_data']['current_images_discarted']==0)==1:
-                if st.session_state['init_data']['images_selected']: 
-                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>4. Press the button to continue.</h2>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>2. Press the button to continue.</h2>", unsafe_allow_html=True)
-                
-                ## Button - Next query
-                Next_Query=st.button('NEXT QUERY', key='Next_Query')
 
             ## Show current results
             if st.session_state['init_data']['token_type']==0:
@@ -851,7 +841,7 @@ def Main_Program():
             ## --------------- CHECK FINISHED GAME ---------------
             if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and not st.session_state['init_data']['finished_game']:
                 st.session_state['init_data']['finished_game']=True
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
+                st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
                 Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
 
 
@@ -867,7 +857,7 @@ def Main_Program():
         
     ## 2 PLAYER GAME - PLAYER 1 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==130:
-        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>PLAYER 1: Select a type of Query to play.</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Select a type of Query to play.</h2>", unsafe_allow_html=True)
 
         ## SelectBox - Select query type (game mode)
         Selected_Feature=st.selectbox('Ask a question from a list, create your query or select a winner:', ['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner'], 
@@ -1094,16 +1084,6 @@ def Main_Program():
 
         ## --------------- ACTIONS SHOWING RESULTS ---------------
         if st.session_state['init_data']['show_results']:
-        
-            ## Continue game
-            if not np.sum(st.session_state['init_data']['current_images_discarted']==0)==1:
-                if st.session_state['init_data']['images_selected']: 
-                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>PLAYER 1: Press the button to continue.</h2>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>PLAYER 1: Press the button to continue.</h2>", unsafe_allow_html=True)
-                
-                ## Button - Next query
-                Next_Query=st.button('NEXT QUERY', key='Next_Query')
 
             ## Show current results
             if st.session_state['init_data']['token_type']==0:
@@ -1131,7 +1111,7 @@ def Main_Program():
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==131:    
-        st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>PLAYER 2: Select a type of Query to play.</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Select a type of Query to play.</h2>", unsafe_allow_html=True)
 
         ## SelectBox - Select query type (game mode)
         Selected_Feature2=st.selectbox('Ask a question from a list, create your query or select a winner:', ['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner'], 
@@ -1355,16 +1335,6 @@ def Main_Program():
 
         ## --------------- ACTIONS SHOWING RESULTS ---------------
         if st.session_state['init_data']['show_results']:
-        
-            ## Continue game
-            if not np.sum(st.session_state['init_data']['current_images_discarted2']==0)==1:
-                if st.session_state['init_data']['images_selected']: 
-                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>PLAYER 2: Press the button to continue.</h2>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h2 style='text-align:left; float:left; color:black; margin:0px;'>PLAYER 2: Press the button to continue.</h2>", unsafe_allow_html=True)
-                
-                ## Button - Next query
-                Next_Query=st.button('NEXT QUERY', key='Next_Query')
 
             ## Show current results
             if st.session_state['init_data']['token_type2']==0:
@@ -1433,7 +1403,7 @@ def Main_Program():
             ## --------------- PLAYER 2: CHECK FINISHED GAME ---------------
             if np.sum(st.session_state['init_data']['current_images_discarted2']==0)==1 and not st.session_state['init_data']['finished_game']:
                 st.session_state['init_data']['finished_game']=True
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
+                st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
                 Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')    
 
     else:
@@ -1470,7 +1440,7 @@ def Main_Program():
             ## --------------- PLAYER 1: CHECK FINISHED GAME ---------------
             if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and not st.session_state['init_data']['finished_game']:
                 st.session_state['init_data']['finished_game']=True
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
+                st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
                 Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
             
 
@@ -1487,7 +1457,7 @@ def Main_Program():
 
 
     ## --------------- RESET APP ---------------
-    st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:black; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
+    st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
     st.session_state['init_data']['reset_app'] = st.button('RESET GAME', key='Reset_App')
     if st.session_state['init_data']['reset_app']:
         Load_Data(st.session_state['init_data']['N_images'])  
