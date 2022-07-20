@@ -304,7 +304,7 @@ def Load_Data():
         'N_images':20,
         'n_images':20,
         '2_players':False,
-        'Selected_Images_Source':'Use Celeba dataset random images'
+        'Selected_Images_Source':'Use Celeba dataset random images',
         'zip_file':'guess_who_images.zip',
         'previous_zip_file':'guess_who_images.zip',
         'images_not_selected':True,
@@ -374,12 +374,14 @@ def Load_Data():
         'user_input2_querys1':'A picture of a person',
         'user_input2_querys2':'A picture of a person',
         'image_current_probs':np.zeros((total_images_number,2)),
-        'image_current_predictions':np.zeros((total_images_number))+2}
         'selected_winner':'Winner not selected',
         'selected_winner2':'Winner not selected',
         'reset_app':False,
-        'selected_winner_index':0
-        'change_player':False
+        'selected_winner_index':0,
+        'change_player':False,
+        'previous_discarding_images_number':0,
+        'function_predict':Predict_0_vs_1,
+        'image_current_predictions':np.zeros((total_images_number))+2}
     
     Select_Images_Randomly()
     del total_images_number
