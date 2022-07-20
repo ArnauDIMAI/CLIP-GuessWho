@@ -462,7 +462,7 @@ def Main_Program():
 
 
     ## --------------- SHOW INFO --------------
-    # Show_Info()     
+    Show_Info()     
     
     
     ## --------------- CHANGE PLAYER TURN --------------- 
@@ -496,7 +496,7 @@ def Main_Program():
         N_Players=st.number_input('Select the number of images', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
             
         ## Number of images
-        st.session_state['init_data']['N_images']=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
+        N_Images=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Images to play with:</h2>", unsafe_allow_html=True)
@@ -507,16 +507,21 @@ def Main_Program():
         ## Current options selection                                           
         st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_Players)+"</h3>", unsafe_allow_html=True)
-        st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "+str(st.session_state['init_data']['N_images'])+"</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "+str(N_Images)+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "+Selected_Images_Source+"</h3>", unsafe_allow_html=True)
            
         ## Start game button
         Use_Images = st.button('START GAME (press to start playing after select the game options)', key='Use_Images')
 
         if Use_Images:            
-            st.session_state['init_data']['n_images']=st.session_state['init_data']['N_images']
-            st.session_state['init_data']['n_images2']=st.session_state['init_data']['N_images']
+            st.session_state['init_data']['N_images']=N_Images
+            st.session_state['init_data']['n_images']=N_Images
+            st.session_state['init_data']['n_images2']=N_Images
             st.session_state['init_data']['N_players']=N_Players
+            st.session_state['init_data']['current_images_discarted']=np.zeros((N_Images))
+            st.session_state['init_data']['current_images_discarted2']=np.zeros((N_Images))
+            st.session_state['init_data']['image_current_probs']=np.zeros((N_Images,2))
+            st.session_state['init_data']['image_current_predictions']=np.zeros((N_Images))+2
             st.session_state['init_data']['Selected_Images_Source']=Selected_Images_Source
             if st.session_state['init_data']['N_players']==1:
                 st.session_state['init_data']['status']=10
@@ -1482,7 +1487,7 @@ Main_Program()
 
 
 ## --------------- SHOW INFO --------------
-# Show_Info() 
+Show_Info() 
 
 
 ## --------------- CLEAR RESOURCES ---------------
