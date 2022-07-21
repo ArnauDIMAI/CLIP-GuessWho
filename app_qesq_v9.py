@@ -544,14 +544,8 @@ def Select_Images_Randomly():
     for i in image_delete:
         image_index_all.remove(i)  
         
-    current_index=1 
-    
-    if st.session_state['init_data']['player2_turn']:
-        n_img=st.session_state['init_data']['n_images2']
-    else:
-        n_img=st.session_state['init_data']['n_images']
-        
-    while len(image_index)<n_img:  
+    current_index=1         
+    while len(image_index)<st.session_state['init_data']['N_images']:  
         image_index.append(random.choice(image_index_all))  
         image_delete=find_same_name(image_index[current_index],listOfFileNames)  
         for i in image_delete:
@@ -576,7 +570,8 @@ def Select_Images_Randomly():
                 
     st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
     st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
-       
+    st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
+    st.session_state['init_data']['images_not_selected']=False
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
 
 def Load_Image(current_index):
@@ -791,8 +786,6 @@ def Main_Program():
         Random_Images = st.button('CHANGE IMAGES', key='Random_Images')
         if st.session_state['init_data']['images_not_selected'] or Random_Images:
             Select_Images_Randomly()
-            st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
-            st.session_state['init_data']['images_not_selected']=False
                         
         ## Button - start game
         st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to play with these images.</h3>", unsafe_allow_html=True)
