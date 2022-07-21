@@ -474,17 +474,16 @@ def Show_images():
     if st.session_state['init_data']['player2_turn']:
         n_img=st.session_state['init_data']['n_images2']
         winner_index=st.session_state['init_data']['current_winner_index2']
-        current_win_index=np.where(st.session_state['init_data']['selected_winner2']==st.session_state['init_data']['current_image_names2'])[0]
+        #current_win_index=np.where(st.session_state['init_data']['selected_winner2']==st.session_state['init_data']['current_image_names2'])[0]
         
     else:
         n_img=st.session_state['init_data']['n_images']
         winner_index=st.session_state['init_data']['current_winner_index']
-        current_win_index=np.where(st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'])[0]
                 
     for current_index in range(n_img):
         if st.session_state['init_data']['show_results']:
             current_line_width=4
-            if st.session_state['init_data']['image_current_predictions'][current_index]==st.session_state['init_data']['image_current_predictions'][current_win_index]:
+            if st.session_state['init_data']['image_current_predictions'][current_index]==st.session_state['init_data']['image_current_predictions'][winner_index]:
                 current_color=np.array([0,255,0])
             else:
                 current_color=np.array([255,0,0]) 
