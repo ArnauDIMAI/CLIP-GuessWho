@@ -699,8 +699,6 @@ def Load_Data(N):
         'image_current_paths':[],
         'winner_options':[],
         'image_current_predictions':np.zeros((N))+2}
-    
-    Select_Images_Randomly()
 
 
 ## --------------- MAIN FUCTION ---------------
@@ -790,7 +788,7 @@ def Main_Program():
 
 
     ## --------------- IMAGE SELECTION ---------------
-    if st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==100:
+    if st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==101:
         ## Select zip file
         if st.session_state['init_data']['Selected_Images_Source']=='Use Celeba dataset random images':
             st.session_state['init_data']['zip_file']='guess_who_images.zip'
