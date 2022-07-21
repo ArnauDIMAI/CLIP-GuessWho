@@ -311,11 +311,16 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
             st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Select a Winner picture name.</h3>", 
                         unsafe_allow_html=True)
             
-            st.session_state['init_data']['selected_winner']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
+            if st.session_state['init_data']['player2_turn']:
+                st.session_state['init_data']['selected_winner2']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
                                             index=0, key='Selected_Winner', help=None)
-            
-            ## Text - Show current winner
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
+                ## Text - Show current winner
+                st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['selected_winner2']+"</h3>", unsafe_allow_html=True)
+            else:
+                st.session_state['init_data']['selected_winner']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
+                                            index=0, key='Selected_Winner', help=None)
+                ## Text - Show current winner
+                st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
             
             ## Button - Use current winner
             Check_Winner = st.button('CHECK THIS WINNER', key='Check_Winner')
@@ -366,10 +371,15 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                 else:
                     st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input_querys2']+"</h3>", unsafe_allow_html=True)
               
-            if st.session_state['init_data']['token_type']==-3:
-                if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['winner_options'][Win_index]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
-         
+            if st.session_state['init_data']['player2_turn']:
+                if st.session_state['init_data']['token_type']==-3:
+                    if not st.session_state['init_data']['selected_winner2']==st.session_state['init_data']['winner_options'][Win_index]:
+                        st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner2']+"</h3>", unsafe_allow_html=True)
+            else:
+                if st.session_state['init_data']['token_type']==-3:
+                    if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['winner_options'][Win_index]:
+                        st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
+
 def CLIP_Process():
     ## Tokenization process
     clip_model, clip_transform=Load_CLIP()
@@ -586,9 +596,6 @@ def Select_Images_Randomly():
     st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
     st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
     st.session_state['init_data']['images_not_selected']=False
-    # test
-    st.markdown(st.session_state['init_data']['current_image_names'])
-    
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
 
 def Load_Image(current_index):
@@ -681,6 +688,7 @@ def Load_Data(N):
         'user_input_querys2':'A picture of a person',
         'image_current_probs':np.zeros((N,2)),
         'selected_winner':'Winner not selected',
+        'selected_winner2':'Winner not selected',
         'reset_app':False,
         'change_player':False,
         'player2_turn':False,
@@ -921,10 +929,6 @@ def Main_Program():
             
         ## --------------- SHOW CURRENT IMAGES ---------------
         if st.session_state['init_data']['status']>0:
-            ## test
-            st.markdown(len(st.session_state['init_data']['show_images']))
-            st.markdown(st.session_state['init_data']['Showed_image_names'])
-        
             st.image(st.session_state['init_data']['show_images'], use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])        
 
 
