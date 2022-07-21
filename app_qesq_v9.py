@@ -481,17 +481,17 @@ def Show_images():
         else:
             current_line_width=2
             current_color=np.zeros(3)  
-    image_size=240
-    current_image_file=Load_Image(current_index)        
-    w,h,c = np.shape(current_image_file)
-        
-    image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
-    image_highlighted[current_line_width:w+current_line_width,current_line_width:w+current_line_width,:]=current_image_file
-    image_highlighted[:current_line_width,:w+2*current_line_width,:]=current_color
-    image_highlighted[w+current_line_width:,:w+2*current_line_width,:]=current_color
-    image_highlighted[:,w+current_line_width:w+2*current_line_width,:]=current_color
-    image_highlighted[:,:current_line_width,:]=current_color
-    showed_images.append(image_highlighted)
+        image_size=240
+        current_image_file=Load_Image(current_index)        
+        w,h,c = np.shape(current_image_file)
+            
+        image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
+        image_highlighted[current_line_width:w+current_line_width,current_line_width:w+current_line_width,:]=current_image_file
+        image_highlighted[:current_line_width,:w+2*current_line_width,:]=current_color
+        image_highlighted[w+current_line_width:,:w+2*current_line_width,:]=current_color
+        image_highlighted[:,w+current_line_width:w+2*current_line_width,:]=current_color
+        image_highlighted[:,:current_line_width,:]=current_color
+        showed_images.append(image_highlighted)
         
     ## result to array      
     showed_images=np.array(showed_images)/255
@@ -923,7 +923,7 @@ def Main_Program():
             
         ## --------------- SHOW CURRENT IMAGES ---------------
         if st.session_state['init_data']['status']>0:
-        
+            ## test
             st.markdown(len(st.session_state['init_data']['show_images']))
             st.markdown(st.session_state['init_data']['Showed_image_names'])
         
