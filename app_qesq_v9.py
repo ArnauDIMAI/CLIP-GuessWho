@@ -883,7 +883,7 @@ def Main_Program():
 
   
     ## --------------- BUTTON NEXT ---------------
-    if st.session_state['init_data']['show_results']:
+    if st.session_state['init_data']['show_results'] and (not st.session_state['init_data']['finished_game']):
         if st.session_state['init_data']['N_players']>1:
             Next_Screen = st.button('NEXT PLAYER', key='next_screen')
             if Next_Screen:
@@ -893,7 +893,7 @@ def Main_Program():
            
                 
     ## --------------- CREATE IMAGES TO SHOW ---------------
-    if st.session_state['init_data']['status']>0:
+    if st.session_state['init_data']['status']> and (not st.session_state['init_data']['finished_game']):
         st.session_state['init_data']['show_images']=Show_images()
     st.session_state['init_data']['Showed_image_names']=st.session_state['init_data']['current_image_names']
 
