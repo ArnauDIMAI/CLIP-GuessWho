@@ -889,25 +889,26 @@ def Main_Program():
            
                 
     ## --------------- CREATE IMAGES TO SHOW ---------------
-    if st.session_state['init_data']['status']>0 and (not st.session_state['init_data']['finished_game']):
-        st.session_state['init_data']['show_images']=Show_images()
-    st.session_state['init_data']['Showed_image_names']=st.session_state['init_data']['current_image_names']
+    if not st.session_state['init_data']['finished_game']:
+        if st.session_state['init_data']['status']>0:
+            st.session_state['init_data']['show_images']=Show_images()
+        st.session_state['init_data']['Showed_image_names']=st.session_state['init_data']['current_image_names']
 
 
-    ## DISCARDING AND FINAL RESULTS
-    if st.session_state['init_data']['player2_turn']:
-        st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], 'THE WINNER IS PLAYER 2', st.session_state['init_data']['current_winner_index2']) 
+        ## DISCARDING AND FINAL RESULTS
+        if st.session_state['init_data']['player2_turn']:
+            st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], 'THE WINNER IS PLAYER 2', st.session_state['init_data']['current_winner_index2']) 
 
-    else:
-        if st.session_state['init_data']['N_players']>1:
-            st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'THE WINNER IS PLAYER 1', st.session_state['init_data']['current_winner_index']) 
         else:
-            st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'YOU ARE THE WINNER', st.session_state['init_data']['current_winner_index']) 
-            
+            if st.session_state['init_data']['N_players']>1:
+                st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'THE WINNER IS PLAYER 1', st.session_state['init_data']['current_winner_index']) 
+            else:
+                st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'YOU ARE THE WINNER', st.session_state['init_data']['current_winner_index']) 
+                
 
-    ## --------------- SHOW CURRENT IMAGES ---------------
-    if st.session_state['init_data']['status']>0:
-        st.image(st.session_state['init_data']['show_images'], use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])        
+        ## --------------- SHOW CURRENT IMAGES ---------------
+        if st.session_state['init_data']['status']>0:
+            st.image(st.session_state['init_data']['show_images'], use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])        
 
 
     ## --------------- RELOAD GAME ---------------
