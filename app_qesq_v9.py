@@ -97,20 +97,11 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index):
 
 
     ## --------------- SHOW FINAL RESULTS ---------------
-    if st.session_state['init_data']['finished_game']:
-        st.session_state['init_data']['reload_game']=True
-        Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
-        if Current_award==1 or Current_award==-1:
-            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ "+Player_indicator+" WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
-        else:
-            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ "+Player_indicator+" WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
-
-    else:
-        ## --------------- CHECK FINISHED GAME ---------------
+    if not st.session_state['init_data']['finished_game']:
         if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and (not st.session_state['init_data']['finished_game']):
             st.session_state['init_data']['finished_game']=True
             st.session_state['init_data']['change_player']=False
-            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+" You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][Win_index]+"</h1>", unsafe_allow_html=True)
+            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+" AND THE WINNER PICTURE IS</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][Win_index]+"</h1>", unsafe_allow_html=True)
             Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
     return Current_award
 
@@ -377,12 +368,6 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                 if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][Win_index]:
                     st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
          
-        ## --------------- PLAYER 1: CHECK FINISHED GAME ---------------
-        if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1:
-            st.session_state['init_data']['finished_game']=True
-            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][Win_index]+"</h1>", unsafe_allow_html=True)
-            Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
-    
 def CLIP_Process():
     ## Tokenization process
     clip_model, clip_transform=Load_CLIP()
@@ -909,13 +894,13 @@ def Main_Program():
 
     ## DISCARDING AND FINAL RESULTS
     if st.session_state['init_data']['player2_turn']:
-        st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], 'PLAYER 2', st.session_state['init_data']['current_winner_index2']) 
+        st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], 'THE WINNER IS PLAYER 2', st.session_state['init_data']['current_winner_index2']) 
 
     else:
         if st.session_state['init_data']['N_players']>1:
-            st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'PLAYER 1', st.session_state['init_data']['current_winner_index']) 
+            st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'THE WINNER IS PLAYER 1', st.session_state['init_data']['current_winner_index']) 
         else:
-            st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'PLAYER', st.session_state['init_data']['current_winner_index']) 
+            st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'YOU ARE THE WINNER', st.session_state['init_data']['current_winner_index']) 
             
 
     ## --------------- SHOW CURRENT IMAGES ---------------
