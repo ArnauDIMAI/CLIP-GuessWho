@@ -76,7 +76,313 @@ def Predict_bald():
                 st.session_state['init_data']['image_current_predictions'].append(0)    
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-   
+
+def Final_Results(N_img, Current_award, Player_indicator, Win_index)
+           ## --------------- APPLY DISCARDING ---------------
+        if st.session_state['init_data']['show_results']:        
+            st.session_state['init_data']['previous_discarding_images_number']=N_img
+            Image_discarding()
+                       
+            ## penalty - game not finished                                                       
+            if N_img>1:
+                Current_award=Current_award-N_img
+            
+            ## penalty - "select winner" option used
+            if st.session_state['init_data']['token_type']==-3:   
+                Current_award=Current_award-1-(st.session_state['init_data']['N_images']-st.session_state['init_data']['previous_discarding_images_number'])
+
+            ## penalty - no image is discarted
+            if st.session_state['init_data']['previous_discarding_images_number']==N_img:   
+                Current_award=Current_award-5
+
+
+        ## --------------- SHOW FINAL RESULTS ---------------
+        if st.session_state['init_data']['finished_game']:
+            st.session_state['init_data']['reload_game']=True
+            Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
+            if Current_award==1 or Current_award==-1:
+                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ "+Player_indicator+" WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
+            else:
+                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ "+Player_indicator+" WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
+
+        else:
+            ## --------------- CHECK FINISHED GAME ---------------
+            if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and (not st.session_state['init_data']['finished_game']):
+                st.session_state['init_data']['finished_game']=True
+                st.session_state['init_data']['change_player']=False
+                st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+" You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][Win_index]+"</h1>", unsafe_allow_html=True)
+                Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
+    return Current_award
+
+def Ask_Question(Player_indicator, Win_index, Current_award):
+
+        ## Finished Game:
+    if st.session_state['init_data']['finished_game']:
+        st.session_state['init_data']['reload_game']=True
+        Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
+        if Current_award==1 or Current_award==-1:
+            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡"+Player_indicator+"YOU WIN WITH </h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'> POINT !!!</h1>", unsafe_allow_html=True)
+        else:
+            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡"+Player_indicator+"YOU WIN WITH </h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'> POINTS !!!</h1>", unsafe_allow_html=True)
+    else:
+    
+        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>"+Player_indicator+"Select a type of Query to play.</h2>", unsafe_allow_html=True)
+
+        ## SelectBox - Select query type (game mode)
+        Selected_Feature=st.selectbox('Ask a question from a list, create your query or select a winner:', ['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner'], 
+                                               index=0, key='selected_feature', help=None)
+            
+        ## --------------- SHOW ELEMENTS - QUESTIONS MODE ---------------
+        if Selected_Feature=='Ask a Question':
+            ## Game mode id
+            st.session_state['init_data']['token_type']=0
+
+            ## Text - Questions mode
+            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Select a Question from the list.</h3>", unsafe_allow_html=True)
+            
+            ## SelectBox - Select question
+            Selected_Question=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], 
+                                               index=0, key='Selected_Question', help=None)
+            st.session_state['init_data']['selected_question']=Selected_Question  # Save Info
+            
+            ## Current question index
+            if Selected_Question not in st.session_state['init_data']['feature_questions']:
+                Selected_Question=st.session_state['init_data']['feature_questions'][0]
+            
+            st.session_state['init_data']['questions_index']=st.session_state['init_data']['feature_questions'].index(Selected_Question)
+               
+            ## Text - Show current question
+            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"Current Question: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"
+                        +Selected_Question+"</h3>", unsafe_allow_html=True)
+            
+            ## Button - Use current question
+            Check_Question = st.button('USE THIS QUESTION', key='Check_Question')
+            
+            ## Check current question
+            if st.session_state['init_data']['show_results']:
+                st.session_state['init_data']['show_results']=False
+                
+            else:
+                if Check_Question:
+                    if Selected_Question=='Are you bald?':
+                        st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
+                                                                    'A picture of a bald man','A picture of a haired man', 
+                                                                    'A picture of a bald person','A picture of a person']
+                        st.session_state['init_data']['function_predict']=Predict_bald
+                        
+                    elif Selected_Question=='Do you have BLACK HAIR?':
+                        st.session_state['init_data']['current_querys']=['A picture of a black-haired person',
+                                                                    'A picture of a tawny-haired person',
+                                                                    'A picture of a blond-haired person',
+                                                                    'A picture of a gray-haired person',
+                                                                    'A picture of a red-haired person',
+                                                                    'A picture of a green-haired person',
+                                                                    'A picture of a blue-haired person',
+                                                                    'A picture of a bald-head person']
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
+
+                    elif Selected_Question=='Do you have BROWN HAIR?':
+                        st.session_state['init_data']['current_querys']=['A picture of a tawny-haired person',
+                                                                    'A picture of a black-haired person',
+                                                                    'A picture of a blond-haired person',
+                                                                    'A picture of a gray-haired person',
+                                                                    'A picture of a red-haired person',
+                                                                    'A picture of a green-haired person',
+                                                                    'A picture of a blue-haired person',
+                                                                    'A picture of a bald-head person']
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
+
+                    elif Selected_Question=='Do you have BLOND HAIR?':
+                        st.session_state['init_data']['current_querys']=['A picture of a blond-haired person',
+                                                                    'A picture of a tawny-haired person',
+                                                                    'A picture of a black-haired person',
+                                                                    'A picture of a gray-haired person',
+                                                                    'A picture of a red-haired person',
+                                                                    'A picture of a green-haired person',
+                                                                    'A picture of a blue-haired person',
+                                                                    'A picture of a bald-head person']
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
+                        
+                    elif Selected_Question=='Do you have RED HAIR?':
+                        st.session_state['init_data']['current_querys']=['A picture of a red-haired person',
+                                                                    'A picture of a tawny-haired person',
+                                                                    'A picture of a blond-haired person',
+                                                                    'A picture of a gray-haired person',
+                                                                    'A picture of a black-haired person',
+                                                                    'A picture of a green-haired person',
+                                                                    'A picture of a blue-haired person',
+                                                                    'A picture of a bald-head person']
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
+                        
+                    elif Selected_Question=='Do you have GRAY HAIR?':
+                        st.session_state['init_data']['current_querys']=['A picture of a gray-haired person',
+                                                                    'A picture of a tawny-haired person',
+                                                                    'A picture of a blond-haired person',
+                                                                    'A picture of a black-haired person',
+                                                                    'A picture of a red-haired person',
+                                                                    'A picture of a green-haired person',
+                                                                    'A picture of a blue-haired person',
+                                                                    'A picture of a bald-head person']
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
+                        
+                   
+                    elif  not st.session_state['init_data']['show_results']:
+                        st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index']],
+                                                                        st.session_state['init_data']['querys_list_no'][st.session_state['init_data']['questions_index']]]
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_1
+                
+                    CLIP_Process()
+                    st.session_state['init_data']['function_predict']()
+                    st.session_state['init_data']['show_results']=True
+                    
+                    
+        ## --------------- SHOW ELEMENTS - 1 QUERY MOD ---------------
+        if Selected_Feature=='Create your own query':              
+            
+            ## Game mode id
+            st.session_state['init_data']['token_type']=-1
+
+            ## Text - Query mode
+            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Write your own query and press the button.</h3>", unsafe_allow_html=True)
+            
+            ## TextInput - Select query
+            User_Input = st.text_input('It is recommended to use a text like: "A picture of a ... person" or "A picture of a person ..." (CLIP will check -> "Your query"  vs  "A picture of a person" )', 'A picture of a person', key='User_Input', help=None)
+            st.session_state['init_data']['user_input']=User_Input  # Save Info
+
+            ## Text - Show current query
+            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"Current Query: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input+"</h3>", unsafe_allow_html=True)
+            
+            ## Button - Use current query
+            Check_Query = st.button('USE MY OWN QUERY', key='Check_Query')
+            
+            ## Check current question            
+            if st.session_state['init_data']['show_results']:
+                st.session_state['init_data']['show_results']=False
+            else:
+                if Check_Query:
+                    if User_Input!='A picture of a person':
+                        st.session_state['init_data']['current_querys']=['A Picture of a person',User_Input]
+                        st.session_state['init_data']['function_predict']=Predict_1_vs_0
+                        CLIP_Process()
+                        st.session_state['init_data']['function_predict']()
+                        st.session_state['init_data']['show_results']=True
+                        
+                    else:
+                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Your query must be different of 'A picture of a person'.</h3>", unsafe_allow_html=True)
+               
+               
+        ## --------------- SHOW ELEMENTS - 2 QUERYS MODE ---------------
+        if Selected_Feature=='Create your own 2 querys':
+            
+            ## Game mode id
+            st.session_state['init_data']['token_type']=-2
+
+            ## Text - Querys mode
+            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Write your own querys by introducing 2 opposite descriptions.</h3>", unsafe_allow_html=True)
+            
+            ## SelectBox - Select querys
+            User_Input_Querys1 = st.text_input('Write your "True" query:', 'A picture of a person',
+                                                        key='User_Input_Querys1', help=None)
+            User_Input_Querys2 = st.text_input('Write your "False" query:', 'A picture of a person',
+                                                        key='User_Input_Querys2', help=None)
+            st.session_state['init_data']['user_input_querys1']=User_Input_Querys1  # Save Info
+            st.session_state['init_data']['user_input_querys2']=User_Input_Querys2  # Save Info
+                             
+            ## Text - Show current querys
+            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"Current Querys: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input_Querys1+' vs '+User_Input_Querys2+"</h3>", unsafe_allow_html=True)
+            
+            ## Button - Use current querys
+            Check_Querys = st.button('USE MY OWN QUERYS', key='Check_Querys')
+            
+            ## Check current querys
+            if st.session_state['init_data']['show_results']:
+                st.session_state['init_data']['show_results']=False
+            else:
+                if Check_Querys:
+                    if User_Input_Querys1!=User_Input_Querys2:
+                        st.session_state['init_data']['current_querys']=[User_Input_Querys1,User_Input_Querys2]     
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_1
+                        CLIP_Process()
+                        st.session_state['init_data']['function_predict']()
+                        st.session_state['init_data']['show_results']=True
+                        
+                    else:
+                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Your two own querys must be different.</h3>", unsafe_allow_html=True)
+
+
+        ## --------------- SHOW ELEMENTS - WINNER MODE ---------------
+        if Selected_Feature=='Select a Winner': 
+            
+            ## Game mode id
+            st.session_state['init_data']['token_type']=-3
+
+            ## Text - Winner mode
+            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Select a Winner picture name.</h3>", unsafe_allow_html=True)
+            
+            ## SelectBox - Select winner
+            # st.session_state['init_data']['winner_options']=['Winner not selected']
+            # st.session_state['init_data']['winner_options'].extend(st.session_state['init_data']['current_image_names'])
+            
+            # if st.session_state['init_data']['selected_winner'] not in st.session_state['init_data']['winner_options']:
+                # st.write(st.session_state['init_data']['selected_winner'])
+                # st.write(st.session_state['init_data']['winner_options'])
+                
+            st.session_state['init_data']['selected_winner']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
+                                            index=0, key='Selected_Winner', help=None)
+            
+            ## Text - Show current winner
+            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
+            
+            ## Button - Use current winner
+            Check_Winner = st.button('CHECK THIS WINNER', key='Check_Winner')
+            st.session_state['init_data']['button_winner']=Check_Winner  # Save Info
+                                                
+            ## Check current winner
+            if st.session_state['init_data']['show_results']:
+                st.session_state['init_data']['show_results']=False
+            else:
+                if Check_Winner:
+                    if st.session_state['init_data']['selected_winner'] in st.session_state['init_data']['current_image_names']:
+                        st.session_state['init_data']['selected_winner_index']=np.where(st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'])[0]
+                        st.session_state['init_data']['image_current_predictions']=np.zeros(st.session_state['init_data']['n_images'])
+                        st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['selected_winner_index']]=1    
+                        st.session_state['init_data']['show_results']=True
+                    else:
+                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Your must select a not discarded picture.</h3>", unsafe_allow_html=True)
+
+
+        ## --------------- ACTIONS SHOWING RESULTS ---------------
+        if st.session_state['init_data']['show_results']:
+
+            ## Show current results
+            if st.session_state['init_data']['token_type']==0:
+                if st.session_state['init_data']['image_current_predictions'][Win_index]:
+                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['selected_question']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>YES</h3>", unsafe_allow_html=True)
+                else:
+                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['selected_question']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>NO</h3>", unsafe_allow_html=True)
+                    
+            if st.session_state['init_data']['token_type']==-1:
+                if st.session_state['init_data']['image_current_predictions'][Win_index]:
+                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['user_input']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>TRUE</h3>", unsafe_allow_html=True)
+                else:
+                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['user_input']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>FALSE</h3>", unsafe_allow_html=True)
+                    
+            if st.session_state['init_data']['token_type']==-2:
+                if st.session_state['init_data']['image_current_predictions'][Win_index]:
+                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input_querys1']+"</h3>", unsafe_allow_html=True)
+                else:
+                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input_querys2']+"</h3>", unsafe_allow_html=True)
+              
+            if st.session_state['init_data']['token_type']==-3:
+                if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][Win_index]:
+                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
+         
+        ## --------------- PLAYER 1: CHECK FINISHED GAME ---------------
+        if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1:
+            st.session_state['init_data']['finished_game']=True
+            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][Win_index]+"</h1>", unsafe_allow_html=True)
+            Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
+    
 def CLIP_Process():
     ## Tokenization process
     clip_model, clip_transform=Load_CLIP()
@@ -201,8 +507,7 @@ def Show_images():
     ## result to array      
     showed_images=np.array(showed_images)/255
     del image_highlighted,current_index,current_line_width,current_color,image_size,current_image_file,w,h,c
-    return showed_images
-    
+    return showed_images   
     
 def find_same_name(index,names_list):
     if st.session_state['init_data']['special_images_names']:
@@ -226,7 +531,6 @@ def find_same_name(index,names_list):
                 if fixed_name==names_list[i]:
                     index_list.append(i)
     return index_list
-
 
 def find_list_elements(x,x_list):
     if type(x)==list:
@@ -309,40 +613,7 @@ def Select_Images_Randomly():
     st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
        
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
-    
-    
-def Select_Images_Randomly_name_management():
-    st.session_state['init_data']['image_current_paths']=[]
-    st.session_state['init_data']['current_image_names']=[]
-    image_index=[]
-        
-    archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
-    listOfFileNames = archive.namelist()        
-    image_index_all=list(range(len(listOfFileNames)))
-    image_index.append(random.choice(image_index_all))
-    image_index_all.remove(image_index[0])
-    current_index=1
-    
-    if st.session_state['init_data']['player2_turn']:
-        n_img=st.session_state['init_data']['n_images2']
-    else:
-        n_img=st.session_state['init_data']['n_images']
-    
-    while len(image_index)<n_img:
-        image_index.append(random.choice(image_index_all))
-        image_index_all.remove(image_index[current_index])
-        current_index+=1
-        
-   # Iterate over the file names
-    for current_index in image_index:
-        image_current_path=listOfFileNames[current_index]
-        st.session_state['init_data']['image_current_paths'].append(image_current_path)
-        st.session_state['init_data']['current_image_names'].append(image_current_path[-10:-4])
-                
-    st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
-    st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
-    del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
-  
+
 def Load_Image(current_index):
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
@@ -375,7 +646,6 @@ def Load_Data(N):
         'special_images_names':False,
         'images_not_selected':True,
         'token_type':0,
-        'token_type2':0,
         'feature_questions':['Are you a MAN?', 'Are you a WOMAN?', 'Are you an ATTRACTIVE person?', 'Are you an CHUBBY person?', 'Are you YOUNG?',
                     'Are you a person with RECEDING HAIRLINES?', 'Are you SMILING?','Are you BALD?', 
                     'Do you have BLACK HAIR?', 'Do you have BROWN HAIR?', 'Do you have BLOND HAIR?', 'Do you have RED HAIR?',
@@ -393,12 +663,9 @@ def Load_Data(N):
                     'Are you wearing NECKTIE?'],
         'selected_question':'Are you a MAN?',
         'questions_index':0,
-        'questions_index2':0,
         'show_results':False,
         'current_querys':['A picture of a person','A picture of a person'],
-        'current_querys2':['A picture of a person','A picture of a person'],
         'function_predict':Predict_0_vs_1,
-        'function_predict2':Predict_0_vs_1,
         'current_images_discarted':np.zeros((N)),
         'current_images_discarted2':np.zeros((N)),
         'querys_list_yes':['A picture of a male person', 'A picture of a female person', 'A picture of an attractive person', 'A picture of a fat person', 'A picture of a young person', 
@@ -435,11 +702,8 @@ def Load_Data(N):
             ],
         'token_type':0,
         'user_input':'A picture of a person',
-        'user_input2':'A picture of a person',
         'user_input_querys1':'A picture of a person',
         'user_input_querys2':'A picture of a person',
-        'user_input2_querys1':'A picture of a person',
-        'user_input2_querys2':'A picture of a person',
         'image_current_probs':np.zeros((N,2)),
         'selected_winner':'Winner not selected',
         'reset_app':False,
@@ -473,15 +737,10 @@ def Main_Program():
     ## --------------- CHANGE PLAYER TURN --------------- 
     if st.session_state['init_data']['change_player']:
         if st.session_state['init_data']['player2_turn']:
-            st.session_state['init_data']['status']=st.session_state['init_data']['status']-100
+            st.session_state['init_data']['status']=131
         else:
-            st.session_state['init_data']['status']=st.session_state['init_data']['status']+100
+            st.session_state['init_data']['status']=132
         st.session_state['init_data']['change_player']=False
-        
-    if st.session_state['init_data']['status']>100:
-        st.session_state['init_data']['player2_turn']=True
-    else:
-        st.session_state['init_data']['player2_turn']=False
         
         
     ## --------------- TITLE --------------- 
@@ -492,14 +751,14 @@ def Main_Program():
             st.markdown("<h1 style='text-align:left; float:left; color:blue; margin:0px;'>Guess Who?</h1>", unsafe_allow_html=True)
         elif st.session_state['init_data']['N_players']!=1:
             st.markdown("<h1 style='text-align:left; float:left; color:blue; margin:0px;'>Guess Who?</h1><h2 style='text-align:right;float:right; color:gray; margin:0px;'>P1 score: "
-                        + str(st.session_state['init_data']['award1'])+"   P2 score: "+ str(st.session_state['init_data']['award2'])+"</h2>", unsafe_allow_html=True)
+                        + str(st.session_state['init_data']['award1'])+"<p></p>P2 score: "+ str(st.session_state['init_data']['award2'])+"</h2>", unsafe_allow_html=True)
         else:
             st.markdown("<h1 style='text-align:left; float:left; color:blue; margin:0px;'>Guess Who?</h1><h2 style='text-align:right; float:right; color:gray; margin:0px;'>score: "
                     + str(st.session_state['init_data']['award1'])+"</h2>", unsafe_allow_html=True)
 
 
     ## --------------- INITIALIZATIONS ---------------
-    if st.session_state['init_data']['status']==0 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==0:
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select 1 or 2 players and the number of images to use</h2>", unsafe_allow_html=True)
          
         ## Number of players
@@ -536,11 +795,12 @@ def Main_Program():
             if st.session_state['init_data']['N_players']==1:
                 st.session_state['init_data']['status']=1
             else:
-                st.session_state['init_data']['status']=11
+                st.session_state['init_data']['status']=101
+            st.session_state['init_data']['player2_turn']=False
 
 
     ## --------------- IMAGE SELECTION ---------------
-    if (st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==11) and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==100:
         ## Select zip file
         if st.session_state['init_data']['Selected_Images_Source']=='Use Celeba dataset random images':
             st.session_state['init_data']['zip_file']='guess_who_images.zip'
@@ -564,19 +824,19 @@ def Main_Program():
         
         if Accept_Images:
             ## Choose winner and start game
-            st.session_state['init_data']['status']=st.session_state['init_data']['status']+1
+            st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
 
 
-    ## --------------- SELECT WINNER IMAGE ---------------
+    ## --------------- SELECT WINNER IMAGE ---------------  
     
     ## 1 player case
-    if st.session_state['init_data']['status']==2 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==11:
         st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
-        st.session_state['init_data']['status']=st.session_state['init_data']['status']+1
+        st.session_state['init_data']['status']=st.session_state['init_data']['status']+20
 
                 
     ## 2 player case - Player 1
-    if st.session_state['init_data']['status']==12 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==111:
         ## Select winner image by players
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Select the image to be discovered by the Player 2</h2>", unsafe_allow_html=True)
         Image_Names_List=['Not selected']
@@ -590,20 +850,21 @@ def Main_Program():
             st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to validate the selection: "+Player_2_Image+"</h3>", unsafe_allow_html=True)
             Next_Player_Selection = st.button('CONFIRM CHOICE', key='Next_Player_Selection')
             if Next_Player_Selection:
-                st.session_state['init_data']['status']=st.session_state['init_data']['status']+1
+                st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
                 st.session_state['init_data']['current_winner_index2']=Image_Names_List.index(Player_2_Image)-1
     
     
     ## 2 player case - Player 1 OK
-    if st.session_state['init_data']['status']==13 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==121:
         st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Press the button to hide the selection.</h3>", unsafe_allow_html=True)
         Next_Player_Selection2 = st.button('HIDE SELECTION', key='Next_Player_Selection2')
         if Next_Player_Selection2:
-            st.session_state['init_data']['status']=st.session_state['init_data']['status']+1                
+            st.session_state['init_data']['status']=112 
+            st.session_state['init_data']['player2_turn']=True              
 
 
     ## 2 player case - Player 2
-    if st.session_state['init_data']['status']==14 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==112:
         ## Select winner image by players
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Select the image to be discovered by the Player 1</h2>", unsafe_allow_html=True)
         Image_Names_List=['Not selected']
@@ -617,794 +878,36 @@ def Main_Program():
             st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to validate the selection: "+Player_1_Image+"</h3>", unsafe_allow_html=True)
             Next_Player_Selection = st.button('CONFIRM CHOICE', key='Next_Player_Selection')
             if Next_Player_Selection:
-                st.session_state['init_data']['status']=st.session_state['init_data']['status']+1
+                st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
                 st.session_state['init_data']['current_winner_index']=Image_Names_List.index(Player_1_Image)-1
 
  
     ## 2 player case - Player 2 OK
-    if st.session_state['init_data']['status']==15 and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['status']==122:
         st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Press the button to hide the selection.</h3>", unsafe_allow_html=True)
         Next_Player_Selection2 = st.button('START GAME', key='Next_Player_Selection2')
         if Next_Player_Selection2:
-            st.session_state['init_data']['status']=30
+            st.session_state['init_data']['status']=131
+            st.session_state['init_data']['player2_turn']=False
 
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
-    if st.session_state['init_data']['status']<10 and (not st.session_state['init_data']['finished_game']):    
-        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select a type of Query to play.</h2>", unsafe_allow_html=True)
-
-        ## SelectBox - Select query type (game mode)
-        Selected_Feature=st.selectbox('Ask a question from a list, create your query or select a winner:', ['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner'], 
-                                               index=0, key='selected_feature', help=None)
-            
-        ## --------------- SHOW ELEMENTS - QUESTIONS MODE ---------------
-        if Selected_Feature=='Ask a Question':
-            ## Game mode id
-            st.session_state['init_data']['token_type']=0
-
-            ## Text - Questions mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Select a Question from the list.</h3>", unsafe_allow_html=True)
-            
-            ## SelectBox - Select question
-            Selected_Question=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], 
-                                               index=0, key='Selected_Question', help=None)
-            st.session_state['init_data']['selected_question']=Selected_Question  # Save Info
-            
-            ## Current question index
-            if Selected_Question not in st.session_state['init_data']['feature_questions']:
-                Selected_Question=st.session_state['init_data']['feature_questions'][0]
-            
-            st.session_state['init_data']['questions_index']=st.session_state['init_data']['feature_questions'].index(Selected_Question)
-               
-            ## Text - Show current question
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current Question: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"
-                        +Selected_Question+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current question
-            Check_Question = st.button('USE THIS QUESTION', key='Check_Question')
-            
-            ## Check current question
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
+    if st.session_state['init_data']['status']==31: 
+        Ask_Question("", st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'])
                 
-            else:
-                if Check_Question:
-                    if Selected_Question=='Are you bald?':
-                        st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
-                                                                    'A picture of a bald man','A picture of a haired man', 
-                                                                    'A picture of a bald person','A picture of a person']
-                        st.session_state['init_data']['function_predict']=Predict_bald
-                        
-                    elif Selected_Question=='Do you have BLACK HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a black-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
-
-                    elif Selected_Question=='Do you have BROWN HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a tawny-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
-
-                    elif Selected_Question=='Do you have BLOND HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a blond-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
-                        
-                    elif Selected_Question=='Do you have RED HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a red-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
-                        
-                    elif Selected_Question=='Do you have GRAY HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a gray-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
-                        
-                   
-                    elif  not st.session_state['init_data']['show_results']:
-                        st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index']],
-                                                                        st.session_state['init_data']['querys_list_no'][st.session_state['init_data']['questions_index']]]
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_1
-                
-                    CLIP_Process()
-                    st.session_state['init_data']['function_predict']()
-                    st.session_state['init_data']['show_results']=True
-                    
-                    
-        ## --------------- SHOW ELEMENTS - 1 QUERY MOD ---------------
-        if Selected_Feature=='Create your own query':              
-            
-            ## Game mode id
-            st.session_state['init_data']['token_type']=-1
-
-            ## Text - Query mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Write your own query and press the button.</h3>", unsafe_allow_html=True)
-            
-            ## TextInput - Select query
-            User_Input = st.text_input('It is recommended to use a text like: "A picture of a ... person" or "A picture of a person ..." (CLIP will check -> "Your query"  vs  "A picture of a person" )', 'A picture of a person', key='User_Input', help=None)
-            st.session_state['init_data']['user_input']=User_Input  # Save Info
-
-            ## Text - Show current query
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current Query: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current query
-            Check_Query = st.button('USE MY OWN QUERY', key='Check_Query')
-            
-            ## Check current question            
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-            else:
-                if Check_Query:
-                    if User_Input!='A picture of a person':
-                        st.session_state['init_data']['current_querys']=['A Picture of a person',User_Input]
-                        st.session_state['init_data']['function_predict']=Predict_1_vs_0
-                        CLIP_Process()
-                        st.session_state['init_data']['function_predict']()
-                        st.session_state['init_data']['show_results']=True
-                        
-                    else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Your query must be different of 'A picture of a person'.</h3>", unsafe_allow_html=True)
-               
-               
-        ## --------------- SHOW ELEMENTS - 2 QUERYS MODE ---------------
-        if Selected_Feature=='Create your own 2 querys':
-            
-            ## Game mode id
-            st.session_state['init_data']['token_type']=-2
-
-            ## Text - Querys mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Write your own querys by introducing 2 opposite descriptions.</h3>", unsafe_allow_html=True)
-            
-            ## SelectBox - Select querys
-            User_Input_Querys1 = st.text_input('Write your "True" query:', 'A picture of a person',
-                                                        key='User_Input_Querys1', help=None)
-            User_Input_Querys2 = st.text_input('Write your "False" query:', 'A picture of a person',
-                                                        key='User_Input_Querys2', help=None)
-            st.session_state['init_data']['user_input_querys1']=User_Input_Querys1  # Save Info
-            st.session_state['init_data']['user_input_querys2']=User_Input_Querys2  # Save Info
-                             
-            ## Text - Show current querys
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current Querys: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input_Querys1+' vs '+User_Input_Querys2+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current querys
-            Check_Querys = st.button('USE MY OWN QUERYS', key='Check_Querys')
-            
-            ## Check current querys
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-            else:
-                if Check_Querys:
-                    if User_Input_Querys1!=User_Input_Querys2:
-                        st.session_state['init_data']['current_querys']=[User_Input_Querys1,User_Input_Querys2]     
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_1
-                        CLIP_Process()
-                        st.session_state['init_data']['function_predict']()
-                        st.session_state['init_data']['show_results']=True
-                        
-                    else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Your two own querys must be different.</h3>", unsafe_allow_html=True)
-
-
-        ## --------------- SHOW ELEMENTS - WINNER MODE ---------------
-        if Selected_Feature=='Select a Winner': 
-            
-            ## Game mode id
-            st.session_state['init_data']['token_type']=-3
-
-            ## Text - Winner mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Select a Winner picture name.</h3>", unsafe_allow_html=True)
-            
-            ## SelectBox - Select winner
-            # st.session_state['init_data']['winner_options']=['Winner not selected']
-            # st.session_state['init_data']['winner_options'].extend(st.session_state['init_data']['current_image_names'])
-            
-            # if st.session_state['init_data']['selected_winner'] not in st.session_state['init_data']['winner_options']:
-                # st.write(st.session_state['init_data']['selected_winner'])
-                # st.write(st.session_state['init_data']['winner_options'])
-                
-            st.session_state['init_data']['selected_winner']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
-                                            index=0, key='Selected_Winner', help=None)
-            
-            ## Text - Show current winner
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current winner
-            Check_Winner = st.button('CHECK THIS WINNER', key='Check_Winner')
-            st.session_state['init_data']['button_winner']=Check_Winner  # Save Info
-                                                
-            ## Check current winner
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-            else:
-                if Check_Winner:
-                    if st.session_state['init_data']['selected_winner'] in st.session_state['init_data']['current_image_names']:
-                        st.session_state['init_data']['selected_winner_index']=np.where(st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'])[0]
-                        st.session_state['init_data']['image_current_predictions']=np.zeros(st.session_state['init_data']['n_images'])
-                        st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['selected_winner_index']]=1    
-                        st.session_state['init_data']['show_results']=True
-                    else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>Your must select a not discarded picture.</h3>", unsafe_allow_html=True)
-
-
-        ## --------------- ACTIONS SHOWING RESULTS ---------------
-        if st.session_state['init_data']['show_results']:
-
-            ## Show current results
-            if st.session_state['init_data']['token_type']==0:
-                if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['selected_question']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>YES</h3>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['selected_question']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>NO</h3>", unsafe_allow_html=True)
-                    
-            if st.session_state['init_data']['token_type']==-1:
-                if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['user_input']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>TRUE</h3>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+st.session_state['init_data']['user_input']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>FALSE</h3>", unsafe_allow_html=True)
-                    
-            if st.session_state['init_data']['token_type']==-2:
-                if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input_querys1']+"</h3>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input_querys2']+"</h3>", unsafe_allow_html=True)
-              
-            if st.session_state['init_data']['token_type']==-3:
-                if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
-            
-        if st.session_state['init_data']['finished_game']:
-            st.session_state['init_data']['reload_game']=True
-            Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
-            if st.session_state['init_data']['award1']==1 or st.session_state['init_data']['award1']==-1:
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ PLAYER 1: YOU WIN WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award1'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
-            else:
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ PLAYER 1:  YOU WIN WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award1'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
-        else:
-            ## --------------- PLAYER 1: CHECK FINISHED GAME ---------------
-            if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and (not st.session_state['init_data']['finished_game']):
-                st.session_state['init_data']['finished_game']=True
-                st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
-                Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
-        
         
     ## 2 PLAYER GAME - PLAYER 1 *********************************************************************************************************************************************************
-    if st.session_state['init_data']['status']==30 and (not st.session_state['init_data']['finished_game']):
-        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Select a type of Query to play.</h2>", unsafe_allow_html=True)
-
-        ## SelectBox - Select query type (game mode)
-        Selected_Feature=st.selectbox('Ask a question from a list, create your query or select a winner:', ['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner'], 
-                                               index=0, key='selected_feature', help=None)
-            
-        ## --------------- SHOW ELEMENTS - QUESTIONS MODE ---------------
-        if Selected_Feature=='Ask a Question':
-            ## Game mode id
-            st.session_state['init_data']['token_type']=0
-
-            ## Text - Questions mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 1: Select a Question from the list.</h3>", unsafe_allow_html=True)
-            
-            ## SelectBox - Select question
-            Selected_Question=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], 
-                                               index=0, key='Selected_Question', help=None)
-            st.session_state['init_data']['selected_question']=Selected_Question  # Save Info
-            
-            ## Current question index
-            if Selected_Question not in st.session_state['init_data']['feature_questions']:
-                Selected_Question=st.session_state['init_data']['feature_questions'][0]
-            
-            st.session_state['init_data']['questions_index']=st.session_state['init_data']['feature_questions'].index(Selected_Question)
-               
-            ## Text - Show current question
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: Current Question: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"
-                        +Selected_Question+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current question
-            Check_Question = st.button('USE THIS QUESTION', key='Check_Question')
-            
-            ## Check current question
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-                
-            else:
-                if Check_Question:
-                    if Selected_Question=='Are you bald?':
-                        st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
-                                                                    'A picture of a bald man','A picture of a haired man', 
-                                                                    'A picture of a bald person','A picture of a person']
-                        st.session_state['init_data']['function_predict']=Predict_bald
-                        
-                    elif Selected_Question=='Do you have BLACK HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a black-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
-
-                    elif Selected_Question=='Do you have BROWN HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a tawny-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
-
-                    elif Selected_Question=='Do you have BLOND HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a blond-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
-                        
-                    elif Selected_Question=='Do you have RED HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a red-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
-                        
-                    elif Selected_Question=='Do you have GRAY HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a gray-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
-                        
-                   
-                    elif  not st.session_state['init_data']['show_results']:
-                        st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index']],
-                                                                        st.session_state['init_data']['querys_list_no'][st.session_state['init_data']['questions_index']]]
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_1
-                
-                    CLIP_Process()
-                    st.session_state['init_data']['function_predict']()
-                    st.session_state['init_data']['show_results']=True
-                    
-                    
-        ## --------------- SHOW ELEMENTS - 1 QUERY MOD ---------------
-        if Selected_Feature=='Create your own query':              
-            
-            ## Game mode id
-            st.session_state['init_data']['token_type']=-1
-
-            ## Text - Query mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 1: Write your own query and press the button.</h3>", unsafe_allow_html=True)
-            
-            ## TextInput - Select query
-            User_Input = st.text_input('It is recommended to use a text like: "A picture of a ... person" or "A picture of a person ..." (CLIP will check -> "Your query"  vs  "A picture of a person" )', 'A picture of a person', key='User_Input', help=None)
-            st.session_state['init_data']['user_input']=User_Input  # Save Info
-
-            ## Text - Show current query
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: Current Query: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current query
-            Check_Query = st.button('USE MY OWN QUERY', key='Check_Query')
-            
-            ## Check current question            
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-            else:
-                if Check_Query:
-                    if User_Input!='A picture of a person':
-                        st.session_state['init_data']['current_querys']=['A Picture of a person',User_Input]
-                        st.session_state['init_data']['function_predict']=Predict_1_vs_0
-                        CLIP_Process()
-                        st.session_state['init_data']['function_predict']()
-                        st.session_state['init_data']['show_results']=True
-                        
-                    else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 1: Your query must be different of 'A picture of a person'.</h3>", unsafe_allow_html=True)
-                
-                
-        ## --------------- SHOW ELEMENTS - 2 QUERYS MODE ---------------
-        if Selected_Feature=='Create your own 2 querys':
-            
-            ## Game mode id
-            st.session_state['init_data']['token_type']=-2
-
-            ## Text - Querys mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 1: Write your own querys by introducing 2 opposite descriptions.</h3>", unsafe_allow_html=True)
-            
-            ## SelectBox - Select querys
-            User_Input_Querys1 = st.text_input('Write your "True" query:', 'A picture of a person',
-                                                        key='User_Input_Querys1', help=None)
-            User_Input_Querys2 = st.text_input('Write your "False" query:', 'A picture of a person',
-                                                        key='User_Input_Querys2', help=None)
-            st.session_state['init_data']['user_input_querys1']=User_Input_Querys1  # Save Info
-            st.session_state['init_data']['user_input_querys2']=User_Input_Querys2  # Save Info
-                             
-            ## Text - Show current querys
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: Current Querys: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input_Querys1+' vs '+User_Input_Querys2+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current querys
-            Check_Querys = st.button('USE MY OWN QUERYS', key='Check_Querys')
-            
-            ## Check current querys
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-            else:
-                if Check_Querys:
-                    if User_Input_Querys1!=User_Input_Querys2:
-                        st.session_state['init_data']['current_querys']=[User_Input_Querys1,User_Input_Querys2]     
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_1
-                        CLIP_Process()
-                        st.session_state['init_data']['function_predict']()
-                        st.session_state['init_data']['show_results']=True
-                        
-                    else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 1: Your two own querys must be different.</h3>", unsafe_allow_html=True)
-
-
-        ## --------------- SHOW ELEMENTS - WINNER MODE ---------------
-        if Selected_Feature=='Select a Winner': 
-            
-            ## Game mode id
-            st.session_state['init_data']['token_type']=-3
-
-            ## Text - Winner mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 1: Select a Winner picture name.</h3>", unsafe_allow_html=True)
-            
-            ## SelectBox - Select winner
-            # st.session_state['init_data']['winner_options']=['Winner not selected']
-            # st.session_state['init_data']['winner_options'].extend(st.session_state['init_data']['current_image_names'])
-            
-            # if st.session_state['init_data']['selected_winner'] not in st.session_state['init_data']['winner_options']:
-                # st.write(st.session_state['init_data']['selected_winner'])
-                # st.write(st.session_state['init_data']['winner_options'])
-                
-            st.session_state['init_data']['selected_winner']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
-                                            index=0, key='Selected_Winner', help=None)
-            
-            ## Text - Show current winner
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current winner
-            Check_Winner = st.button('CHECK THIS WINNER', key='Check_Winner')
-            st.session_state['init_data']['button_winner']=Check_Winner  # Save Info
-                                                
-            ## Check current winner
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-            else:
-                if Check_Winner:
-                    if st.session_state['init_data']['selected_winner'] in st.session_state['init_data']['current_image_names']:
-                        st.session_state['init_data']['selected_winner_index']=np.where(st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'])[0]
-                        st.session_state['init_data']['image_current_predictions']=np.zeros(st.session_state['init_data']['n_images'])
-                        st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['selected_winner_index']]=1    
-                        st.session_state['init_data']['show_results']=True
-                    else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 1: Your must select a not discarded picture.</h3>", unsafe_allow_html=True)
-
-
-        ## --------------- ACTIONS SHOWING RESULTS ---------------
-        if st.session_state['init_data']['show_results']:
-
-            ## Show current results
-            if st.session_state['init_data']['token_type']==0:
-                if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: "+st.session_state['init_data']['selected_question']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>YES</h3>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: "+st.session_state['init_data']['selected_question']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>NO</h3>", unsafe_allow_html=True)
-                    
-            if st.session_state['init_data']['token_type']==-1:
-                if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: "+st.session_state['init_data']['user_input']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>TRUE</h3>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: "+st.session_state['init_data']['user_input']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>FALSE</h3>", unsafe_allow_html=True)
-                    
-            if st.session_state['init_data']['token_type']==-2:
-                if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input_querys1']+"</h3>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input_querys2']+"</h3>", unsafe_allow_html=True)
-              
-            if st.session_state['init_data']['token_type']==-3:
-                if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
-
+    if st.session_state['init_data']['status']==131:
+        Ask_Question("PLAYER 1: ", st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'])
+    
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
-    if st.session_state['init_data']['status']==130 and (not st.session_state['init_data']['finished_game']):    
-        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 2: Select a type of Query to play.</h2>", unsafe_allow_html=True)
+    if st.session_state['init_data']['status']==132 and (not st.session_state['init_data']['finished_game']):    
+        Ask_Question("PLAYER 2: ", st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'])
 
-        ## SelectBox - Select query type (game mode)
-        Selected_Feature2=st.selectbox('Ask a question from a list, create your query or select a winner:', ['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner'], 
-                                               index=0, key='selected_feature2', help=None)
-            
-        ## --------------- SHOW ELEMENTS - QUESTIONS MODE ---------------
-        if Selected_Feature2=='Ask a Question':
-            ## Game mode id
-            st.session_state['init_data']['token_type2']=0
-
-            ## Text - Questions mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 2: Select a Question from the list.</h3>", unsafe_allow_html=True)
-            
-            ## SelectBox - Select question
-            Selected_Question2=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], 
-                                               index=0, key='Selected_Question2', help=None)
-            st.session_state['init_data']['Selected_Question2']=Selected_Question2  # Save Info
-            
-            ## Current question index
-            if Selected_Question2 not in st.session_state['init_data']['feature_questions']:
-                Selected_Question2=st.session_state['init_data']['feature_questions'][0]
-            
-            st.session_state['init_data']['questions_index2']=st.session_state['init_data']['feature_questions'].index(Selected_Question2)
-               
-            ## Text - Show current question
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: Current Question: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"
-                        +Selected_Question2+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current question
-            Check_Question2 = st.button('USE THIS QUESTION', key='Check_Question2')
-            
-            ## Check current question
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-                
-            else:
-                if Check_Question2:
-                    if Selected_Question2=='Are you bald?':
-                        st.session_state['init_data']['current_querys2']=['A picture of a male person','A picture of a female person',
-                                                                    'A picture of a bald man','A picture of a haired man', 
-                                                                    'A picture of a bald person','A picture of a person']
-                        st.session_state['init_data']['function_predict2']=Predict_bald
-                        
-                    elif Selected_Question2=='Do you have BLACK HAIR?':
-                        st.session_state['init_data']['current_querys2']=['A picture of a black-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict2']=Predict_0_vs_all
-
-                    elif Selected_Question2=='Do you have BROWN HAIR?':
-                        st.session_state['init_data']['current_querys2']=['A picture of a tawny-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict2']=Predict_0_vs_all
-
-                    elif Selected_Question2=='Do you have BLOND HAIR?':
-                        st.session_state['init_data']['current_querys2']=['A picture of a blond-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict2']=Predict_0_vs_all
-                        
-                    elif Selected_Question2=='Do you have RED HAIR?':
-                        st.session_state['init_data']['current_querys2']=['A picture of a red-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict2']=Predict_0_vs_all
-                        
-                    elif Selected_Question2=='Do you have GRAY HAIR?':
-                        st.session_state['init_data']['current_querys2']=['A picture of a gray-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict2']=Predict_0_vs_all
-                        
-                   
-                    elif  not st.session_state['init_data']['show_results']:
-                        st.session_state['init_data']['current_querys2']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index2']],
-                                                                        st.session_state['init_data']['querys_list_no'][st.session_state['init_data']['questions_index2']]]
-                        st.session_state['init_data']['function_predict2']=Predict_0_vs_1
-                
-                    CLIP_Process()
-                    st.session_state['init_data']['function_predict2']()
-                    st.session_state['init_data']['show_results']=True
-                   
-                   
-        ## --------------- SHOW ELEMENTS - 1 QUERY MOD ---------------
-        if Selected_Feature2=='Create your own query':              
-            
-            ## Game mode id
-            st.session_state['init_data']['token_type2']=-1
-
-            ## Text - Query mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 2: Write your own query and press the button.</h3>", unsafe_allow_html=True)
-            
-            ## TextInput - Select query
-            User_Input2 = st.text_input('It is recommended to use a text like: "A picture of a ... person" or "A picture of a person ..." (CLIP will check -> "Your query"  vs  "A picture of a person" )', 'A picture of a person', key='User_Input2', help=None)
-            st.session_state['init_data']['user_input2']=User_Input2  # Save Info
-
-            ## Text - Show current query
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: Current Query: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input2+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current query
-            Check_Query2 = st.button('USE MY OWN QUERY', key='Check_Query2')
-            
-            ## Check current question            
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-            else:
-                if Check_Query2:
-                    if User_Input2!='A picture of a person':
-                        st.session_state['init_data']['current_querys2']=['A Picture of a person',User_Input2]
-                        st.session_state['init_data']['function_predict2']=Predict_1_vs_0
-                        CLIP_Process()
-                        st.session_state['init_data']['function_predict2']()
-                        st.session_state['init_data']['show_results']=True
-                        
-                    else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 2: Your query must be different of 'A picture of a person'.</h3>", unsafe_allow_html=True)
-                
-        ## --------------- SHOW ELEMENTS - 2 QUERYS MODE ---------------
-        if Selected_Feature2=='Create your own 2 querys':
-            
-            ## Game mode id
-            st.session_state['init_data']['token_type2']=-2
-
-            ## Text - Querys mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 2: Write your own querys by introducing 2 opposite descriptions.</h3>", unsafe_allow_html=True)
-            
-            ## SelectBox - Select querys
-            User_Input2_Querys1 = st.text_input('Write your "True" query:', 'A picture of a person',
-                                                        key='User_Input2_Querys1', help=None)
-            User_Input2_Querys2 = st.text_input('Write your "False" query:', 'A picture of a person',
-                                                        key='User_Input2_Querys2', help=None)
-            st.session_state['init_data']['user_input2_querys1']=User_Input2_Querys1  # Save Info
-            st.session_state['init_data']['user_input2_querys2']=User_Input2_Querys2  # Save Info
-                             
-            ## Text - Show current querys
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: Current Querys: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+User_Input2_Querys1+' vs '+User_Input2_Querys2+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current querys
-            Check_Querys2 = st.button('USE MY OWN QUERYS', key='Check_Querys2')
-            
-            ## Check current querys
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-            else:
-                if Check_Querys2:
-                    if User_Input2_Querys1!=User_Input2_Querys2:
-                        st.session_state['init_data']['current_querys2']=[User_Input2_Querys1,User_Input2_Querys2]     
-                        st.session_state['init_data']['function_predict2']=Predict_0_vs_1
-                        CLIP_Process()
-                        st.session_state['init_data']['function_predict2']()
-                        st.session_state['init_data']['show_results']=True
-                        
-                    else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 2: Your two own querys must be different.</h3>", unsafe_allow_html=True)
-
-        ## --------------- SHOW ELEMENTS - WINNER MODE ---------------
-        if Selected_Feature2=='Select a Winner': 
-            
-            ## Game mode id
-            st.session_state['init_data']['token_type2']=-3
-
-            ## Text - Winner mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 2: Select a Winner picture name.</h3>", unsafe_allow_html=True)
-            
-            ## SelectBox - Select winner
-            # st.session_state['init_data']['winner_options']=['Winner not selected']
-            # st.session_state['init_data']['winner_options'].extend(st.session_state['init_data']['current_image_names'])
-            
-            # if st.session_state['init_data']['selected_winner'] not in st.session_state['init_data']['winner_options']:
-                # st.write(st.session_state['init_data']['selected_winner'])
-                # st.write(st.session_state['init_data']['winner_options2'])
-                
-            st.session_state['init_data']['selected_winner']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
-                                            index=0, key='Selected_Winner', help=None)
-            
-            ## Text - Show current winner
-            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: Current Winner: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
-            
-            ## Button - Use current winner
-            Check_Winner = st.button('CHECK THIS WINNER', key='Check_Winner')
-            st.session_state['init_data']['button_winner']=Check_Winner  # Save Info
-                                                
-            ## Check current winner
-            if st.session_state['init_data']['show_results']:
-                st.session_state['init_data']['show_results']=False
-            else:
-                if Check_Winner:
-                    if st.session_state['init_data']['selected_winner'] in st.session_state['init_data']['current_image_names']:
-                        st.session_state['init_data']['selected_winner_index']=np.where(st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'])[0]
-                        st.session_state['init_data']['image_current_predictions']=np.zeros(st.session_state['init_data']['n_images2'])
-                        st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['selected_winner_index']]=1    
-                        st.session_state['init_data']['show_results']=True
-                    else:
-                        st.markdown("<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>PLAYER 2: Your must select a not discarded picture.</h3>", unsafe_allow_html=True)
-
-
-        ## --------------- ACTIONS SHOWING RESULTS ---------------
-        if st.session_state['init_data']['show_results']:
-
-            ## Show current results
-            if st.session_state['init_data']['token_type2']==0:
-                if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index2']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: "+st.session_state['init_data']['Selected_Question2']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>YES</h3>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: "+st.session_state['init_data']['Selected_Question2']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>NO</h3>", unsafe_allow_html=True)
-                    
-            if st.session_state['init_data']['token_type2']==-1:
-                if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index2']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: "+st.session_state['init_data']['user_input2']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>TRUE</h3>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: "+st.session_state['init_data']['user_input2']+"</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>FALSE</h3>", unsafe_allow_html=True)
-                    
-            if st.session_state['init_data']['token_type2']==-2:
-                if st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index2']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input2_querys1']+"</h3>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input2_querys2']+"</h3>", unsafe_allow_html=True)
-              
-            if st.session_state['init_data']['token_type2']==-3:
-                if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index2']]:
-                    st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
-        
-        
+  
     ## --------------- BUTTON NEXT ---------------
-    if st.session_state['init_data']['show_results'] and (not st.session_state['init_data']['finished_game']):
+    if st.session_state['init_data']['show_results']:
         if st.session_state['init_data']['N_players']>1:
             Next_Screen = st.button('NEXT PLAYER', key='next_screen')
             if Next_Screen:
@@ -1419,90 +922,15 @@ def Main_Program():
     st.session_state['init_data']['Showed_image_names']=st.session_state['init_data']['current_image_names']
 
 
-    ## PLAYER 2 OR PLAYER 1 FINAL OPERATIONS
+    ## DISCARDING AND FINAL RESULTS
     if st.session_state['init_data']['player2_turn']:
-    
-           ## --------------- PLAYER 2: APPLY DISCARDING ---------------
-        if st.session_state['init_data']['show_results']:        
-            st.session_state['init_data']['previous_discarding_images_number']=st.session_state['init_data']['n_images2']
-            Image_discarding()
-                       
-            ## penalty - game not finished                                                       
-            if st.session_state['init_data']['n_images2']>1:
-                st.session_state['init_data']['award2']=st.session_state['init_data']['award2']-st.session_state['init_data']['n_images2']
-            
-            ## penalty - "select winner" option used
-            if st.session_state['init_data']['token_type2']==-3:   
-                st.session_state['init_data']['award2']=st.session_state['init_data']['award2']-1-(st.session_state['init_data']['N_images']-st.session_state['init_data']['previous_discarding_images_number'])
-
-            ## penalty - no image is discarted
-            if st.session_state['init_data']['previous_discarding_images_number']==st.session_state['init_data']['n_images2']:   
-                st.session_state['init_data']['award2']=st.session_state['init_data']['award2']-5
-
-
-        ## --------------- PLAYER 2: SHOW FINAL RESULTS ---------------
-        if st.session_state['init_data']['finished_game']:
-            st.session_state['init_data']['reload_game']=True
-            Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
-            if st.session_state['init_data']['award2']==1 or st.session_state['init_data']['award2']==-1:
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ PLAYER 2 WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award2'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
-            else:
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ PLAYER 2 WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award2'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
-
-        else:
-            ## --------------- PLAYER 2: CHECK FINISHED GAME ---------------
-            if np.sum(st.session_state['init_data']['current_images_discarted2']==0)==1 and (not st.session_state['init_data']['finished_game']):
-                st.session_state['init_data']['finished_game']=True
-                st.session_state['init_data']['change_player']=False
-                st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 2: You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index2']]+"</h1>", unsafe_allow_html=True)
-                Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')    
+        st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], 'PLAYER 2', st.session_state['init_data']['current_winner_index2']) 
 
     else:
-    
-       ## --------------- PLAYER 1: APPLY DISCARDING ---------------
-        if st.session_state['init_data']['show_results']:        
-            st.session_state['init_data']['previous_discarding_images_number']=st.session_state['init_data']['n_images']
-            Image_discarding()
-                       
-            ## penalty - game not finished                                                       
-            if st.session_state['init_data']['n_images']>1:
-                st.session_state['init_data']['award1']=st.session_state['init_data']['award1']-st.session_state['init_data']['n_images']
-            
-            ## penalty - "select winner" option used
-            if st.session_state['init_data']['token_type']==-3:   
-                st.session_state['init_data']['award1']=st.session_state['init_data']['award1']-1-(st.session_state['init_data']['N_images']-st.session_state['init_data']['previous_discarding_images_number'])
-
-            ## penalty - no image is discarted
-            if st.session_state['init_data']['previous_discarding_images_number']==st.session_state['init_data']['n_images']:   
-                st.session_state['init_data']['award1']=st.session_state['init_data']['award1']-5
-
-
-        ## --------------- PLAYER 1: SHOW FINAL RESULTS ---------------
-        if st.session_state['init_data']['finished_game']:
-            st.session_state['init_data']['reload_game']=True
-            Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
-            if st.session_state['init_data']['N_players']>1:
-                if st.session_state['init_data']['award1']==1 or st.session_state['init_data']['award1']==-1:
-                
-                    st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ PLAYER 1 WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award1'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ PLAYER 1 WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award1'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
-            else:
-                if st.session_state['init_data']['award1']==1 or st.session_state['init_data']['award1']==-1:
-                
-                    st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ YOU WIN WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award1'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ YOU WIN WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(st.session_state['init_data']['award1'])+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
+        if st.session_state['init_data']['N_players']>1:
+            st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'PLAYER 1', st.session_state['init_data']['current_winner_index']) 
         else:
-            ## --------------- PLAYER 1: CHECK FINISHED GAME ---------------
-            if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and (not st.session_state['init_data']['finished_game']):
-                st.session_state['init_data']['finished_game']=True
-                st.session_state['init_data']['change_player']=False
-                if st.session_state['init_data']['N_players']>1:
-                    st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 1: You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][st.session_state['init_data']['current_winner_index']]+"</h1>", unsafe_allow_html=True)
-                Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
+            st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'PLAYER', st.session_state['init_data']['current_winner_index']) 
             
 
     ## --------------- SHOW CURRENT IMAGES ---------------
