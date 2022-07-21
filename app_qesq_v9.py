@@ -691,7 +691,7 @@ def Load_Data(N):
         'reload_game':False,
         'show_images':0,
         'previous_discarding_images_number':0,
-        'current_image_names'=[],
+        'current_image_names':[],
         'image_current_paths':[],
         'winner_options':[],
         'image_current_predictions':np.zeros((N))+2}
