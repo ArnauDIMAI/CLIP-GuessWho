@@ -77,7 +77,7 @@ def Predict_bald():
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
 
-def Final_Results(N_img, Current_award, Player_indicator, Win_index)
+def Final_Results(N_img, Current_award, Player_indicator, Win_index):
            ## --------------- APPLY DISCARDING ---------------
         if st.session_state['init_data']['show_results']:        
             st.session_state['init_data']['previous_discarding_images_number']=N_img
