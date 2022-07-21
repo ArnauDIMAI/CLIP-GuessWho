@@ -684,6 +684,7 @@ def Load_Data(N):
         'player2_turn':False,
         'finished_game':False,
         'reload_game':False,
+        'show_images':0,
         'previous_discarding_images_number':0,
         'image_current_predictions':np.zeros((N))+2}
     
@@ -888,7 +889,7 @@ def Main_Program():
                 
     ## --------------- CREATE IMAGES TO SHOW ---------------
     if st.session_state['init_data']['status']>0:
-        Showed_Images=Show_images()
+        st.session_state['init_data']['show_images']=Show_images()
     st.session_state['init_data']['Showed_image_names']=st.session_state['init_data']['current_image_names']
 
 
@@ -905,8 +906,7 @@ def Main_Program():
 
     ## --------------- SHOW CURRENT IMAGES ---------------
     if st.session_state['init_data']['status']>0:
-        st.image(Showed_Images, use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])        
-        del Showed_Images
+        st.image(st.session_state['init_data']['show_images'], use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])        
 
 
     ## --------------- RELOAD GAME ---------------
