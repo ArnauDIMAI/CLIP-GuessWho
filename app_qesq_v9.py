@@ -99,6 +99,11 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index):
     ## --------------- SHOW FINAL RESULTS ---------------
     if not st.session_state['init_data']['finished_game']:
         if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and (not st.session_state['init_data']['finished_game']):
+        
+           ## 
+            st.markdown(Win_index)
+            st.markdown(st.session_state['init_data']['current_image_names'])
+        
             st.session_state['init_data']['finished_game']=True
             st.session_state['init_data']['change_player']=False
             st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+" AND THE WINNER PICTURE IS</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][Win_index]+"</h1>", unsafe_allow_html=True)
