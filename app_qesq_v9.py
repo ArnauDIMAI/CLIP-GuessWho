@@ -99,11 +99,6 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index):
     ## --------------- SHOW FINAL RESULTS ---------------
     if not st.session_state['init_data']['finished_game']:
         if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and (not st.session_state['init_data']['finished_game']):
-        
-           ## 
-            st.markdown(Win_index)
-            st.markdown(st.session_state['init_data']['current_image_names'])
-        
             st.session_state['init_data']['finished_game']=True
             st.session_state['init_data']['change_player']=False
             st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+" AND THE WINNER PICTURE IS</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['winner_options'][Win_index]+"</h1>", unsafe_allow_html=True)
@@ -702,9 +697,16 @@ def Main_Program():
         Load_Data(20)
 
 
+    ## --------------- RESET APP ---------------
+    st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
+    st.session_state['init_data']['reset_app'] = st.sidebar.button('RESET GAME', key='Reset_App')
+    if st.session_state['init_data']['reset_app']:
+        Load_Data(st.session_state['init_data']['N_images'])  
+        st.session_state['init_data']['finished_game']=True
+
+
     ## --------------- SHOW INFO --------------
     Show_Info()     
-    
     
     ## --------------- CHANGE PLAYER TURN --------------- 
     if st.session_state['init_data']['change_player']:
@@ -877,17 +879,7 @@ def Main_Program():
     if st.session_state['init_data']['status']==132 and (not st.session_state['init_data']['finished_game']):    
         Ask_Question("PLAYER 2: ", st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'])
 
-  
-    ## --------------- BUTTON NEXT ---------------
-    if st.session_state['init_data']['show_results'] and (not st.session_state['init_data']['finished_game']):
-        if st.session_state['init_data']['N_players']>1:
-            Next_Screen = st.button('NEXT PLAYER', key='next_screen')
-            if Next_Screen:
-                st.session_state['init_data']['change_player']=True
-        else:
-            Next_Screen = st.button('NEXT QUERY', key='next_screen')
-           
-                
+
     ## --------------- CREATE IMAGES TO SHOW ---------------
     if not st.session_state['init_data']['finished_game']:
         if st.session_state['init_data']['status']>0:
@@ -905,7 +897,17 @@ def Main_Program():
             else:
                 st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'YOU ARE THE WINNER', st.session_state['init_data']['current_winner_index']) 
                 
-
+          
+        ## --------------- BUTTON NEXT ---------------
+        if st.session_state['init_data']['show_results'] and (not st.session_state['init_data']['finished_game']):
+            if st.session_state['init_data']['N_players']>1:
+                Next_Screen = st.button('NEXT PLAYER', key='next_screen')
+                if Next_Screen:
+                    st.session_state['init_data']['change_player']=True
+            else:
+                Next_Screen = st.button('NEXT QUERY', key='next_screen')
+            
+            
         ## --------------- SHOW CURRENT IMAGES ---------------
         if st.session_state['init_data']['status']>0:
             st.image(st.session_state['init_data']['show_images'], use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])        
@@ -914,13 +916,6 @@ def Main_Program():
     ## --------------- RELOAD GAME ---------------
     if st.session_state['init_data']['reload_game']:
         Load_Data(st.session_state['init_data']['N_images'])   
-
-
-    ## --------------- RESET APP ---------------
-    st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
-    st.session_state['init_data']['reset_app'] = st.sidebar.button('RESET GAME', key='Reset_App')
-    if st.session_state['init_data']['reset_app']:
-        Load_Data(st.session_state['init_data']['N_images'])  
 
 
 ## --------------- CACHE FUCTION ---------------
