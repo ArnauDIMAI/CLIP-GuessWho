@@ -458,11 +458,13 @@ def Show_images():
     else:
         n_img=st.session_state['init_data']['n_images']
         winner_index=st.session_state['init_data']['current_winner_index']
+        
+    current_win_index=np.where(st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'])[0]
     
     for current_index in range(n_img):
         if st.session_state['init_data']['show_results']:
             current_line_width=4
-            if st.session_state['init_data']['image_current_predictions'][current_index]==st.session_state['init_data']['image_current_predictions'][winner_index]:
+            if st.session_state['init_data']['image_current_predictions'][current_index]==st.session_state['init_data']['image_current_predictions'][current_win_index]:
                 current_color=np.array([0,255,0])
             else:
                 current_color=np.array([255,0,0]) 
@@ -485,7 +487,7 @@ def Show_images():
     ## result to array      
     showed_images=np.array(showed_images)/255
     del image_highlighted,current_index,current_line_width,current_color,image_size,current_image_file,w,h,c
-    return showed_images   
+    return [showed_images, st.session_state['init_data']['current_image_names']]
     
 def find_same_name(index,names_list):
     if st.session_state['init_data']['special_images_names']:
@@ -883,8 +885,7 @@ def Main_Program():
     ## --------------- CREATE IMAGES TO SHOW ---------------
     if not st.session_state['init_data']['finished_game']:
         if st.session_state['init_data']['status']>0:
-            st.session_state['init_data']['show_images']=Show_images()
-        st.session_state['init_data']['Showed_image_names']=st.session_state['init_data']['current_image_names']
+            [st.session_state['init_data']['show_images'], st.session_state['init_data']['Showed_image_names']]=Show_images()        
 
 
         ## DISCARDING AND FINAL RESULTS
@@ -910,6 +911,10 @@ def Main_Program():
             
         ## --------------- SHOW CURRENT IMAGES ---------------
         if st.session_state['init_data']['status']>0:
+        
+            st.markdown(len(st.session_state['init_data']['show_images']))
+            st.markdown(st.session_state['init_data']['Showed_image_names'])
+        
             st.image(st.session_state['init_data']['show_images'], use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])        
 
 
