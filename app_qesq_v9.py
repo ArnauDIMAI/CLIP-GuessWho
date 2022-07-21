@@ -548,28 +548,13 @@ def Select_Images_Randomly():
     image_index=[]
     image_delete=[]
     
-    
     if st.session_state['init_data']['zip_file']=='frifam.zip':
         st.session_state['init_data']['special_images_names']=True
     else:
         st.session_state['init_data']['special_images_names']=False
     
-    # current_URL = "https://drive.google.com/file/d/1b-x_RvEMte2tKZkXzjXZdk6rpx1duLIJ/view?usp=sharing"
-    # st.session_state['init_data']['zip_file'] = wget.download(current_URL)
-
-    #current_URL_result = requests.get(current_URL)
-    #st.session_state['init_data']['zip_file'] = "zipFile.zip"
-    #zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'w', ZIP_STORED, current_URL_result.content, True, None, False)
-    #with ZipFile(st.session_state['init_data']['zip_file'], 'w') as myzip:
-    #    myzip.write(current_URL_result.content)
-    #    myzip.close
-    
-    #open(st.session_state['init_data']['zip_file'], "wb").write(current_URL_result.content)
-
-    # archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     listOfFileNames = archive.namelist()     
-    # listOfFileNames = find_list_elements(listOfFileElements,[])     
     image_index_all=list(range(len(listOfFileNames)))
     
     image_index.append(random.choice(image_index_all))
@@ -945,8 +930,8 @@ def Main_Program():
 
 
     ## --------------- RESET APP ---------------
-    st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
-    st.session_state['init_data']['reset_app'] = st.button('RESET GAME', key='Reset_App')
+    st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
+    st.session_state['init_data']['reset_app'] = st.sidebar.button('RESET GAME', key='Reset_App')
     if st.session_state['init_data']['reset_app']:
         Load_Data(st.session_state['init_data']['N_images'])  
 
