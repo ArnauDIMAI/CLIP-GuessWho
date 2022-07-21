@@ -78,40 +78,40 @@ def Predict_bald():
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
 
 def Final_Results(N_img, Current_award, Player_indicator, Win_index):
-           ## --------------- APPLY DISCARDING ---------------
-        if st.session_state['init_data']['show_results']:        
-            st.session_state['init_data']['previous_discarding_images_number']=N_img
-            Image_discarding()
-                       
-            ## penalty - game not finished                                                       
-            if N_img>1:
-                Current_award=Current_award-N_img
-            
-            ## penalty - "select winner" option used
-            if st.session_state['init_data']['token_type']==-3:   
-                Current_award=Current_award-1-(st.session_state['init_data']['N_images']-st.session_state['init_data']['previous_discarding_images_number'])
+    ## --------------- APPLY DISCARDING ---------------
+    if st.session_state['init_data']['show_results']:        
+        st.session_state['init_data']['previous_discarding_images_number']=N_img
+        Image_discarding()
+                   
+        ## penalty - game not finished                                                       
+        if N_img>1:
+            Current_award=Current_award-N_img
+        
+        ## penalty - "select winner" option used
+        if st.session_state['init_data']['token_type']==-3:   
+            Current_award=Current_award-1-(st.session_state['init_data']['N_images']-st.session_state['init_data']['previous_discarding_images_number'])
 
-            ## penalty - no image is discarted
-            if st.session_state['init_data']['previous_discarding_images_number']==N_img:   
-                Current_award=Current_award-5
+        ## penalty - no image is discarted
+        if st.session_state['init_data']['previous_discarding_images_number']==N_img:   
+            Current_award=Current_award-5
 
 
-        ## --------------- SHOW FINAL RESULTS ---------------
-        if st.session_state['init_data']['finished_game']:
-            st.session_state['init_data']['reload_game']=True
-            Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
-            if Current_award==1 or Current_award==-1:
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ "+Player_indicator+" WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
-            else:
-                st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ "+Player_indicator+" WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
-
+    ## --------------- SHOW FINAL RESULTS ---------------
+    if st.session_state['init_data']['finished_game']:
+        st.session_state['init_data']['reload_game']=True
+        Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
+        if Current_award==1 or Current_award==-1:
+            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ "+Player_indicator+" WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINT !!!</h1>", unsafe_allow_html=True)
         else:
-            ## --------------- CHECK FINISHED GAME ---------------
-            if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and (not st.session_state['init_data']['finished_game']):
-                st.session_state['init_data']['finished_game']=True
-                st.session_state['init_data']['change_player']=False
-                st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+" You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][Win_index]+"</h1>", unsafe_allow_html=True)
-                Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
+            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ "+Player_indicator+" WINS WITH</h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'>POINTS !!!</h1>", unsafe_allow_html=True)
+
+    else:
+        ## --------------- CHECK FINISHED GAME ---------------
+        if np.sum(st.session_state['init_data']['current_images_discarted']==0)==1 and (not st.session_state['init_data']['finished_game']):
+            st.session_state['init_data']['finished_game']=True
+            st.session_state['init_data']['change_player']=False
+            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+" You found the Winner picture:</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][Win_index]+"</h1>", unsafe_allow_html=True)
+            Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
     return Current_award
 
 def Ask_Question(Player_indicator, Win_index, Current_award):
