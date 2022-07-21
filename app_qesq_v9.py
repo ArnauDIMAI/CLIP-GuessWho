@@ -106,7 +106,7 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index):
         
             st.session_state['init_data']['finished_game']=True
             st.session_state['init_data']['change_player']=False
-            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+" AND THE WINNER PICTURE IS</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['current_image_names'][Win_index]+"</h1>", unsafe_allow_html=True)
+            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+" AND THE WINNER PICTURE IS</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['winner_options'][Win_index]+"</h1>", unsafe_allow_html=True)
             Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
     return Current_award
 
@@ -313,16 +313,9 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
             st.session_state['init_data']['token_type']=-3
 
             ## Text - Winner mode
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Select a Winner picture name.</h3>", unsafe_allow_html=True)
+            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Select a Winner picture name.</h3>", 
+                        unsafe_allow_html=True)
             
-            ## SelectBox - Select winner
-            # st.session_state['init_data']['winner_options']=['Winner not selected']
-            # st.session_state['init_data']['winner_options'].extend(st.session_state['init_data']['current_image_names'])
-            
-            # if st.session_state['init_data']['selected_winner'] not in st.session_state['init_data']['winner_options']:
-                # st.write(st.session_state['init_data']['selected_winner'])
-                # st.write(st.session_state['init_data']['winner_options'])
-                
             st.session_state['init_data']['selected_winner']=st.selectbox('If you are inspired, Select a Winner image directly:', st.session_state['init_data']['winner_options'],
                                             index=0, key='Selected_Winner', help=None)
             
@@ -370,7 +363,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                     st.markdown("<h3 style='text-align:left; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>The most accurate query is:</h3><h3 style='text-align:left; float:left; color:green; margin:0px;'>"+st.session_state['init_data']['user_input_querys2']+"</h3>", unsafe_allow_html=True)
               
             if st.session_state['init_data']['token_type']==-3:
-                if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][Win_index]:
+                if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['winner_options'][Win_index]:
                     st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>The winner picture is not:</h3><h3 style='text-align:left; float:center; color:red; margin:0px;'>"+st.session_state['init_data']['selected_winner']+"</h3>", unsafe_allow_html=True)
          
 def CLIP_Process():
