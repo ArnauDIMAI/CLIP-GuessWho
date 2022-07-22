@@ -721,6 +721,16 @@ def Main_Program():
         Load_Data(20)
 
 
+    st.markdown("<h1 style='text-align:left; color:gray; margin:0px;'>CONGRATULATIONS <span style='text-align:left; color:green; margin:0px;'>PLAYER 2<span style='text-align:left; color:gray; margin:0px;'>! THE WINNER PICTURE IS: <span style='text-align:left; color:green; margin:0px;'>Arnau</h1>", unsafe_allow_html=True)
+
+    st.markdown("<p style='text-align:left; color:gray; margin:0px;'>CONGRATULATIONS <span style='text-align:left; color:green; margin:0px;'>PLAYER 2<span style='text-align:left; color:gray; margin:0px;'>! THE WINNER PICTURE IS: <span style='text-align:left; color:green; margin:0px;'>Arnau</h1>", unsafe_allow_html=True)
+
+    st.markdown("<h1 style='text-align:left; float:left; color:gray; margin:0px;'>CONGRATULATIONS <span style='text-align:left; float:left; color:green; margin:0px;'>PLAYER 2<span style='text-align:left; float:left; color:gray; margin:0px;'>! THE WINNER PICTURE IS: <span style='text-align:left; float:left; color:green; margin:0px;'>Arnau</h1>", unsafe_allow_html=True)
+
+    st.markdown("<p style='text-align:left; float:left; color:gray; margin:0px;'>CONGRATULATIONS <span style='text-align:left; float:left; color:green; margin:0px;'>PLAYER 2<span style='text-align:left; float:left; color:gray; margin:0px;'>! THE WINNER PICTURE IS: <span style='text-align:left; float:left; color:green; margin:0px;'>Arnau</h1>", unsafe_allow_html=True)
+
+
+
     ## --------------- RESET APP ---------------
     st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
     st.session_state['init_data']['reset_app'] = st.sidebar.button('RESET GAME', key='Reset_App')
