@@ -912,13 +912,13 @@ def Main_Program():
 
         ## DISCARDING AND FINAL RESULTS
         if st.session_state['init_data']['player2_turn']:
-            st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], "<h1 style='text-align:left; float:left; color:green; margin:0px;'>PLAYER 2</h1><h1 style='text-align:left; float:left; color:gray; margin:0px;'> HAS FINISHED THE GAME", st.session_state['init_data']['current_winner_index2'],st.session_state['init_data']['current_image_names2'],st.session_state['init_data']['current_images_discarted2']) 
+            st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], "PLAYER 2", st.session_state['init_data']['current_winner_index2'],st.session_state['init_data']['current_image_names2'],st.session_state['init_data']['current_images_discarted2']) 
 
         else:
             if st.session_state['init_data']['N_players']>1:
-               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], "<h1 style='text-align:left; float:left; color:green; margin:0px;'>PLAYER 1</h1><h1 style='text-align:left; float:left; color:gray; margin:0px;'> HAS FINISHED THE GAME", st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
+               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], "PLAYER 2", st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
             else:
-               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], "<h1 style='text-align:left; float:left; color:gray; margin:0px;'> THE GAME HAS FINISHED", st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
+               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], "", st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
                 
           
         ## --------------- BUTTON NEXT ---------------
