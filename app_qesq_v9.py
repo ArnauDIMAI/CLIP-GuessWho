@@ -734,7 +734,7 @@ def Main_Program():
     
     
     ## --------------- CHANGE PLAYER TURN --------------- 
-        if st.session_state['init_data']['change_player']:
+    if st.session_state['init_data']['change_player']:
         if st.session_state['init_data']['player2_turn']:
             st.session_state['init_data']['status']=131
             st.session_state['init_data']['player2_turn']=False
