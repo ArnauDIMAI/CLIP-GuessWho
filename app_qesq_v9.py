@@ -101,7 +101,7 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_ima
         if np.sum(Img_discarded==0)==1:
             st.session_state['init_data']['finished_game']=True
             st.session_state['init_data']['change_player']=False
-            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>CONGRATULATIONS <h1 color:green;>"+Player_indicator+"<h1 color:gray>, THE WINNER PICTURE IS <h1 color:green;>"+Current_images[Win_index]+"</h1>", unsafe_allow_html=True)
+            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>CONGRATULATIONS <h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>, THE WINNER PICTURE IS <h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Current_images[Win_index]+"</h1>", unsafe_allow_html=True)
             Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
     return Current_award
 
