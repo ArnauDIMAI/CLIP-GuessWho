@@ -730,12 +730,19 @@ def Main_Program():
     Show_Info()     
     
     ## --------------- CHANGE PLAYER TURN --------------- 
+    
+    ##test
+    st.markdown('Previous player turn: ' + str(st.session_state['init_data']['player2_turn']))
     if st.session_state['init_data']['change_player']:
         if st.session_state['init_data']['player2_turn']:
             st.session_state['init_data']['status']=131
+            st.session_state['init_data']['player2_turn']=False
         else:
             st.session_state['init_data']['status']=132
+            st.session_state['init_data']['player2_turn']=True
         st.session_state['init_data']['change_player']=False
+    ##test
+    st.markdown('Current player turn: ' + str(st.session_state['init_data']['player2_turn']))
         
         
     ## --------------- TITLE --------------- 
@@ -792,6 +799,8 @@ def Main_Program():
             else:
                 st.session_state['init_data']['status']=101
             st.session_state['init_data']['player2_turn']=False
+            ##test
+            st.markdown('Change to player 1: ' + str(st.session_state['init_data']['player2_turn']))
 
 
     ## --------------- IMAGE SELECTION ---------------
@@ -853,7 +862,9 @@ def Main_Program():
         Next_Player_Selection2 = st.button('HIDE SELECTION', key='Next_Player_Selection2')
         if Next_Player_Selection2:
             st.session_state['init_data']['status']=112 
-            st.session_state['init_data']['player2_turn']=True              
+            st.session_state['init_data']['player2_turn']=True
+            ##test
+            st.markdown('Change to player 2: ' + str(st.session_state['init_data']['player2_turn']))        
 
 
     ## 2 player case - Player 2
@@ -882,6 +893,8 @@ def Main_Program():
         if Next_Player_Selection2:
             st.session_state['init_data']['status']=131
             st.session_state['init_data']['player2_turn']=False
+            ##test
+            st.markdown('Change to player 1: ' + str(st.session_state['init_data']['player2_turn']))
 
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
@@ -903,7 +916,9 @@ def Main_Program():
     if not st.session_state['init_data']['finished_game']:
         if st.session_state['init_data']['status']>0:
             [st.session_state['init_data']['show_images'], st.session_state['init_data']['Showed_image_names']]=Show_images()        
-
+            ## test
+            st.markdown(len(st.session_state['init_data']['show_images']))
+            st.markdown(st.session_state['init_data']['Showed_image_names'])
 
         ## DISCARDING AND FINAL RESULTS
         if st.session_state['init_data']['player2_turn']:
@@ -917,11 +932,13 @@ def Main_Program():
                 
           
         ## --------------- BUTTON NEXT ---------------
-        if st.session_state['init_data']['show_results'] and (not st.session_state['init_data']['finished_game']):
+        if st.session_state['init_data']['show_results']:
             if st.session_state['init_data']['N_players']>1:
                 Next_Screen = st.button('NEXT PLAYER', key='next_screen')
                 if Next_Screen:
                     st.session_state['init_data']['change_player']=True
+                    ##test
+                    st.markdown('Change player activated - ' + str(st.session_state['init_data']['change_player']))
             else:
                 Next_Screen = st.button('NEXT QUERY', key='next_screen')
             
