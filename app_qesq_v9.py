@@ -900,17 +900,19 @@ def Main_Program():
     
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
-    if st.session_state['init_data']['status']==132 and (not st.session_state['init_data']['finished_game']):    
+    if st.session_state['init_data']['status']==132:    
         Ask_Question("PLAYER 2: ", st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'])
 
 
-    ## --------------- CREATE IMAGES TO SHOW ---------------
+    ## --------------- CALCULATE RESULTS ---------------
     if not st.session_state['init_data']['finished_game']:
+    
+        ## CREATE IMAGES TO SHOW
         if st.session_state['init_data']['status']>0:
             [st.session_state['init_data']['show_images'], st.session_state['init_data']['Showed_image_names']]=Show_images()        
 
 
-        ## DISCARDING AND FINAL RESULTS
+        ## DISCARDING IMAGES AND FINAL RESULTS
         if st.session_state['init_data']['player2_turn']:
             st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], "PLAYER 2", st.session_state['init_data']['current_winner_index2'],st.session_state['init_data']['current_image_names2'],st.session_state['init_data']['current_images_discarted2']) 
 
@@ -921,7 +923,7 @@ def Main_Program():
                st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], "", st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
                 
           
-        ## --------------- BUTTON NEXT ---------------
+        ## BUTTON NEXT
         if st.session_state['init_data']['show_results'] and (not st.session_state['init_data']['finished_game']):
             if st.session_state['init_data']['N_players']>1:
                 st.session_state['init_data']['change_player']=True
@@ -930,7 +932,7 @@ def Main_Program():
                 Next_Screen = st.button('NEXT QUERY', key='next_screen')
             
             
-        ## --------------- SHOW CURRENT IMAGES ---------------
+        ## SHOW CURRENT IMAGES
         if st.session_state['init_data']['status']>0:
             st.image(st.session_state['init_data']['show_images'], use_column_width=False, caption=st.session_state['init_data']['Showed_image_names'])        
 
