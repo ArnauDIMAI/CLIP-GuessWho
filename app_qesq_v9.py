@@ -612,9 +612,9 @@ def Load_Image(current_index, current_path):
     return np.array(image_file)
 
 def Show_Info():
-    st.sidebar.markdown('## INFO')
-    st.sidebar.write(st.session_state['init_data'])
-    st.sidebar.markdown('#### Questions List:')
+    #st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>INFO</h2>", unsafe_allow_html=True)
+    #st.sidebar.write(st.session_state['init_data'])
+    st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>List of avalaible Questions</h2>", unsafe_allow_html=True)
     st.sidebar.write(st.session_state['init_data']['feature_questions'])
 
 def Load_Data(N):
@@ -713,7 +713,6 @@ def Load_Data(N):
 
 
 ## --------------- MAIN FUCTION ---------------
-
 def Main_Program():
 
     ## --------------- LOAD DATA ---------------
@@ -722,14 +721,14 @@ def Main_Program():
 
 
     ## --------------- RESET APP ---------------
-    st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
+    st.sidebar.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
     st.session_state['init_data']['reset_app'] = st.sidebar.button('RESET GAME', key='Reset_App')
     if st.session_state['init_data']['reset_app']:
         Load_Data(st.session_state['init_data']['N_images'])
 
 
     ## --------------- SHOW INFO --------------
-    Show_Info()     
+    #Show_Info()     
     
     
     ## --------------- CHANGE PLAYER TURN --------------- 
@@ -962,7 +961,7 @@ Main_Program()
 
 
 ## --------------- SHOW INFO --------------
-Show_Info() 
+Show_Info()
 
 
 ## --------------- CLEAR RESOURCES ---------------
