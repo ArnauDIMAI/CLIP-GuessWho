@@ -98,10 +98,10 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_ima
 
     ## --------------- SHOW FINAL RESULTS ---------------
     if not st.session_state['init_data']['finished_game']:
-        if np.sum(Img_discarded==0)==1 and (not st.session_state['init_data']['finished_game']):
+        if np.sum(Img_discarded==0)==1:
             st.session_state['init_data']['finished_game']=True
             st.session_state['init_data']['change_player']=False
-            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+" AND THE WINNER PICTURE IS</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+Current_images[Win_index]+"</h1>", unsafe_allow_html=True)
+            st.markdown("<h1 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+". THE WINNER PICTURE IS</h1><h1 style='text-align:left; float:left; color:green; margin:0px;'>"+Current_images[Win_index]+"</h1>", unsafe_allow_html=True)
             Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
     return Current_award
 
@@ -112,9 +112,9 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
         st.session_state['init_data']['reload_game']=True
         Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
         if Current_award==1 or Current_award==-1:
-            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡"+Player_indicator+"YOU WIN WITH </h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'> POINT !!!</h1>", unsafe_allow_html=True)
+            st.markdown(Player_indicator+" WITH </h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'> POINT !!!</h1>", unsafe_allow_html=True)
         else:
-            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡"+Player_indicator+"YOU WIN WITH </h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'> POINTS !!!</h1>", unsafe_allow_html=True)
+            st.markdown("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡"+Player_indicator+" WITH </h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>"+str(Current_award)+"</h1><h1 style='text-align:left; float:left; color:black; margin:0px;'> POINTS !!!</h1>", unsafe_allow_html=True)
     else:
     
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>"+Player_indicator+"Select a type of Query to play.</h2>", unsafe_allow_html=True)
@@ -725,8 +725,7 @@ def Main_Program():
     st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Restart the Game</h2>", unsafe_allow_html=True)
     st.session_state['init_data']['reset_app'] = st.sidebar.button('RESET GAME', key='Reset_App')
     if st.session_state['init_data']['reset_app']:
-        Load_Data(st.session_state['init_data']['N_images'])  
-        st.session_state['init_data']['finished_game']=True
+        Load_Data(st.session_state['init_data']['N_images'])
 
 
     ## --------------- SHOW INFO --------------
@@ -892,17 +891,17 @@ def Main_Program():
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==31: 
-        Ask_Question("", st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'])
+        Ask_Question("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ YOU HAVE FINISHED THE GAME", st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'])
                 
         
     ## 2 PLAYER GAME - PLAYER 1 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==131:
-        Ask_Question("PLAYER 1: ", st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'])
+        Ask_Question("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ </h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 1 </h1><h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>WINS THE GAME", st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'])
     
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==132 and (not st.session_state['init_data']['finished_game']):    
-        Ask_Question("PLAYER 2: ", st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'])
+        Ask_Question("<h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>¡¡¡ </h1><h1 style='text-align:left; float:left; color:green; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>PLAYER 2 </h1><h1 style='text-align:left; float:left; color:black; margin-left:0px; margin-right:15px; margin-top:0px; margin-bottom:0px;'>WINS THE GAME", st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'])
 
 
     ## --------------- CREATE IMAGES TO SHOW ---------------
@@ -913,17 +912,17 @@ def Main_Program():
 
         ## DISCARDING AND FINAL RESULTS
         if st.session_state['init_data']['player2_turn']:
-            st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], 'THE WINNER IS PLAYER 2', st.session_state['init_data']['current_winner_index2'],st.session_state['init_data']['current_image_names2'],st.session_state['init_data']['current_images_discarted2']) 
+            st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], "<h1 style='text-align:left; float:left; color:green; margin:0px;'>PLAYER 2</h1><h1 style='text-align:left; float:left; color:gray; margin:0px;'> HAS FINISHED THE GAME", st.session_state['init_data']['current_winner_index2'],st.session_state['init_data']['current_image_names2'],st.session_state['init_data']['current_images_discarted2']) 
 
         else:
             if st.session_state['init_data']['N_players']>1:
-               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'THE WINNER IS PLAYER 1', st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
+               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], "<h1 style='text-align:left; float:left; color:green; margin:0px;'>PLAYER 1</h1><h1 style='text-align:left; float:left; color:gray; margin:0px;'> HAS FINISHED THE GAME", st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
             else:
-               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], 'YOU ARE THE WINNER', st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
+               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], "<h1 style='text-align:left; float:left; color:gray; margin:0px;'> THE GAME HAS FINISHED", st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
                 
           
         ## --------------- BUTTON NEXT ---------------
-        if st.session_state['init_data']['show_results']:
+        if st.session_state['init_data']['show_results'] and (not st.session_state['init_data']['finished_game']):
             if st.session_state['init_data']['N_players']>1:
                 st.session_state['init_data']['change_player']=True
                 Next_Screen = st.button('NEXT PLAYER', key='next_screen')
