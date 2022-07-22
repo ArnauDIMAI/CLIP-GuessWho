@@ -390,7 +390,7 @@ def CLIP_Process():
     if st.session_state['init_data']['player2_turn']:
         st.session_state['init_data']['image_current_probs']=np.zeros((st.session_state['init_data']['n_images2'],n_tokens))
         for i in range(st.session_state['init_data']['n_images2']):
-            current_image_file = Load_Image(i)
+            current_image_file = Load_Image(i,st.session_state['init_data']['image_current_paths2'])
             img_preprocessed = clip_transform(Image.fromarray(current_image_file)).unsqueeze(0).to("cpu")
             img_logits, img_logits_txt = clip_model(img_preprocessed, clip_text)
             st.session_state['init_data']['image_current_probs'][i,:]=np.round(img_logits.detach().numpy()[0],2)
@@ -398,7 +398,7 @@ def CLIP_Process():
     else:
         st.session_state['init_data']['image_current_probs']=np.zeros((st.session_state['init_data']['n_images'],n_tokens))
         for i in range(st.session_state['init_data']['n_images']):
-            current_image_file = Load_Image(i)
+            current_image_file = Load_Image(i,st.session_state['init_data']['image_current_paths'])
             img_preprocessed = clip_transform(Image.fromarray(current_image_file)).unsqueeze(0).to("cpu")
             img_logits, img_logits_txt = clip_model(img_preprocessed, clip_text)
             st.session_state['init_data']['image_current_probs'][i,:]=np.round(img_logits.detach().numpy()[0],2)
@@ -435,7 +435,7 @@ def Image_discarding():
                 
         st.session_state['init_data']['n_images2']=np.sum(st.session_state['init_data']['current_images_discarted2']==0)                     
         st.session_state['init_data']['current_image_names2']=np.array(st.session_state['init_data']['current_image_names2'])                   
-        st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths']) 
+        st.session_state['init_data']['image_current_paths2']=np.array(st.session_state['init_data']['image_current_paths2']) 
         st.session_state['init_data']['current_images_discarted2']=np.zeros(st.session_state['init_data']['n_images2'])
     else:
         for i in range(len(st.session_state['init_data']['current_images_discarted'])):
@@ -474,11 +474,12 @@ def Show_images():
     if st.session_state['init_data']['player2_turn']:
         n_img=st.session_state['init_data']['n_images2']
         winner_index=st.session_state['init_data']['current_winner_index2']
-        #current_win_index=np.where(st.session_state['init_data']['selected_winner2']==st.session_state['init_data']['current_image_names2'])[0]
-        
+        Current_path=st.session_state['init_data']['image_current_paths2']
+
     else:
         n_img=st.session_state['init_data']['n_images']
         winner_index=st.session_state['init_data']['current_winner_index']
+        Current_path=st.session_state['init_data']['image_current_paths']
                 
     for current_index in range(n_img):
         if st.session_state['init_data']['show_results']:
@@ -491,7 +492,7 @@ def Show_images():
             current_line_width=2
             current_color=np.zeros(3)  
         image_size=240
-        current_image_file=Load_Image(current_index)        
+        current_image_file=Load_Image(current_index,Current_path)        
         w,h,c = np.shape(current_image_file)
             
         image_highlighted=np.zeros([h+current_line_width*2,image_size,c])+255
@@ -593,13 +594,14 @@ def Select_Images_Randomly():
     st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
     st.session_state['init_data']['current_image_names2']=st.session_state['init_data']['current_image_names']
     st.session_state['init_data']['image_current_paths']=np.array(st.session_state['init_data']['image_current_paths'])
+    st.session_state['init_data']['image_current_paths2']=st.session_state['init_data']['image_current_paths']
     st.session_state['init_data']['winner_options']=st.session_state['init_data']['current_image_names']
     st.session_state['init_data']['images_not_selected']=False
     del image_index,archive,listOfFileNames,image_index_all,current_index,image_current_path
 
-def Load_Image(current_index):
+def Load_Image(current_index, current_path):
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
-    image_current_path=st.session_state['init_data']['image_current_paths'][current_index]
+    image_current_path=current_path[current_index]
     image_file=Image.open(BytesIO(archive.read(image_current_path)))
     image_file = image_file.convert('RGB')  
     
@@ -704,6 +706,7 @@ def Load_Data(N):
         'current_image_names':[],
         'current_image_names2':[],
         'image_current_paths':[],
+        'image_current_paths2':[],
         'winner_options':[],
         'image_current_predictions':np.zeros((N))+2}
 
