@@ -934,11 +934,10 @@ def Main_Program():
         ## --------------- BUTTON NEXT ---------------
         if st.session_state['init_data']['show_results']:
             if st.session_state['init_data']['N_players']>1:
+                st.session_state['init_data']['change_player']=True
                 Next_Screen = st.button('NEXT PLAYER', key='next_screen')
-                if Next_Screen:
-                    st.session_state['init_data']['change_player']=True
-                    ##test
-                    st.markdown('Change player activated - ' + str(st.session_state['init_data']['change_player']))
+                ##test
+                st.markdown('Change player activated - ' + str(st.session_state['init_data']['change_player']))
             else:
                 Next_Screen = st.button('NEXT QUERY', key='next_screen')
             
