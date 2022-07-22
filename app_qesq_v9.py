@@ -382,7 +382,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
 
 def CLIP_Process():
     ## Tokenization process
-    clip_model, clip_transform=Load_CLIP()
+    clip_model, clip_transform=CLIP_Loading()
     clip_text = clip.tokenize(st.session_state['init_data']['current_querys']).to("cpu")
     n_tokens=len(st.session_state['init_data']['current_querys'])
     
@@ -732,11 +732,9 @@ def Main_Program():
     ## --------------- SHOW INFO --------------
     Show_Info()     
     
-    ## --------------- CHANGE PLAYER TURN --------------- 
     
-    ##test
-    st.markdown('Previous player turn: ' + str(st.session_state['init_data']['player2_turn']))
-    if st.session_state['init_data']['change_player']:
+    ## --------------- CHANGE PLAYER TURN --------------- 
+        if st.session_state['init_data']['change_player']:
         if st.session_state['init_data']['player2_turn']:
             st.session_state['init_data']['status']=131
             st.session_state['init_data']['player2_turn']=False
@@ -744,8 +742,6 @@ def Main_Program():
             st.session_state['init_data']['status']=132
             st.session_state['init_data']['player2_turn']=True
         st.session_state['init_data']['change_player']=False
-    ##test
-    st.markdown('Current player turn: ' + str(st.session_state['init_data']['player2_turn']))
         
         
     ## --------------- TITLE --------------- 
@@ -802,8 +798,6 @@ def Main_Program():
             else:
                 st.session_state['init_data']['status']=101
             st.session_state['init_data']['player2_turn']=False
-            ##test
-            st.markdown('Change to player 1: ' + str(st.session_state['init_data']['player2_turn']))
 
 
     ## --------------- IMAGE SELECTION ---------------
@@ -866,8 +860,6 @@ def Main_Program():
         if Next_Player_Selection2:
             st.session_state['init_data']['status']=112 
             st.session_state['init_data']['player2_turn']=True
-            ##test
-            st.markdown('Change to player 2: ' + str(st.session_state['init_data']['player2_turn']))        
 
 
     ## 2 player case - Player 2
@@ -896,8 +888,6 @@ def Main_Program():
         if Next_Player_Selection2:
             st.session_state['init_data']['status']=131
             st.session_state['init_data']['player2_turn']=False
-            ##test
-            st.markdown('Change to player 1: ' + str(st.session_state['init_data']['player2_turn']))
 
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
@@ -919,9 +909,7 @@ def Main_Program():
     if not st.session_state['init_data']['finished_game']:
         if st.session_state['init_data']['status']>0:
             [st.session_state['init_data']['show_images'], st.session_state['init_data']['Showed_image_names']]=Show_images()        
-            ## test
-            st.markdown(len(st.session_state['init_data']['show_images']))
-            st.markdown(st.session_state['init_data']['Showed_image_names'])
+
 
         ## DISCARDING AND FINAL RESULTS
         if st.session_state['init_data']['player2_turn']:
@@ -939,8 +927,6 @@ def Main_Program():
             if st.session_state['init_data']['N_players']>1:
                 st.session_state['init_data']['change_player']=True
                 Next_Screen = st.button('NEXT PLAYER', key='next_screen')
-                ##test
-                st.markdown('Change player activated - ' + str(st.session_state['init_data']['change_player']))
             else:
                 Next_Screen = st.button('NEXT QUERY', key='next_screen')
             
@@ -957,7 +943,7 @@ def Main_Program():
 
 ## --------------- CACHE FUCTION ---------------
 @st.cache(ttl=12*3600)
-def Load_CLIP():
+def CLIP_Loading():
 	  return clip.load("ViT-B/32", device="cpu", jit=False)
 
 
