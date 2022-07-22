@@ -525,7 +525,7 @@ def find_same_name(index,names_list):
             fixed_name=names_list[index][:names_list[index].find('.')]
             index_list=[]
             for i in range(0,len(names_list)):
-                if fixed_name==names_list[i][:names_list[i].find('-')]:
+                if fixed_name==names_list[i][:names_list[i].find('.')]:
                     index_list.append(i)
         else:
             fixed_name=names_list[index]
