@@ -774,7 +774,7 @@ def Main_Program():
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the set of images to play with:</h2>", unsafe_allow_html=True)
-        Selected_Images_Source=st.selectbox('Choose between: Celebrities images, My friends images, Your own images (selecting a source path with your images zip file)', 
+        Selected_Images_Source=st.selectbox('Choose between: Celebrities images, Your own images (selecting a source path with your images zip file)', 
                                                     ['Use Celeba dataset random images', 'Use friends random images', 'Use images from specific path'],
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
