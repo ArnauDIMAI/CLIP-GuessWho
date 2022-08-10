@@ -107,6 +107,7 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_ima
     return Current_award
 
 def Ask_Question(Player_indicator, Win_index, Current_award):
+    Features_list=['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner']
 
         ## Finished Game:
     if st.session_state['init_data']['finished_game']:
@@ -123,8 +124,8 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
         if st.session_state['init_data']['player2_turn']: 
 
             ## SelectBox - Select query type (game mode)
-            Selected_Feature2=st.selectbox('Ask a question from a list, create your query or select a winner:', ['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner'], 
-                                                   index=0, key='selected_feature2', help=None)
+            Selected_Feature2=st.selectbox('Ask a question from a list, create your query or select a winner:', Features_list, index=st.session_state['init_data']['selected_feature_index2'], key='selected_feature2', help=None)
+            st.session_state['init_data']['selected_feature_index2']=Features_list.index(Selected_Feature2)
                 
             ## --------------- SHOW ELEMENTS - QUESTIONS MODE ---------------
             if Selected_Feature2=='Ask a Question':
@@ -136,14 +137,15 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                 
                 ## SelectBox - Select question
                 Selected_Question2=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], 
-                                                   index=0, key='Selected_Question2', help=None)
+                                                   index=st.session_state['init_data']['questions_index2'], key='Selected_Question2', help=None)
                 st.session_state['init_data']['selected_question2']=Selected_Question2  # Save Info
+                
                 
                 ## Current question index
                 if Selected_Question2 not in st.session_state['init_data']['feature_questions']:
                     Selected_Question2=st.session_state['init_data']['feature_questions'][0]
                 
-                st.session_state['init_data']['questions_index']=st.session_state['init_data']['feature_questions'].index(Selected_Question2)
+                st.session_state['init_data']['questions_index2']=st.session_state['init_data']['feature_questions'].index(Selected_Question2)
                    
                 ## Text - Show current question
                 st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"Current Question: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"
@@ -221,8 +223,8 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                             
                        
                         elif  not st.session_state['init_data']['show_results']:
-                            st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index']],
-                                                                            st.session_state['init_data']['querys_list_no'][st.session_state['init_data']['questions_index']]]
+                            st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index2']],
+                                                                            st.session_state['init_data']['querys_list_no'][st.session_state['init_data']['questions_index2']]]
                             st.session_state['init_data']['function_predict']=Predict_0_vs_1
                     
                         CLIP_Process()
@@ -240,7 +242,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                 st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Write your own query and press the button.</h3>", unsafe_allow_html=True)
                 
                 ## TextInput - Select query
-                User_Input2 = st.text_input('It is recommended to use a text like: "A picture of a ... person" or "A picture of a person ..." (CLIP will check -> "Your query"  vs  "A picture of a person" )', 'A picture of a person', key='User_Input2', help=None)
+                User_Input2 = st.text_input('It is recommended to use a text like: "A picture of a ... person" or "A picture of a person ..." (CLIP will check -> "Your query"  vs  "A picture of a person" )', st.session_state['init_data']['user_input2'], key='User_Input2', help=None)
                 st.session_state['init_data']['user_input2']=User_Input2  # Save Info
 
                 ## Text - Show current query
@@ -386,8 +388,8 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
         else:
 
             ## SelectBox - Select query type (game mode)
-            Selected_Feature=st.selectbox('Ask a question from a list, create your query or select a winner:', ['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner'], 
-                                                   index=0, key='selected_feature', help=None)
+            Selected_Feature=st.selectbox('Ask a question from a list, create your query or select a winner:', Features_list, index=st.session_state['init_data']['selected_feature_index'], key='selected_feature', help=None)
+            st.session_state['init_data']['selected_feature_index2']=Features_list.index(Selected_Feature)
                 
             ## --------------- SHOW ELEMENTS - QUESTIONS MODE ---------------
             if Selected_Feature=='Ask a Question':
@@ -399,7 +401,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                 
                 ## SelectBox - Select question
                 Selected_Question=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], 
-                                                   index=0, key='Selected_Question', help=None)
+                                                   index=st.session_state['init_data']['questions_index'], key='Selected_Question', help=None)
                 st.session_state['init_data']['selected_question']=Selected_Question  # Save Info
                 
                 ## Current question index
@@ -503,7 +505,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                 st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Write your own query and press the button.</h3>", unsafe_allow_html=True)
                 
                 ## TextInput - Select query
-                User_Input = st.text_input('It is recommended to use a text like: "A picture of a ... person" or "A picture of a person ..." (CLIP will check -> "Your query"  vs  "A picture of a person" )', 'A picture of a person', key='User_Input', help=None)
+                User_Input = st.text_input('It is recommended to use a text like: "A picture of a ... person" or "A picture of a person ..." (CLIP will check -> "Your query"  vs  "A picture of a person" )', st.session_state['init_data']['user_input'], key='User_Input', help=None)
                 st.session_state['init_data']['user_input']=User_Input  # Save Info
 
                 ## Text - Show current query
@@ -915,8 +917,11 @@ def Load_Data(N):
                     'Are you wearing LIPSTICK?', 'Are you wearing NECKLACE?', 
                     'Are you wearing NECKTIE?'],
         'selected_question':'Are you a MAN?',
-        'selected_question2':'Are you a MAN?',
+        'selected_question2':'Are you a MAN?',?',
+        'selected_feature_index':0,
+        'selected_feature_index2':0,
         'questions_index':0,
+        'questions_index2':0,
         'show_results':False,
         'current_querys':['A picture of a person','A picture of a person'],
         'function_predict':Predict_0_vs_1,
