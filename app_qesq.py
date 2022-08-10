@@ -696,6 +696,7 @@ def Load_Data(N):
         'player2_turn':False,
         'finished_game':False,
         'reload_game':False,
+        'random_winner':False,
         'show_images':[],
         'previous_discarding_images_number':0,
         'selected_winner_index':0,
