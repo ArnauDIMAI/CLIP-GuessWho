@@ -514,19 +514,26 @@ def Show_images():
         return [showed_images, st.session_state['init_data']['current_image_names']]
     
 def find_same_name(index,names_list):
-    if '.' in names_list[index]:
-        fixed_name=names_list[index][:names_list[index].find('.')]
+    if st.session_state['init_data']['special_images_names']:
+        fixed_name=names_list[index][:names_list[index].find('-')]
         index_list=[]
         for i in range(0,len(names_list)):
-            if fixed_name==names_list[i][:names_list[i].find('.')]:
+            if fixed_name==names_list[i][:names_list[i].find('-')]:
                 index_list.append(i)
     else:
-        fixed_name=names_list[index]
-        index_list=[]
-        for i in range(0,len(names_list)):
-            name_find=names_list[i]
-            if fixed_name==names_list[i]:
-                index_list.append(i)
+        if '.' in names_list[index]:
+            fixed_name=names_list[index][:names_list[index].find('.')]
+            index_list=[]
+            for i in range(0,len(names_list)):
+                if fixed_name==names_list[i][:names_list[i].find('.')]:
+                    index_list.append(i)
+        else:
+            fixed_name=names_list[index]
+            index_list=[]
+            for i in range(0,len(names_list)):
+                name_find=names_list[i]
+                if fixed_name==names_list[i]:
+                    index_list.append(i)
     return index_list
 
 def find_list_elements(x,x_list):
@@ -544,6 +551,11 @@ def Select_Images_Randomly():
     st.session_state['init_data']['current_image_names']=[]
     image_index=[]
     image_delete=[]
+    
+    if st.session_state['init_data']['zip_file']=='frifam.zip':
+        st.session_state['init_data']['special_images_names']=True
+    else:
+        st.session_state['init_data']['special_images_names']=False
     
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     listOfFileNames = archive.namelist()     
@@ -570,7 +582,14 @@ def Select_Images_Randomly():
         image_current_path=listOfFileNames[current_index]
         st.session_state['init_data']['image_current_paths'].append(image_current_path)
         current_name = os.path.basename(image_current_path)
-        current_name = current_name[:current_name.find('.')]        
+        st.session_state['init_data']['special_images_names']=False
+        if '-' in current_name:
+            current_name = current_name[:current_name.find('-')-1]
+            st.session_state['init_data']['special_images_names']=True
+        elif '.' in current_name:
+            current_name = current_name[:current_name.find('.')]
+            st.session_state['init_data']['special_images_names']=False
+        
         st.session_state['init_data']['current_image_names'].append(current_name)
                 
     st.session_state['init_data']['current_image_names']=np.array(st.session_state['init_data']['current_image_names'])
@@ -610,6 +629,7 @@ def Load_Data(N):
         'Selected_Images_Source':'Use Celeba dataset random images',
         'zip_file':'guess_who_images.zip',
         'previous_zip_file':'guess_who_images.zip',
+        'special_images_names':False,
         'images_not_selected':True,
         'token_type':0,
         'feature_questions':['Are you a MAN?', 'Are you a WOMAN?', 'Are you an ATTRACTIVE person?', 'Are you an CHUBBY person?', 'Are you YOUNG?',
@@ -676,7 +696,6 @@ def Load_Data(N):
         'player2_turn':False,
         'finished_game':False,
         'reload_game':False,
-        'random_winner':False,
         'show_images':[],
         'previous_discarding_images_number':0,
         'selected_winner_index':0,
@@ -742,20 +761,18 @@ def Main_Program():
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select 1 or 2 players and the number of images to use</h2>", unsafe_allow_html=True)
          
         ## Number of players
-        N_Players=st.number_input('Select the number of players', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
+        N_Players=st.number_input('Select the number of images', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
         
         if N_Players==2:
             Winner_selection_random=st.checkbox('Select to choose the winner images randomly', value=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
-        else:
-            Winner_selection_random=False
             
         ## Number of images
         N_Images=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the set of images to play with:</h2>", unsafe_allow_html=True)
-        Selected_Images_Source=st.selectbox('Choose between: Celebrities images or Your own images (selecting a source path with your images zip file)', 
-                                                    ['Use Celeba dataset random images', 'Use images from specific path'],
+        Selected_Images_Source=st.selectbox('Choose between: Celebrities images, Your own images (selecting a source path with your images zip file)', 
+                                                    ['Use Celeba dataset random images', 'Use friends random images', 'Use images from specific path'],
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
@@ -776,7 +793,6 @@ def Main_Program():
             st.session_state['init_data']['n_images']=N_Images
             st.session_state['init_data']['n_images2']=N_Images
             st.session_state['init_data']['N_players']=N_Players
-            st.session_state['init_data']['random_winner']=Winner_selection_random
             st.session_state['init_data']['current_images_discarted']=np.zeros((N_Images))
             st.session_state['init_data']['current_images_discarted2']=np.zeros((N_Images))
             st.session_state['init_data']['image_current_probs']=np.zeros((N_Images,2))
@@ -821,7 +837,7 @@ def Main_Program():
         st.session_state['init_data']['status']=st.session_state['init_data']['status']+20
 
                 
-    ## 2 player case - Player 1
+    ## 2 player case - Player 1   
     if st.session_state['init_data']['status']==111:
         if st.session_state['init_data']['random_winner']:
             provisional_list=list(range(0,st.session_state['init_data']['N_images']))
@@ -829,6 +845,7 @@ def Main_Program():
             provisional_list.remove(st.session_state['init_data']['current_winner_index'])
             st.session_state['init_data']['current_winner_index2']=random.choice(provisional_list)
             st.session_state['init_data']['status']=131
+        
         else:
             ## Select winner image by players
             st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Select the image to be discovered by the Player 2</h2>", unsafe_allow_html=True)
