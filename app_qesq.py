@@ -917,7 +917,7 @@ def Load_Data(N):
                     'Are you wearing LIPSTICK?', 'Are you wearing NECKLACE?', 
                     'Are you wearing NECKTIE?'],
         'selected_question':'Are you a MAN?',
-        'selected_question2':'Are you a MAN?',?',
+        'selected_question2':'Are you a MAN?',
         'selected_feature_index':0,
         'selected_feature_index2':0,
         'questions_index':0,
