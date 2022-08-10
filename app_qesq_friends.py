@@ -626,7 +626,7 @@ def Load_Data(N):
         'n_images':N,
         'n_images2':N,
         'N_players':1,
-        'Selected_Images_Source':'Use Celeba dataset random images',
+        'Selected_Images_Source':'Use Celeba dataset',
         'zip_file':'guess_who_images.zip',
         'previous_zip_file':'guess_who_images.zip',
         'special_images_names':False,
@@ -775,7 +775,7 @@ def Main_Program():
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the set of images to play with:</h2>", unsafe_allow_html=True)
         Selected_Images_Source=st.selectbox('Choose between: Celebrities images, My friends images, Your own images (selecting a source path with your images zip file)', 
-                                                    ['Use Celeba dataset random images', 'Use friends random images', 'Use images from specific path'],
+                                                    ['Use Celeba dataset', 'Use friends dataset', 'Use images from specific path'],
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
@@ -812,9 +812,9 @@ def Main_Program():
     ## --------------- IMAGE SELECTION ---------------
     if st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==101:
         ## Select zip file
-        if st.session_state['init_data']['Selected_Images_Source']=='Use Celeba dataset random images':
+        if st.session_state['init_data']['Selected_Images_Source']=='Use Celeba dataset':
             st.session_state['init_data']['zip_file']='guess_who_images.zip'
-        elif st.session_state['init_data']['Selected_Images_Source']=='Use friends random images':
+        elif st.session_state['init_data']['Selected_Images_Source']=='Use friends dataset':
             st.session_state['init_data']['zip_file']='frifam.zip'
         else:
             st.session_state['init_data']['zip_file']='Use images from specific path'
