@@ -745,7 +745,7 @@ def Main_Program():
         N_Players=st.number_input('Select the number of players', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
         
         if N_Players==2:
-            Winner_selection_random=st.checkbox('Select to choose the winner images randomly', value=False, key=None, help=None, on_change=None, args=None, kwargs=None, *, disabled=False)
+            Winner_selection_random=st.checkbox('Select to choose the winner images randomly', value=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
 
         
         ## Number of images
