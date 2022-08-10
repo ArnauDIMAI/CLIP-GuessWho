@@ -746,8 +746,9 @@ def Main_Program():
         
         if N_Players==2:
             Winner_selection_random=st.checkbox('Select to choose the winner images randomly', value=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
-
-        
+        else:
+            Winner_selection_random=False
+            
         ## Number of images
         N_Images=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
 
@@ -759,7 +760,11 @@ def Main_Program():
                                                     
         ## Current options selection                                           
         st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
-        st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_Players)+"</h3>", unsafe_allow_html=True)
+        if Winner_selection_random:
+            st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_Players)+" (autoselect winners randomly)</h3>", unsafe_allow_html=True)
+
+        else:
+            st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_Players)+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "+str(N_Images)+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "+Selected_Images_Source+"</h3>", unsafe_allow_html=True)
            
@@ -819,10 +824,11 @@ def Main_Program():
     ## 2 player case - Player 1
     if st.session_state['init_data']['status']==111:
         if st.session_state['init_data']['random_winner']:
-            st.session_state['init_data']['current_winner_index']=random.choice(list(range(0,st.session_state['init_data']['N_images'])))
-            st.session_state['init_data']['current_winner_index2']=random.choice(list(range(0,st.session_state['init_data']['N_images'])).remove(st.session_state['init_data']['current_winner_index']))
+            provisional_list=list(range(0,st.session_state['init_data']['N_images']))
+            st.session_state['init_data']['current_winner_index']=random.choice(provisional_list)
+            provisional_list.remove(st.session_state['init_data']['current_winner_index'])
+            st.session_state['init_data']['current_winner_index2']=random.choice(provisional_list)
             st.session_state['init_data']['status']=131
-        
         else:
             ## Select winner image by players
             st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Select the image to be discovered by the Player 2</h2>", unsafe_allow_html=True)
