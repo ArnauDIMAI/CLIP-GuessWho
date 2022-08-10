@@ -796,6 +796,7 @@ def Main_Program():
             st.session_state['init_data']['n_images']=N_Images
             st.session_state['init_data']['n_images2']=N_Images
             st.session_state['init_data']['N_players']=N_Players
+            st.session_state['init_data']['random_winner']=Winner_selection_random
             st.session_state['init_data']['current_images_discarted']=np.zeros((N_Images))
             st.session_state['init_data']['current_images_discarted2']=np.zeros((N_Images))
             st.session_state['init_data']['image_current_probs']=np.zeros((N_Images,2))
