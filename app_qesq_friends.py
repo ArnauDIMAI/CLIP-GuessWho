@@ -695,7 +695,8 @@ def Load_Data(N):
         'change_player':False,
         'player2_turn':False,
         'finished_game':False,
-        'reload_game':False,
+        'reload_game':False,        
+        'random_winner':False,
         'show_images':[],
         'previous_discarding_images_number':0,
         'selected_winner_index':0,
@@ -762,6 +763,11 @@ def Main_Program():
          
         ## Number of players
         N_Players=st.number_input('Select the number of images', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
+        
+        if N_Players==2:
+            Winner_selection_random=st.checkbox('Select to choose the winner images randomly', value=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
+        else:
+            Winner_selection_random=False
             
         ## Number of images
         N_Images=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
@@ -774,7 +780,11 @@ def Main_Program():
                                                     
         ## Current options selection                                           
         st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
-        st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_Players)+"</h3>", unsafe_allow_html=True)
+        if Winner_selection_random:
+            st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_Players)+" (autoselect winners randomly)</h3>", unsafe_allow_html=True)
+
+        else:
+            st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "+str(N_Players)+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "+str(N_Images)+"</h3>", unsafe_allow_html=True)
         st.markdown("<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "+Selected_Images_Source+"</h3>", unsafe_allow_html=True)
            
@@ -786,6 +796,7 @@ def Main_Program():
             st.session_state['init_data']['n_images']=N_Images
             st.session_state['init_data']['n_images2']=N_Images
             st.session_state['init_data']['N_players']=N_Players
+            st.session_state['init_data']['random_winner']=Winner_selection_random
             st.session_state['init_data']['current_images_discarted']=np.zeros((N_Images))
             st.session_state['init_data']['current_images_discarted2']=np.zeros((N_Images))
             st.session_state['init_data']['image_current_probs']=np.zeros((N_Images,2))
@@ -832,23 +843,31 @@ def Main_Program():
         st.session_state['init_data']['status']=st.session_state['init_data']['status']+20
 
                 
-    ## 2 player case - Player 1
+    ## 2 player case - Player 1   
     if st.session_state['init_data']['status']==111:
-        ## Select winner image by players
-        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Select the image to be discovered by the Player 2</h2>", unsafe_allow_html=True)
-        Image_Names_List=['Not selected']
-        Image_Names_List.extend(st.session_state['init_data']['current_image_names2'])
-        Player_2_Image=st.selectbox('(PLAYER 1: choose an image from the list)', 
-                                                    Image_Names_List,
-                                                    index=0, key='Player_2_Image', help=None)    
-                           
-        ## Button - start game
-        if Player_2_Image!='Not selected':
-            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to validate the selection: "+Player_2_Image+"</h3>", unsafe_allow_html=True)
-            Next_Player_Selection = st.button('CONFIRM CHOICE', key='Next_Player_Selection')
-            if Next_Player_Selection:
-                st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
-                st.session_state['init_data']['current_winner_index2']=Image_Names_List.index(Player_2_Image)-1
+        if st.session_state['init_data']['random_winner']:
+            provisional_list=list(range(0,st.session_state['init_data']['N_images']))
+            st.session_state['init_data']['current_winner_index']=random.choice(provisional_list)
+            provisional_list.remove(st.session_state['init_data']['current_winner_index'])
+            st.session_state['init_data']['current_winner_index2']=random.choice(provisional_list)
+            st.session_state['init_data']['status']=131
+        
+        else:
+            ## Select winner image by players
+            st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>PLAYER 1: Select the image to be discovered by the Player 2</h2>", unsafe_allow_html=True)
+            Image_Names_List=['Not selected']
+            Image_Names_List.extend(st.session_state['init_data']['current_image_names2'])
+            Player_2_Image=st.selectbox('(PLAYER 1: choose an image from the list)', 
+                                                        Image_Names_List,
+                                                        index=0, key='Player_2_Image', help=None)    
+                               
+            ## Button - start game
+            if Player_2_Image!='Not selected':
+                st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to validate the selection: "+Player_2_Image+"</h3>", unsafe_allow_html=True)
+                Next_Player_Selection = st.button('CONFIRM CHOICE', key='Next_Player_Selection')
+                if Next_Player_Selection:
+                    st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
+                    st.session_state['init_data']['current_winner_index2']=Image_Names_List.index(Player_2_Image)-1
     
     
     ## 2 player case - Player 1 OK
