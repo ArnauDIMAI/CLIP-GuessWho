@@ -776,7 +776,7 @@ def Main_Program():
             Winner_selection_random=False
             
         ## Number of images
-        N_Images=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
+        N_Images=st.number_input('Select the number of images', min_value=5, max_value=24, value=20, step=1, format='%d', key='N_images', help=None)
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the set of images to play with:</h2>", unsafe_allow_html=True)
