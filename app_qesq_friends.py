@@ -39,16 +39,6 @@ def Predict_0_vs_1():
             st.session_state['init_data']['image_current_predictions'].append(0)
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    
-def Predict_1_vs_2():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if st.session_state['init_data']['image_current_probs'][i,1]>st.session_state['init_data']['image_current_probs'][i,2]:
-            st.session_state['init_data']['image_current_predictions'].append(1)
-        else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
-
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
 
 def Predict_0_vs_all():
     st.session_state['init_data']['image_current_predictions']=[]
@@ -59,7 +49,17 @@ def Predict_0_vs_all():
             st.session_state['init_data']['image_current_predictions'].append(0)
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-     
+  
+def Predict_all_vs_last():
+    n_max=len(st.session_state['init_data']['image_current_probs'][:,0])-1
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==n_max:
+            st.session_state['init_data']['image_current_predictions'].append(1)        
+        else:
+            st.session_state['init_data']['image_current_predictions'].append(0)
+
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])   
 def Predict_bald():
     st.session_state['init_data']['image_current_predictions']=[]
     for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
@@ -217,6 +217,12 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                                                                     'A picture of a bald-head person']
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all
                         
+                    elif Selected_Question=='Do you wear EYEGLASSES?':
+                        st.session_state['init_data']['current_querys']=['A picture of a person with eyeglasses',
+                                                                    'A picture of a person with glasses',
+                                                                    'A picture of a person with sunglasses',
+                                                                    'A picture of a person']
+                        st.session_state['init_data']['function_predict']=Predict_all_vs_last    
                    
                     elif  not st.session_state['init_data']['show_results']:
                         st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index']],
@@ -657,7 +663,7 @@ def Load_Data(N):
             'A picture of a person with black hair', 'A picture of a person with brown hair', 'A picture of a person with blond hair', 'A picture of a person with red hair', 
             'A picture of a person with gray hair', 'A picture of a person with straight hair', 'A picture of a person with wavy hair', 
             'A picture of a glabrous person', 'A picture of a mustachioed person', 'A picture of a person with bushy sideburns', 
-            'A picture of a person with goatee', 'A picture of a person with heavy makeup', 'A picture of a person with eyeglasses ',             
+            'A picture of a person with goatee', 'A picture of a person with heavy makeup', 'A picture of a person with eyeglasses',             
             'A picture of a person with bushy eyebrows', 'A picture of a double chin person', 
             'A picture of a person with high cheekbones', 'A picture of a person with opened mouth', 
             'A picture of a person with narrow eyes', 'A picture of a person with an oval-shaped face', 
@@ -668,7 +674,7 @@ def Load_Data(N):
             'A picture of a person with lipstick', 'A picture of a necklaced person', 
             'A picture of a necktied person'
             ],
-        'querys_list_no':['A picture of a female person', 'A picture of a male person', 'A picture of an ugly person', 'A picture of a slender person', 'A picture of a aged person', 
+        'querys_list_no':['A picture of a female person', 'A picture of a male person', 'A picture of an ugly person', 'A picture of a slender person', 'A picture of an aged person', 
             'A picture of a hairy person', 'A picture of a person', 'A picture of a hairy person',
             'A picture of a person', 'A picture of a person', 'A picture of a person', 'A picture of a person', 
             'A picture of a person', 'A picture of a person with wavy hair', 'A picture of a person with straight hair', 
@@ -774,8 +780,8 @@ def Main_Program():
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the set of images to play with:</h2>", unsafe_allow_html=True)
-        Selected_Images_Source=st.selectbox('Choose between: Celebrities images, My friends images, Your own images (selecting a source path with your images zip file)', 
-                                                    ['Use Celeba dataset', 'Use friends dataset', 'Use images from specific path'],
+        Selected_Images_Source=st.selectbox('Choose between: Celebrities images, Original "Guess Who" game images, My friends images, Your own images (selecting a source path with your images zip file)', 
+                                                    ['Use Celeba dataset','Use Original "Guess Who" game images', 'Use friends dataset', 'Use images from specific path'],
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
@@ -814,6 +820,8 @@ def Main_Program():
         ## Select zip file
         if st.session_state['init_data']['Selected_Images_Source']=='Use Celeba dataset':
             st.session_state['init_data']['zip_file']='guess_who_images.zip'
+        elif st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+            st.session_state['init_data']['zip_file']='Original.zip'
         elif st.session_state['init_data']['Selected_Images_Source']=='Use friends dataset':
             st.session_state['init_data']['zip_file']='frifam.zip'
         else:
