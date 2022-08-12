@@ -757,6 +757,7 @@ def Main_Program():
                     + str(st.session_state['init_data']['award1'])+"</h2>", unsafe_allow_html=True)
 
 
+    
     ## --------------- INITIALIZATIONS ---------------
     if st.session_state['init_data']['status']==0:
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select 1 or 2 players and the number of images to use</h2>", unsafe_allow_html=True)
@@ -774,8 +775,8 @@ def Main_Program():
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the set of images to play with:</h2>", unsafe_allow_html=True)
-        Selected_Images_Source=st.selectbox('Choose between: Celebrities images or Your own images (selecting a source path with your images zip file)', 
-                                                    ['Use Celeba dataset', 'Use images from specific path'],
+        Selected_Images_Source=st.selectbox('Choose between: Celebrities images, Original "Guess Who" game images, Your own images (selecting a source path with your images zip file)', 
+                                                    ['Use Celeba dataset','Use Original "Guess Who" game images', 'Use images from specific path'],
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
@@ -814,10 +815,13 @@ def Main_Program():
         ## Select zip file
         if st.session_state['init_data']['Selected_Images_Source']=='Use Celeba dataset':
             st.session_state['init_data']['zip_file']='guess_who_images.zip'
+        elif st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+            st.session_state['init_data']['zip_file']='Original.zip'
         elif st.session_state['init_data']['Selected_Images_Source']=='Use friends dataset':
             st.session_state['init_data']['zip_file']='frifam.zip'
         else:
             st.session_state['init_data']['zip_file']='Use images from specific path'
+
     
         ## Button - randomly change images
         st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to randomly modify the selected images.</h3>",
