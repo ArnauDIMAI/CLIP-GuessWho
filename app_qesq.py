@@ -603,6 +603,7 @@ def Select_Images_Randomly():
 def Load_Image(current_index, current_path):
     archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
     image_current_path=current_path[current_index]
+    st.markdown("<h3 style='text-align:left; float:left; color:red; margin:0px;'>"+image_current_path+".</h3>", unsafe_allow_html=True)
     image_file=Image.open(BytesIO(archive.read(image_current_path)))
     image_file = image_file.convert('RGB')  
     
