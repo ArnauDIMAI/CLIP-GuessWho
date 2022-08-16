@@ -173,7 +173,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                             st.session_state['init_data']['current_querys']=["An illlustration of a black-haired person's face",
                                                                         "An illlustration of a chocolate-haired person's face",
                                                                         "An illlustration of a carrot-haired person's face",
-                                                                        "An illlustration of a lemon-haired person's face",
+                                                                        "An illlustration of a bumblebe-haired person's face",
                                                                         "An illlustration of a white-haired person's face"]
                         else:
                             st.session_state['init_data']['current_querys']=["A picture of a black-haired person",
@@ -191,7 +191,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                             st.session_state['init_data']['current_querys']=["An illlustration of a chocolate-haired person's face",
                                                                         "An illlustration of a black-haired person's face",
                                                                         "An illlustration of a carrot-haired person's face",
-                                                                        "An illlustration of a lemon-haired person's face",
+                                                                        "An illlustration of a bumblebe-haired person's face",
                                                                         "An illlustration of a white-haired person's face"]
                         else:
                             st.session_state['init_data']['current_querys']=["A picture of a tawny-haired person",
@@ -208,12 +208,12 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                         st.session_state['init_data']['current_querys']=["An illlustration of a carrot-haired person's face",
                                                                         "An illlustration of a chocolate-haired person's face",
                                                                         "An illlustration of a black-haired person's face",
-                                                                        "An illlustration of a lemon-haired person's face",
+                                                                        "An illlustration of a bumblebe-haired person's face",
                                                                         "An illlustration of a white-haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all  
                                                  
                     elif Selected_Question=='Do you have YELLOW HAIR?':
-                        st.session_state['init_data']['current_querys']=["An illlustration of a lemon-haired person's face",
+                        st.session_state['init_data']['current_querys']=["An illlustration of a bumblebe-haired person's face",
                                                                         "An illlustration of a chocolate-haired person's face",
                                                                         "An illlustration of a carrot-haired person's face",
                                                                         "An illlustration of a black-haired person's face",
@@ -224,7 +224,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                         st.session_state['init_data']['current_querys']=["An illlustration of a white-haired person's face",
                                                                         "An illlustration of a chocolate-haired person's face",
                                                                         "An illlustration of a carrot-haired person's face",
-                                                                        "An illlustration of a lemon-haired person's face",
+                                                                        "An illlustration of a bumblebe-haired person's face",
                                                                         "An illlustration of a black-haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all                         
 
