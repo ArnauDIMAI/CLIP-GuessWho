@@ -666,9 +666,7 @@ def Load_Image(current_index, current_path):
     return np.array(image_file)
 
 
-def Select_Dataset():
-
-    
+def Select_Dataset():   
     if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
         ## Select zip file
         st.session_state['init_data']['zip_file']='Original.zip'
@@ -687,7 +685,7 @@ def Select_Dataset():
                     "Do you have BANGS?", "Do you have a BIG LIPS?", "Do you have a BIG NOSE?",
                     "Are you wearing EARRINGS?", "Are you wearing a HAT?", 
                     "Are you wearing LIPSTICK?", "Are you wearing NECKLACE?", 
-                    "Are you wearing NECKTIE?"],
+                    "Are you wearing NECKTIE?"]
     
         st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
             "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
@@ -703,8 +701,7 @@ def Select_Dataset():
             "An illlustration of a person's face with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
             "An illlustration of a person's face with earrings", "An illlustration of a person's face with hat", 
             "An illlustration of a person's face with lipstick", "A picture of a necklaced person", 
-            "A picture of a necktied person"
-            ]
+            "A picture of a necktied person"]
     
         st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
             "A picture of a hairy person", "An illlustration of a person's face", "A picture of a hairy person",
@@ -720,8 +717,7 @@ def Select_Dataset():
             "An illlustration of a person's face", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
             "An illlustration of a person's face", "An illlustration of a person's face with hair", 
             "An illlustration of a person's face with natural lips", "An illlustration of a person's face", 
-            "An illlustration of a person's face"
-            ]    
+            "An illlustration of a person's face"]    
     
     else:
         ## Select zip file
@@ -747,7 +743,7 @@ def Select_Dataset():
                     "Do you have BANGS?", "Do you have a BIG LIPS?", "Do you have a BIG NOSE?",
                     "Are you wearing EARRINGS?", "Are you wearing a HAT?", 
                     "Are you wearing LIPSTICK?", "Are you wearing NECKLACE?", 
-                    "Are you wearing NECKTIE?"],
+                    "Are you wearing NECKTIE?"]
     
         st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
             "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
@@ -763,8 +759,7 @@ def Select_Dataset():
             "A picture of a person with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
             "A picture of a person with earrings", "A picture of a person with hat", 
             "A picture of a person with lipstick", "A picture of a necklaced person", 
-            "A picture of a necktied person"
-            ]
+            "A picture of a necktied person"]
     
         st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
             "A picture of a hairy person", "A picture of a person", "A picture of a hairy person",
@@ -780,8 +775,7 @@ def Select_Dataset():
             "A picture of a person", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
             "A picture of a person", "A picture of a person with hair", 
             "A picture of a person with natural lips", "A picture of a person", 
-            "A picture of a person"
-            ] 
+            "A picture of a person"] 
                     
 
 def Show_Info():
@@ -947,7 +941,7 @@ def Main_Program():
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the set of images to play with:</h2>", unsafe_allow_html=True)
-        Selected_Images_Source=st.selectbox('Choose between: Celebrities images, Original "Guess Who" game images or Your own images (selecting a source path with your images zip file)', 
+        Selected_Images_Source=st.selectbox('Choose between: Celebrities images, Original "Guess Who" game images, or Your own images (selecting a source path with your images zip file)', 
                                                     ['Use Celeba dataset','Use Original "Guess Who" game images', 'Use images from specific path'],
                                                     index=0, key='Selected_Images_Source', help=None)
                                                     
