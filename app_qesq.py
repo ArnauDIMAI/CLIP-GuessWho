@@ -174,7 +174,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a light red haired person's face",
                                                                         "An illustration of a bumblebee haired person's face",
-                                                                        "An illustration of a dark white haired person's face"]
+                                                                        "An illustration of a white-gray haired person's face"]
                         else:
                             st.session_state['init_data']['current_querys']=["A picture of a black haired person",
                                                                         "A picture of a tawny haired person",
@@ -192,7 +192,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                                                                         "An illustration of a black haired person's face",
                                                                         "An illustration of a light red haired person's face",
                                                                         "An illustration of a bumblebee haired person's face",
-                                                                        "An illustration of a dark white haired person's face"]
+                                                                        "An illustration of a white-gray haired person's face"]
                         else:
                             st.session_state['init_data']['current_querys']=["A picture of a tawny haired person",
                                                                         "A picture of a black haired person",
@@ -209,7 +209,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a black haired person's face",
                                                                         "An illustration of a bumblebee haired person's face",
-                                                                        "An illustration of a dark white haired person's face"]
+                                                                        "An illustration of a white-gray haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all  
                                                  
                     elif Selected_Question=='Do you have YELLOW HAIR?':
@@ -217,11 +217,11 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a light red haired person's face",
                                                                         "An illustration of a black haired person's face",
-                                                                        "An illustration of a dark white haired person's face"]
+                                                                        "An illustration of a white-gray haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all 
                                                  
                     elif Selected_Question=='Do you have WHITE HAIR?':
-                        st.session_state['init_data']['current_querys']=["An illustration of a dark white haired person's face",
+                        st.session_state['init_data']['current_querys']=["An illustration of a white-gray haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a light red haired person's face",
                                                                         "An illustration of a bumblebee haired person's face",
