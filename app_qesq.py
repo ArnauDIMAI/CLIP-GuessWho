@@ -929,7 +929,7 @@ def Main_Program():
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select 1 or 2 players and the number of images to use</h2>", unsafe_allow_html=True)
          
         ## Number of players
-        N_Players=st.number_input('Select the number of images', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
+        N_Players=st.number_input('Select the number of players', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
         
         if N_Players==2:
             Winner_selection_random=st.checkbox('Select to choose the winner images randomly', value=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
