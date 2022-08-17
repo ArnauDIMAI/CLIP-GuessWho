@@ -173,7 +173,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                             st.session_state['init_data']['current_querys']=["An illustration of a black haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a neon tangerine haired person's face",
-                                                                        "An illustration of a candium yellow haired person's face",
+                                                                        "An illustration of a citron yellow haired person's face",
                                                                         "An illustration of a milky white haired person's face"]
                         else:
                             st.session_state['init_data']['current_querys']=["A picture of a black haired person",
