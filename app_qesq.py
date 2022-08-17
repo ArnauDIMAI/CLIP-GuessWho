@@ -172,7 +172,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                         if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
                             st.session_state['init_data']['current_querys']=["An illustration of a black haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
-                                                                        "An illustration of a cornrow haired person's face",
+                                                                        "An illustration of a ginger haired person's face",
                                                                         "An illustration of a bumblebee haired person's face",
                                                                         "An illustration of a white haired person's face"]
                         else:
@@ -190,7 +190,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                         if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
                             st.session_state['init_data']['current_querys']=["An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a black haired person's face",
-                                                                        "An illustration of a cornrow haired person's face",
+                                                                        "An illustration of a ginger haired person's face",
                                                                         "An illustration of a bumblebee haired person's face",
                                                                         "An illustration of a white haired person's face"]
                         else:
@@ -205,7 +205,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all                            
                                                  
                     elif Selected_Question=='Do you have ORANGE HAIR?':
-                        st.session_state['init_data']['current_querys']=["An illustration of a cornrow haired person's face",
+                        st.session_state['init_data']['current_querys']=["An illustration of a ginger haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a black haired person's face",
                                                                         "An illustration of a bumblebee haired person's face",
@@ -215,7 +215,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                     elif Selected_Question=='Do you have YELLOW HAIR?':
                         st.session_state['init_data']['current_querys']=["An illustration of a bumblebee haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
-                                                                        "An illustration of a cornrow haired person's face",
+                                                                        "An illustration of a ginger haired person's face",
                                                                         "An illustration of a black haired person's face",
                                                                         "An illustration of a white haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all 
@@ -223,7 +223,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                     elif Selected_Question=='Do you have WHITE HAIR?':
                         st.session_state['init_data']['current_querys']=["An illustration of a white haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
-                                                                        "An illustration of a cornrow haired person's face",
+                                                                        "An illustration of a ginger haired person's face",
                                                                         "An illustration of a bumblebee haired person's face",
                                                                         "An illustration of a black haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all                         
@@ -937,13 +937,13 @@ def Main_Program():
             Winner_selection_random=False
             
         ## Number of images
-        N_Images=st.number_input('Select the number of images', min_value=5, max_value=24, value=20, step=1, format='%d', key='N_images', help=None)
+        N_Images=st.number_input('Select the number of images', min_value=5, max_value=24, value=24, step=1, format='%d', key='N_images', help=None)
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the set of images to play with:</h2>", unsafe_allow_html=True)
         Selected_Images_Source=st.selectbox('Choose between: Celebrities images, Original "Guess Who" game images, My friends images or Your own images (selecting a source path with your images zip file)', 
                                                     ['Use Celeba dataset','Use Original "Guess Who" game images', 'Use friends dataset', 'Use images from specific path'],
-                                                    index=0, key='Selected_Images_Source', help=None)
+                                                    index=1, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
         st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
