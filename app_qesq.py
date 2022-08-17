@@ -158,9 +158,9 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                 if Check_Question:
                     if Selected_Question=='Are you bald?':
                         if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
-                            st.session_state['init_data']['current_querys']=["An illlustration of a male person's face","An illlustration of a female person's face",
-                                                                        "An illlustration of a bald man's face","An illlustration of a haired person's face", 
-                                                                        "An illlustration of a bald person's face","An illlustration of a person's face"]
+                            st.session_state['init_data']['current_querys']=["An illustration of a male person's face","An illustration of a female person's face",
+                                                                        "An illustration of a bald man's face","An illustration of a haired person's face", 
+                                                                        "An illustration of a bald person's face","An illustration of a person's face"]
                         
                         else:
                             st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
@@ -170,103 +170,103 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                         
                     elif Selected_Question=='Do you have BLACK HAIR?':
                         if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
-                            st.session_state['init_data']['current_querys']=["An illlustration of a black-haired person's face",
-                                                                        "An illlustration of a rust-haired person's face",
-                                                                        "An illlustration of a red-haired person's face",
-                                                                        "An illlustration of a bumblebee-haired person's face",
-                                                                        "An illlustration of a white-haired person's face"]
+                            st.session_state['init_data']['current_querys']=["An illustration of a black haired person's face",
+                                                                        "An illustration of a dark maroon haired person's face",
+                                                                        "An illustration of a red haired person's face",
+                                                                        "An illustration of a bumblebee haired person's face",
+                                                                        "An illustration of a white haired person's face"]
                         else:
-                            st.session_state['init_data']['current_querys']=["A picture of a black-haired person",
-                                                                        "A picture of a tawny-haired person",
-                                                                        "A picture of a blond-haired person",
-                                                                        "A picture of a gray-haired person",
-                                                                        "A picture of a red-haired person",
-                                                                        "A picture of a green-haired person",
-                                                                        "A picture of a blue-haired person",
+                            st.session_state['init_data']['current_querys']=["A picture of a black haired person",
+                                                                        "A picture of a tawny haired person",
+                                                                        "A picture of a blond haired person",
+                                                                        "A picture of a gray haired person",
+                                                                        "A picture of a red haired person",
+                                                                        "A picture of a green haired person",
+                                                                        "A picture of a blue haired person",
                                                                         "A picture of a bald-head person"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all
                             
                     elif Selected_Question=='Do you have BROWN HAIR?':
                         if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
-                            st.session_state['init_data']['current_querys']=["An illlustration of a rust-haired person's face",
-                                                                        "An illlustration of a black-haired person's face",
-                                                                        "An illlustration of a red-haired person's face",
-                                                                        "An illlustration of a bumblebee-haired person's face",
-                                                                        "An illlustration of a white-haired person's face"]
+                            st.session_state['init_data']['current_querys']=["An illustration of a dark maroon haired person's face",
+                                                                        "An illustration of a black haired person's face",
+                                                                        "An illustration of a red haired person's face",
+                                                                        "An illustration of a bumblebee haired person's face",
+                                                                        "An illustration of a white haired person's face"]
                         else:
-                            st.session_state['init_data']['current_querys']=["A picture of a tawny-haired person",
-                                                                        "A picture of a black-haired person",
-                                                                        "A picture of a blond-haired person",
-                                                                        "A picture of a gray-haired person",
-                                                                        "A picture of a red-haired person",
-                                                                        "A picture of a green-haired person",
-                                                                        "A picture of a blue-haired person",
+                            st.session_state['init_data']['current_querys']=["A picture of a tawny haired person",
+                                                                        "A picture of a black haired person",
+                                                                        "A picture of a blond haired person",
+                                                                        "A picture of a gray haired person",
+                                                                        "A picture of a red haired person",
+                                                                        "A picture of a green haired person",
+                                                                        "A picture of a blue haired person",
                                                                         "A picture of a bald-head person"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all                            
                                                  
                     elif Selected_Question=='Do you have ORANGE HAIR?':
-                        st.session_state['init_data']['current_querys']=["An illlustration of a red-haired person's face",
-                                                                        "An illlustration of a rust-haired person's face",
-                                                                        "An illlustration of a black-haired person's face",
-                                                                        "An illlustration of a bumblebee-haired person's face",
-                                                                        "An illlustration of a white-haired person's face"]
+                        st.session_state['init_data']['current_querys']=["An illustration of a red haired person's face",
+                                                                        "An illustration of a dark maroon haired person's face",
+                                                                        "An illustration of a black haired person's face",
+                                                                        "An illustration of a bumblebee haired person's face",
+                                                                        "An illustration of a white haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all  
                                                  
                     elif Selected_Question=='Do you have YELLOW HAIR?':
-                        st.session_state['init_data']['current_querys']=["An illlustration of a bumblebee-haired person's face",
-                                                                        "An illlustration of a rust-haired person's face",
-                                                                        "An illlustration of a red-haired person's face",
-                                                                        "An illlustration of a black-haired person's face",
-                                                                        "An illlustration of a white-haired person's face"]
+                        st.session_state['init_data']['current_querys']=["An illustration of a bumblebee haired person's face",
+                                                                        "An illustration of a dark maroon haired person's face",
+                                                                        "An illustration of a red haired person's face",
+                                                                        "An illustration of a black haired person's face",
+                                                                        "An illustration of a white haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all 
                                                  
                     elif Selected_Question=='Do you have WHITE HAIR?':
-                        st.session_state['init_data']['current_querys']=["An illlustration of a white-haired person's face",
-                                                                        "An illlustration of a rust-haired person's face",
-                                                                        "An illlustration of a red-haired person's face",
-                                                                        "An illlustration of a bumblebee-haired person's face",
-                                                                        "An illlustration of a black-haired person's face"]
+                        st.session_state['init_data']['current_querys']=["An illustration of a white haired person's face",
+                                                                        "An illustration of a dark maroon haired person's face",
+                                                                        "An illustration of a red haired person's face",
+                                                                        "An illustration of a bumblebee haired person's face",
+                                                                        "An illustration of a black haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all                         
 
                     elif Selected_Question=='Do you have BLOND HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a blond-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
+                        st.session_state['init_data']['current_querys']=['A picture of a blond haired person',
+                                                                    'A picture of a tawny haired person',
+                                                                    'A picture of a black haired person',
+                                                                    'A picture of a gray haired person',
+                                                                    'A picture of a red haired person',
+                                                                    'A picture of a green haired person',
+                                                                    'A picture of a blue haired person',
                                                                     'A picture of a bald-head person']
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all
                         
                     elif Selected_Question=='Do you have RED HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a red-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
+                        st.session_state['init_data']['current_querys']=['A picture of a red haired person',
+                                                                    'A picture of a tawny haired person',
+                                                                    'A picture of a blond haired person',
+                                                                    'A picture of a gray haired person',
+                                                                    'A picture of a black haired person',
+                                                                    'A picture of a green haired person',
+                                                                    'A picture of a blue haired person',
                                                                     'A picture of a bald-head person']
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all
                         
                     elif Selected_Question=='Do you have GRAY HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a gray-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
+                        st.session_state['init_data']['current_querys']=['A picture of a gray haired person',
+                                                                    'A picture of a tawny haired person',
+                                                                    'A picture of a blond haired person',
+                                                                    'A picture of a black haired person',
+                                                                    'A picture of a red haired person',
+                                                                    'A picture of a green haired person',
+                                                                    'A picture of a blue haired person',
                                                                     'A picture of a bald-head person']
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all
                         
                     elif Selected_Question=='Do you wear EYEGLASSES?':
                         if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
-                            st.session_state['init_data']['current_querys']=["An illlustration of a person's face with eyeglasses",
-                                                                        "An illlustration of a person's face with glasses",
-                                                                        "An illlustration of a person's face with sunglasses",
-                                                                        "An illlustration of a person's face"]
+                            st.session_state['init_data']['current_querys']=["An illustration of a person's face with eyeglasses",
+                                                                        "An illustration of a person's face with glasses",
+                                                                        "An illustration of a person's face with sunglasses",
+                                                                        "An illustration of a person's face"]
                         else:
                             st.session_state['init_data']['current_querys']=['A picture of a person with eyeglasses',
                                                                         'A picture of a person with glasses',
@@ -689,35 +689,35 @@ def Select_Dataset():
     
         st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
             "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
-            "An illlustration of a person's face with black hair", "An illlustration of a person's face with brown hair", "An illlustration of a person's face with orange hair", "An illlustration of a person's face with yellow hair", 
-            "An illlustration of a person's face with white hair", "An illlustration of a person's face with straight hair", "An illlustration of a person's face with wavy hair", 
-            "A picture of a unshaved person", "A picture of a mustachioed person", "An illlustration of a person's face with bushy sideburns", 
-            "An illlustration of a person's face with goatee", "An illlustration of a person's face with heavy makeup", "An illlustration of a person's face with eyeglasses",             
-            "An illlustration of a person's face with bushy eyebrows", "A picture of a double chin person", 
-            "An illlustration of a person's face with high cheekbones", "An illlustration of a person's face with opened mouth", 
-            "An illlustration of a person's face with narrow eyes", "An illlustration of a person's face with an oval-shaped face", 
-            "An illlustration of a person's face wiht pale skin", "A picture of a pointy-nosed person ", "An illlustration of a person's face with colored cheeks", 
-            "A picture of a five o'clock shadow person", "A picture of a rounded eyebrows person", "An illlustration of a person's face with bags under the eyes", 
-            "An illlustration of a person's face with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
-            "An illlustration of a person's face with earrings", "An illlustration of a person's face with hat", 
-            "An illlustration of a person's face with lipstick", "A picture of a necklaced person", 
+            "An illustration of a person's face with black hair", "An illustration of a person's face with brown hair", "An illustration of a person's face with orange hair", "An illustration of a person's face with yellow hair", 
+            "An illustration of a person's face with white hair", "An illustration of a person's face with straight hair", "An illustration of a person's face with wavy hair", 
+            "A picture of a unshaved person", "A picture of a mustachioed person", "An illustration of a person's face with bushy sideburns", 
+            "An illustration of a person's face with goatee", "An illustration of a person's face with heavy makeup", "An illustration of a person's face with eyeglasses",             
+            "An illustration of a person's face with bushy eyebrows", "A picture of a double chin person", 
+            "An illustration of a person's face with high cheekbones", "An illustration of a person's face with opened mouth", 
+            "An illustration of a person's face with narrow eyes", "An illustration of a person's face with an oval-shaped face", 
+            "An illustration of a person's face wiht pale skin", "A picture of a pointy-nosed person ", "An illustration of a person's face with colored cheeks", 
+            "A picture of a five o'clock shadow person", "A picture of a rounded eyebrows person", "An illustration of a person's face with bags under the eyes", 
+            "An illustration of a person's face with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
+            "An illustration of a person's face with earrings", "An illustration of a person's face with hat", 
+            "An illustration of a person's face with lipstick", "A picture of a necklaced person", 
             "A picture of a necktied person"]
     
         st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
-            "A picture of a hairy person", "An illlustration of a person's face", "A picture of a hairy person",
-            "An illlustration of a person's face", "An illlustration of a person's face", "An illlustration of a person's face", "An illlustration of a person's face", 
-            "An illlustration of a person's face", "An illlustration of a person's face with wavy hair", "An illlustration of a person's face with straight hair", 
-            "A picture of a glabrous person", "An illlustration of a person's face", "An illlustration of a person's face with shaved sideburns", 
-            "An illlustration of a person's face", "An illlustration of a person's face with light makeup", "An illlustration of a person's face ",             
-            "An illlustration of a person's face with sparse eyebrows", "An illlustration of a person's face with a double chin", 
-            "An illlustration of a person's face with low cheekbones", "An illlustration of a person's face with closed mouth", 
-            "An illlustration of a person's face with wide eyes", "An illlustration of a person's face with a normal-shaped face", 
-            "An illlustration of a person's face wiht tanned skin", "A picture of a flat-nosed person", "An illlustration of a person's face with pale cheeks", 
-            "A picture of a shaved or unshaved person", "An illlustration of a person's face a straight eyebrows person", "An illlustration of a person's face with with smooth skin under the eyes", 
-            "An illlustration of a person's face", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
-            "An illlustration of a person's face", "An illlustration of a person's face with hair", 
-            "An illlustration of a person's face with natural lips", "An illlustration of a person's face", 
-            "An illlustration of a person's face"]    
+            "A picture of a hairy person", "An illustration of a person's face", "A picture of a hairy person",
+            "An illustration of a person's face", "An illustration of a person's face", "An illustration of a person's face", "An illustration of a person's face", 
+            "An illustration of a person's face", "An illustration of a person's face with wavy hair", "An illustration of a person's face with straight hair", 
+            "A picture of a glabrous person", "An illustration of a person's face", "An illustration of a person's face with shaved sideburns", 
+            "An illustration of a person's face", "An illustration of a person's face with light makeup", "An illustration of a person's face ",             
+            "An illustration of a person's face with sparse eyebrows", "An illustration of a person's face with a double chin", 
+            "An illustration of a person's face with low cheekbones", "An illustration of a person's face with closed mouth", 
+            "An illustration of a person's face with wide eyes", "An illustration of a person's face with a normal-shaped face", 
+            "An illustration of a person's face wiht tanned skin", "A picture of a flat-nosed person", "An illustration of a person's face with pale cheeks", 
+            "A picture of a shaved or unshaved person", "An illustration of a person's face a straight eyebrows person", "An illustration of a person's face with with smooth skin under the eyes", 
+            "An illustration of a person's face", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
+            "An illustration of a person's face", "An illustration of a person's face with hair", 
+            "An illustration of a person's face with natural lips", "An illustration of a person's face", 
+            "An illustration of a person's face"]    
     
     else:
         ## Select zip file
