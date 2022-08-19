@@ -39,16 +39,6 @@ def Predict_0_vs_1():
             st.session_state['init_data']['image_current_predictions'].append(0)
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-    
-def Predict_1_vs_2():
-    st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
-        if st.session_state['init_data']['image_current_probs'][i,1]>st.session_state['init_data']['image_current_probs'][i,2]:
-            st.session_state['init_data']['image_current_predictions'].append(1)
-        else:
-            st.session_state['init_data']['image_current_predictions'].append(0)
-
-    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
 
 def Predict_0_vs_all():
     st.session_state['init_data']['image_current_predictions']=[]
@@ -59,7 +49,17 @@ def Predict_0_vs_all():
             st.session_state['init_data']['image_current_predictions'].append(0)
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
-     
+  
+def Predict_all_vs_last():
+    n_max=len(st.session_state['init_data']['image_current_probs'][:,0])-1
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==n_max:
+            st.session_state['init_data']['image_current_predictions'].append(1)        
+        else:
+            st.session_state['init_data']['image_current_predictions'].append(0)
+
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])   
 def Predict_bald():
     st.session_state['init_data']['image_current_predictions']=[]
     for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
@@ -134,7 +134,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
             
             ## SelectBox - Select question
             Selected_Question=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], 
-                                               index=0, key='Selected_Question', help=None)
+                                               index=11, key='Selected_Question', help=None)
             st.session_state['init_data']['selected_question']=Selected_Question  # Save Info
             
             ## Current question index
@@ -157,68 +157,124 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
             else:
                 if Check_Question:
                     if Selected_Question=='Are you bald?':
-                        st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
-                                                                    'A picture of a bald man','A picture of a haired man', 
-                                                                    'A picture of a bald person','A picture of a person']
+                        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+                            st.session_state['init_data']['current_querys']=["An illustration of a male person's face","An illustration of a female person's face",
+                                                                        "An illustration of a bald man's face","An illustration of a haired person's face", 
+                                                                        "An illustration of a bald person's face","An illustration of a person's face"]
+                        
+                        else:
+                            st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
+                                                                        'A picture of a bald man','A picture of a haired man', 
+                                                                        'A picture of a bald person','A picture of a person']
                         st.session_state['init_data']['function_predict']=Predict_bald
                         
                     elif Selected_Question=='Do you have BLACK HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a black-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
+                        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+                            st.session_state['init_data']['current_querys']=["An illustration of a black haired person's face",
+                                                                        "An illustration of a chocolate brown haired person's face",
+                                                                        "An illustration of a neon tangerine haired person's face",
+                                                                        "An illustration of a yellow fade haired person's face",
+                                                                        "An illustration of a milky white haired person's face"]
+                        else:
+                            st.session_state['init_data']['current_querys']=["A picture of a black haired person",
+                                                                        "A picture of a tawny haired person",
+                                                                        "A picture of a blond haired person",
+                                                                        "A picture of a gray haired person",
+                                                                        "A picture of a red haired person",
+                                                                        "A picture of a green haired person",
+                                                                        "A picture of a blue haired person",
+                                                                        "A picture of a bald-head person"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all
-
+                            
                     elif Selected_Question=='Do you have BROWN HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a tawny-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
-                                                                    'A picture of a bald-head person']
-                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
+                        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+                            st.session_state['init_data']['current_querys']=["An illustration of a chocolate brown haired person's face",
+                                                                        "An illustration of a black haired person's face",
+                                                                        "An illustration of a neon tangerine haired person's face",
+                                                                        "An illustration of a yellow fade haired person's face",
+                                                                        "An illustration of a milky white haired person's face"]
+                        else:
+                            st.session_state['init_data']['current_querys']=["A picture of a tawny haired person",
+                                                                        "A picture of a black haired person",
+                                                                        "A picture of a blond haired person",
+                                                                        "A picture of a gray haired person",
+                                                                        "A picture of a red haired person",
+                                                                        "A picture of a green haired person",
+                                                                        "A picture of a blue haired person",
+                                                                        "A picture of a bald-head person"]
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_all                            
+                                                 
+                    elif Selected_Question=='Do you have ORANGE HAIR?':
+                        st.session_state['init_data']['current_querys']=["An illustration of a neon tangerine haired person's face",
+                                                                        "An illustration of a chocolate brown haired person's face",
+                                                                        "An illustration of a black haired person's face",
+                                                                        "An illustration of a yellow fade haired person's face",
+                                                                        "An illustration of a milky white haired person's face"]
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_all  
+                                                 
+                    elif Selected_Question=='Do you have YELLOW HAIR?':
+                        st.session_state['init_data']['current_querys']=["An illustration of a yellow fade haired person's face",
+                                                                        "An illustration of a chocolate brown haired person's face",
+                                                                        "An illustration of a neon tangerine haired person's face",
+                                                                        "An illustration of a black haired person's face",
+                                                                        "An illustration of a milky white haired person's face"]
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_all 
+                                                 
+                    elif Selected_Question=='Do you have WHITE HAIR?':
+                        st.session_state['init_data']['current_querys']=["An illustration of a milky white haired person's face",
+                                                                        "An illustration of a chocolate brown haired person's face",
+                                                                        "An illustration of a neon tangerine haired person's face",
+                                                                        "An illustration of a yellow fade haired person's face",
+                                                                        "An illustration of a black haired person's face"]
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_all                         
 
                     elif Selected_Question=='Do you have BLOND HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a blond-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
+                        st.session_state['init_data']['current_querys']=['A picture of a blond haired person',
+                                                                    'A picture of a tawny haired person',
+                                                                    'A picture of a black haired person',
+                                                                    'A picture of a gray haired person',
+                                                                    'A picture of a red haired person',
+                                                                    'A picture of a green haired person',
+                                                                    'A picture of a blue haired person',
                                                                     'A picture of a bald-head person']
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all
                         
                     elif Selected_Question=='Do you have RED HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a red-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a gray-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
+                        st.session_state['init_data']['current_querys']=['A picture of a red haired person',
+                                                                    'A picture of a tawny haired person',
+                                                                    'A picture of a blond haired person',
+                                                                    'A picture of a gray haired person',
+                                                                    'A picture of a black haired person',
+                                                                    'A picture of a green haired person',
+                                                                    'A picture of a blue haired person',
                                                                     'A picture of a bald-head person']
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all
                         
                     elif Selected_Question=='Do you have GRAY HAIR?':
-                        st.session_state['init_data']['current_querys']=['A picture of a gray-haired person',
-                                                                    'A picture of a tawny-haired person',
-                                                                    'A picture of a blond-haired person',
-                                                                    'A picture of a black-haired person',
-                                                                    'A picture of a red-haired person',
-                                                                    'A picture of a green-haired person',
-                                                                    'A picture of a blue-haired person',
+                        st.session_state['init_data']['current_querys']=['A picture of a gray haired person',
+                                                                    'A picture of a tawny haired person',
+                                                                    'A picture of a blond haired person',
+                                                                    'A picture of a black haired person',
+                                                                    'A picture of a red haired person',
+                                                                    'A picture of a green haired person',
+                                                                    'A picture of a blue haired person',
                                                                     'A picture of a bald-head person']
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all
                         
+                    elif Selected_Question=='Do you wear EYEGLASSES?':
+                        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+                            st.session_state['init_data']['current_querys']=["An illustration of a person's face with eyeglasses",
+                                                                        "An illustration of a person's face with glasses",
+                                                                        "An illustration of a person's face with sunglasses",
+                                                                        "An illustration of a person's face"]
+                        else:
+                            st.session_state['init_data']['current_querys']=['A picture of a person with eyeglasses',
+                                                                        'A picture of a person with glasses',
+                                                                        'A picture of a person with sunglasses',
+                                                                        'A picture of a person']
+                        st.session_state['init_data']['function_predict']=Predict_all_vs_last    
                    
-                    elif  not st.session_state['init_data']['show_results']:
+                    else:
                         st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index']],
                                                                         st.session_state['init_data']['querys_list_no'][st.session_state['init_data']['questions_index']]]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_1
@@ -395,7 +451,6 @@ def CLIP_Process():
             img_preprocessed = clip_transform(Image.fromarray(current_image_file)).unsqueeze(0).to("cpu")
             img_logits, img_logits_txt = clip_model(img_preprocessed, clip_text)
             st.session_state['init_data']['image_current_probs'][i,:]=np.round(img_logits.detach().numpy()[0],2)
-            gc.collect()
     else:
         st.session_state['init_data']['image_current_probs']=np.zeros((st.session_state['init_data']['n_images'],n_tokens))
         for i in range(st.session_state['init_data']['n_images']):
@@ -403,7 +458,6 @@ def CLIP_Process():
             img_preprocessed = clip_transform(Image.fromarray(current_image_file)).unsqueeze(0).to("cpu")
             img_logits, img_logits_txt = clip_model(img_preprocessed, clip_text)
             st.session_state['init_data']['image_current_probs'][i,:]=np.round(img_logits.detach().numpy()[0],2)
-            gc.collect()
         
     del i,n_tokens,clip_model,clip_transform,clip_text,current_image_file,img_preprocessed,img_logits,img_logits_txt
     gc.collect()
@@ -611,6 +665,119 @@ def Load_Image(current_index, current_path):
     del image_current_path,archive
     return np.array(image_file)
 
+
+def Select_Dataset():   
+    if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+        ## Select zip file
+        st.session_state['init_data']['zip_file']='Original.zip'
+
+        st.session_state['init_data']['feature_questions']=["Are you a MAN?", "Are you a WOMAN?", "Are you an ATTRACTIVE person?", "Are you an CHUBBY person?", "Are you YOUNG?",
+                    "Are you a person with RECEDING HAIRLINES?", "Are you SMILING?","Are you BALD?", 
+                    "Do you have BLACK HAIR?", "Do you have BROWN HAIR?", "Do you have ORANGE HAIR?", "Do you have YELLOW HAIR?",
+                    "Do you have WHITE HAIR?", "Do you have STRAIGHT HAIR?", "Do you have WAVY HAIR?",
+                    "Do you have a BEARD?", "Do you have a MUSTACHE?", "Do you have SIDEBURNS?",
+                    "Do you have a GOATEE?", "Do you wear HEAVY MAKEUP?", "Do you wear EYEGLASSES?",
+                    "Do you have BUSHY EYEBROWS?", "Do you have a DOUBLE CHIN?", 
+                    "Do you have a high CHEECKBONES?", "Do you have SLIGHTLY OPEN MOUTH?", 
+                    "Do you have NARROWED EYES?", "Do you have an OVAL FACE?", 
+                    "Do you have PALE SKIN?", "Do you have a POINTY NOSE?", "Do you have ROSY CHEEKS?", 
+                    "Do you have FIVE O'CLOCK SHADOW?", "Do you have ARCHED EYEBROWS?", "Do you have BUGS UNDER your EYES?", 
+                    "Do you have BANGS?", "Do you have a BIG LIPS?", "Do you have a BIG NOSE?",
+                    "Are you wearing EARRINGS?", "Are you wearing a HAT?", 
+                    "Are you wearing LIPSTICK?", "Are you wearing NECKLACE?", 
+                    "Are you wearing NECKTIE?"]
+    
+        st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
+            "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
+            "An illustration of a person's face with black hair", "An illustration of a person's face with brown hair", "An illustration of a person's face with orange hair", "An illustration of a person's face with yellow hair", 
+            "An illustration of a person's face with white hair", "An illustration of a person's face with straight hair", "An illustration of a person's face with wavy hair", 
+            "A picture of a unshaved person", "A picture of a mustachioed person", "An illustration of a person's face with bushy sideburns", 
+            "An illustration of a person's face with goatee", "An illustration of a person's face with heavy makeup", "An illustration of a person's face with eyeglasses",             
+            "An illustration of a person's face with bushy eyebrows", "A picture of a double chin person", 
+            "An illustration of a person's face with high cheekbones", "An illustration of a person's face with opened mouth", 
+            "An illustration of a person's face with narrow eyes", "An illustration of a person's face with an oval-shaped face", 
+            "An illustration of a person's face wiht pale skin", "A picture of a pointy-nosed person ", "An illustration of a person's face with colored cheeks", 
+            "A picture of a five o'clock shadow person", "A picture of a rounded eyebrows person", "An illustration of a person's face with bags under the eyes", 
+            "An illustration of a person's face with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
+            "An illustration of a person's face with earrings", "An illustration of a person's face with hat", 
+            "An illustration of a person's face with lipstick", "A picture of a necklaced person", 
+            "A picture of a necktied person"]
+    
+        st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
+            "A picture of a hairy person", "An illustration of a person's face", "A picture of a hairy person",
+            "An illustration of a person's face", "An illustration of a person's face", "An illustration of a person's face", "An illustration of a person's face", 
+            "An illustration of a person's face", "An illustration of a person's face with wavy hair", "An illustration of a person's face with straight hair", 
+            "A picture of a glabrous person", "An illustration of a person's face", "An illustration of a person's face with shaved sideburns", 
+            "An illustration of a person's face", "An illustration of a person's face with light makeup", "An illustration of a person's face ",             
+            "An illustration of a person's face with sparse eyebrows", "An illustration of a person's face with a double chin", 
+            "An illustration of a person's face with low cheekbones", "An illustration of a person's face with closed mouth", 
+            "An illustration of a person's face with wide eyes", "An illustration of a person's face with a normal-shaped face", 
+            "An illustration of a person's face wiht tanned skin", "A picture of a flat-nosed person", "An illustration of a person's face with pale cheeks", 
+            "A picture of a shaved or unshaved person", "An illustration of a person's face a straight eyebrows person", "An illustration of a person's face with with smooth skin under the eyes", 
+            "An illustration of a person's face", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
+            "An illustration of a person's face", "An illustration of a person's face with hair", 
+            "An illustration of a person's face with natural lips", "An illustration of a person's face", 
+            "An illustration of a person's face"]    
+    
+    else:
+        ## Select zip file
+        if st.session_state['init_data']['Selected_Images_Source']=='Use Celeba dataset':
+            st.session_state['init_data']['zip_file']='guess_who_images.zip'
+        elif st.session_state['init_data']['Selected_Images_Source']=='Use friends dataset':
+            st.session_state['init_data']['zip_file']='frifam.zip'
+        else:
+            st.session_state['init_data']['zip_file']='Use images from specific path'
+
+    
+        st.session_state['init_data']['feature_questions']=["Are you a MAN?", "Are you a WOMAN?", "Are you an ATTRACTIVE person?", "Are you an CHUBBY person?", "Are you YOUNG?",
+                    "Are you a person with RECEDING HAIRLINES?", "Are you SMILING?","Are you BALD?", 
+                    "Do you have BLACK HAIR?", "Do you have BROWN HAIR?", "Do you have BLOND HAIR?", "Do you have RED HAIR?",
+                    "Do you have GRAY HAIR?", "Do you have STRAIGHT HAIR?", "Do you have WAVY HAIR?",
+                    "Do you have a BEARD?", "Do you have a MUSTACHE?", "Do you have SIDEBURNS?",
+                    "Do you have a GOATEE?", "Do you wear HEAVY MAKEUP?", "Do you wear EYEGLASSES?",
+                    "Do you have BUSHY EYEBROWS?", "Do you have a DOUBLE CHIN?", 
+                    "Do you have a high CHEECKBONES?", "Do you have SLIGHTLY OPEN MOUTH?", 
+                    "Do you have NARROWED EYES?", "Do you have an OVAL FACE?", 
+                    "Do you have PALE SKIN?", "Do you have a POINTY NOSE?", "Do you have ROSY CHEEKS?", 
+                    "Do you have FIVE O'CLOCK SHADOW?", "Do you have ARCHED EYEBROWS?", "Do you have BUGS UNDER your EYES?", 
+                    "Do you have BANGS?", "Do you have a BIG LIPS?", "Do you have a BIG NOSE?",
+                    "Are you wearing EARRINGS?", "Are you wearing a HAT?", 
+                    "Are you wearing LIPSTICK?", "Are you wearing NECKLACE?", 
+                    "Are you wearing NECKTIE?"]
+    
+        st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
+            "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
+            "A picture of a person with black hair", "A picture of a person with brown hair", "A picture of a person with blond hair", "A picture of a person with red hair", 
+            "A picture of a person with gray hair", "A picture of a person with straight hair", "A picture of a person with wavy hair", 
+            "A picture of a unshaved person", "A picture of a mustachioed person", "A picture of a person with bushy sideburns", 
+            "A picture of a person with goatee", "A picture of a person with heavy makeup", "A picture of a person with eyeglasses",             
+            "A picture of a person with bushy eyebrows", "A picture of a double chin person", 
+            "A picture of a person with high cheekbones", "A picture of a person with opened mouth", 
+            "A picture of a person with narrow eyes", "A picture of a person with an oval-shaped face", 
+            "A picture of a person wiht pale skin", "A picture of a pointy-nosed person ", "A picture of a person with colored cheeks", 
+            "A picture of a five o'clock shadow person", "A picture of a rounded eyebrows person", "A picture of a person with bags under the eyes", 
+            "A picture of a person with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
+            "A picture of a person with earrings", "A picture of a person with hat", 
+            "A picture of a person with lipstick", "A picture of a necklaced person", 
+            "A picture of a necktied person"]
+    
+        st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
+            "A picture of a hairy person", "A picture of a person", "A picture of a hairy person",
+            "A picture of a person", "A picture of a person", "A picture of a person", "A picture of a person", 
+            "A picture of a person", "A picture of a person with wavy hair", "A picture of a person with straight hair", 
+            "A picture of a glabrous person", "A picture of a person", "A picture of a person with shaved sideburns", 
+            "A picture of a person", "A picture of a person with light makeup", "A picture of a person ",             
+            "A picture of a person with sparse eyebrows", "A picture of a person with a double chin", 
+            "A picture of a person with low cheekbones", "A picture of a person with closed mouth", 
+            "A picture of a person with wide eyes", "A picture of a person with a normal-shaped face", 
+            "A picture of a person wiht tanned skin", "A picture of a flat-nosed person", "A picture of a person with pale cheeks", 
+            "A picture of a shaved or unshaved person", "A picture of a person a straight eyebrows person", "A picture of a person with with smooth skin under the eyes", 
+            "A picture of a person", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
+            "A picture of a person", "A picture of a person with hair", 
+            "A picture of a person with natural lips", "A picture of a person", 
+            "A picture of a person"] 
+                    
+
 def Show_Info():
     #st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>INFO</h2>", unsafe_allow_html=True)
     #st.sidebar.write(st.session_state['init_data'])
@@ -656,8 +823,8 @@ def Load_Data(N):
             'A picture of a receding-hairline person  ', 'A picture of a smily person', 'A picture of a bald person',
             'A picture of a person with black hair', 'A picture of a person with brown hair', 'A picture of a person with blond hair', 'A picture of a person with red hair', 
             'A picture of a person with gray hair', 'A picture of a person with straight hair', 'A picture of a person with wavy hair', 
-            'A picture of a glabrous person', 'A picture of a mustachioed person', 'A picture of a person with bushy sideburns', 
-            'A picture of a person with goatee', 'A picture of a person with heavy makeup', 'A picture of a person with eyeglasses ',             
+            'A picture of a unshaved person', 'A picture of a mustachioed person', 'A picture of a person with bushy sideburns', 
+            'A picture of a person with goatee', 'A picture of a person with heavy makeup', 'A picture of a person with eyeglasses',             
             'A picture of a person with bushy eyebrows', 'A picture of a double chin person', 
             'A picture of a person with high cheekbones', 'A picture of a person with opened mouth', 
             'A picture of a person with narrow eyes', 'A picture of a person with an oval-shaped face', 
@@ -668,11 +835,11 @@ def Load_Data(N):
             'A picture of a person with lipstick', 'A picture of a necklaced person', 
             'A picture of a necktied person'
             ],
-        'querys_list_no':['A picture of a female person', 'A picture of a male person', 'A picture of an ugly person', 'A picture of a slender person', 'A picture of a aged person', 
+        'querys_list_no':['A picture of a female person', 'A picture of a male person', 'A picture of an ugly person', 'A picture of a slender person', 'A picture of an aged person', 
             'A picture of a hairy person', 'A picture of a person', 'A picture of a hairy person',
             'A picture of a person', 'A picture of a person', 'A picture of a person', 'A picture of a person', 
             'A picture of a person', 'A picture of a person with wavy hair', 'A picture of a person with straight hair', 
-            'A picture of a unshaved person', 'A picture of a person', 'A picture of a person with shaved sideburns', 
+            'A picture of a glabrous person', 'A picture of a person', 'A picture of a person with shaved sideburns', 
             'A picture of a person', 'A picture of a person with light makeup', 'A picture of a person ',             
             'A picture of a person with sparse eyebrows', 'A picture of a person with a double chin', 
             'A picture of a person with low cheekbones', 'A picture of a person with closed mouth', 
@@ -762,7 +929,7 @@ def Main_Program():
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select 1 or 2 players and the number of images to use</h2>", unsafe_allow_html=True)
          
         ## Number of players
-        N_Players=st.number_input('Select the number of images', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
+        N_Players=st.number_input('Select the number of players', min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
         
         if N_Players==2:
             Winner_selection_random=st.checkbox('Select to choose the winner images randomly', value=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
@@ -770,13 +937,13 @@ def Main_Program():
             Winner_selection_random=False
             
         ## Number of images
-        N_Images=st.number_input('Select the number of images', min_value=5, max_value=40, value=20, step=1, format='%d', key='N_images', help=None)
+        N_Images=st.number_input('Select the number of images', min_value=5, max_value=24, value=24, step=1, format='%d', key='N_images', help=None)
 
         ## Type of images
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the set of images to play with:</h2>", unsafe_allow_html=True)
-        Selected_Images_Source=st.selectbox('Choose between: Celebrities images or Your own images (selecting a source path with your images zip file)', 
-                                                    ['Use Celeba dataset', 'Use images from specific path'],
-                                                    index=0, key='Selected_Images_Source', help=None)
+        Selected_Images_Source=st.selectbox('Choose between: Celebrities images, Original "Guess Who" game images, My friends images or Your own images (selecting a source path with your images zip file)', 
+                                                    ['Use Celeba dataset','Use Original "Guess Who" game images', 'Use friends dataset', 'Use images from specific path'],
+                                                    index=1, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
         st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
@@ -807,17 +974,11 @@ def Main_Program():
             else:
                 st.session_state['init_data']['status']=101
             st.session_state['init_data']['player2_turn']=False
+            Select_Dataset()
 
 
     ## --------------- IMAGE SELECTION ---------------
     if st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==101:
-        ## Select zip file
-        if st.session_state['init_data']['Selected_Images_Source']=='Use Celeba dataset':
-            st.session_state['init_data']['zip_file']='guess_who_images.zip'
-        elif st.session_state['init_data']['Selected_Images_Source']=='Use friends dataset':
-            st.session_state['init_data']['zip_file']='frifam.zip'
-        else:
-            st.session_state['init_data']['zip_file']='Use images from specific path'
     
         ## Button - randomly change images
         st.markdown("<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Press the button to randomly modify the selected images.</h3>",
