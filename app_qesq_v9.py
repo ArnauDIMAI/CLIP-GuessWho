@@ -1153,4 +1153,3 @@ gc.collect()
 ## --------------- SHOW MORE INFO (cpu, memeory) ---------------
 # st.sidebar.write(psutil.cpu_percent()) ## show info (cpu, memeory)
 # st.sidebar.write(psutil.virtual_memory()) ## show info (cpu, memeory)
-
