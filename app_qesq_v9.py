@@ -2,7 +2,8 @@
 
 ## Used Imports
 import os
-import ioimport zipfile
+import io
+import zipfile
 import random
 import numpy as np
 import streamlit as st
