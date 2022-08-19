@@ -3,11 +3,6 @@
 ## Used Imports
 import os
 import io
-# -*- coding: utf-8 -*-
-
-## Used Imports
-import os
-import io
 import zipfile
 import random
 import numpy as np
