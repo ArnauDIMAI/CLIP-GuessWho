@@ -1,4 +1,204 @@
-"A picture of a red haired person",
+# -*- coding: utf-8 -*-
+
+## Used Imports
+import os
+import io
+import zipfile
+import random
+import numpy as np
+import streamlit as st
+import clip
+import gc
+
+# import psutil  ## show info (cpu, memeory)
+
+from io import BytesIO
+from PIL import Image
+from zipfile import ZipFile 
+from pathlib import Path, PurePath, PureWindowsPath
+# from streamlit import caching
+
+## --------------- USED FUNCTIONS ---------------
+
+def Predict_1_vs_0():
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if st.session_state['init_data']['image_current_probs'][i,1]>st.session_state['init_data']['image_current_probs'][i,0]:
+            st.session_state['init_data']['image_current_predictions'].append(1)
+        else:
+            st.session_state['init_data']['image_current_predictions'].append(0)
+    
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
+    
+def Predict_0_vs_1():
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if st.session_state['init_data']['image_current_probs'][i,0]>st.session_state['init_data']['image_current_probs'][i,1]:
+            st.session_state['init_data']['image_current_predictions'].append(1)
+        else:
+            st.session_state['init_data']['image_current_predictions'].append(0)
+
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
+
+def Predict_0_vs_all():
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==0:
+            st.session_state['init_data']['image_current_predictions'].append(1)        
+        else:
+            st.session_state['init_data']['image_current_predictions'].append(0)
+
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
+  
+def Predict_all_vs_last():
+    n_max=len(st.session_state['init_data']['image_current_probs'][:,0])-1
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==n_max:
+            st.session_state['init_data']['image_current_predictions'].append(1)        
+        else:
+            st.session_state['init_data']['image_current_predictions'].append(0)
+
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])   
+def Predict_bald():
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+    
+        if st.session_state['init_data']['image_current_probs'][i,0]>st.session_state['init_data']['image_current_probs'][i,1]:
+            if st.session_state['init_data']['image_current_probs'][i,2]>st.session_state['init_data']['image_current_probs'][i,3]:
+                st.session_state['init_data']['image_current_predictions'].append(1)
+            else:
+                st.session_state['init_data']['image_current_predictions'].append(0)
+        else:
+            if st.session_state['init_data']['image_current_probs'][i,4]>st.session_state['init_data']['image_current_probs'][i,5]:
+                st.session_state['init_data']['image_current_predictions'].append(1)
+            else:
+                st.session_state['init_data']['image_current_predictions'].append(0)    
+
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
+
+def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_images, Img_discarded):
+    ## --------------- APPLY DISCARDING ---------------
+    if st.session_state['init_data']['show_results']:        
+        st.session_state['init_data']['previous_discarding_images_number']=N_img
+        Image_discarding()
+                   
+        ## penalty - game not finished                                                       
+        if N_img>1:
+            Current_award=Current_award-N_img
+        
+        ## penalty - "select winner" option used
+        if st.session_state['init_data']['token_type']==-3:   
+            Current_award=Current_award-1-(st.session_state['init_data']['N_images']-st.session_state['init_data']['previous_discarding_images_number'])
+
+        ## penalty - no image is discarted
+        if st.session_state['init_data']['previous_discarding_images_number']==N_img:   
+            Current_award=Current_award-5
+
+
+    ## --------------- SHOW FINAL RESULTS ---------------
+    if not st.session_state['init_data']['finished_game']:
+        if np.sum(Img_discarded==0)==1:
+            st.session_state['init_data']['finished_game']=True
+            st.session_state['init_data']['change_player']=False
+            st.markdown("<h1 style='text-align:left; color:gray; margin:0px;'>CONGRATULATIONS <span style='text-align:left; color:green; margin:0px;'>"+Player_indicator+"<span style='text-align:left; color:gray; margin:0px;'>! THE WINNER PICTURE IS: <span style='text-align:left; color:green; margin:0px;'>"+Current_images[Win_index]+"</h1>", unsafe_allow_html=True)
+
+            Finsih_Game = st.button('FINISH GAME', key='Finsih_Game')
+    return Current_award
+
+def Ask_Question(Player_indicator, Win_index, Current_award):
+
+        ## Finished Game:
+    if st.session_state['init_data']['finished_game']:
+        st.session_state['init_data']['reload_game']=True
+        Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
+        if Current_award==1 or Current_award==-1:
+            st.markdown("<h1 style='text-align:left; color:black; margin:0px;'>¡¡¡ <span style='text-align:left; color:green; margin:0px;'>"+Player_indicator+"<span style='text-align:left; color:black; margin:0px;'>YOU WIN WITH <span style='text-align:left; color:green; margin:0px;'>"+str(Current_award)+"<span style='text-align:left; color:black; margin:0px;'> POINT !!!</h1>", unsafe_allow_html=True)
+        else:
+            st.markdown("<h1 style='text-align:left; color:black; margin:0px;'>¡¡¡ <span style='text-align:left; color:green; margin:0px;'>"+Player_indicator+"<span style='text-align:left; color:black; margin:0px;'>YOU WIN WITH <span style='text-align:left; color:green; margin:0px;'>"+str(Current_award)+"<span style='text-align:left; color:black; margin:0px;'> POINTS !!!</h1>", unsafe_allow_html=True)
+    else:
+    
+        st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>"+Player_indicator+"Select a type of Query to play.</h2>", unsafe_allow_html=True)
+
+        ## SelectBox - Select query type (game mode)
+        Selected_Feature=st.selectbox('Ask a question from a list, create your query or select a winner:', ['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner'], 
+                                               index=0, key='selected_feature', help=None)
+            
+        ## --------------- SHOW ELEMENTS - QUESTIONS MODE ---------------
+        if Selected_Feature=='Ask a Question':
+            ## Game mode id
+            st.session_state['init_data']['token_type']=0
+
+            ## Text - Questions mode
+            st.markdown("<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"+Player_indicator+"Select a Question from the list.</h3>", unsafe_allow_html=True)
+            
+            ## SelectBox - Select question
+            Selected_Question=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], 
+                                               index=11, key='Selected_Question', help=None)
+            st.session_state['init_data']['selected_question']=Selected_Question  # Save Info
+            
+            ## Current question index
+            if Selected_Question not in st.session_state['init_data']['feature_questions']:
+                Selected_Question=st.session_state['init_data']['feature_questions'][0]
+            
+            st.session_state['init_data']['questions_index']=st.session_state['init_data']['feature_questions'].index(Selected_Question)
+               
+            ## Text - Show current question
+            st.markdown("<h3 style='text-align:center; float:left; color:blue; margin-left:0px; margin-right:25px; margin-top:0px; margin-bottom:0px;'>"+Player_indicator+"Current Question: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"
+                        +Selected_Question+"</h3>", unsafe_allow_html=True)
+            
+            ## Button - Use current question
+            Check_Question = st.button('USE THIS QUESTION', key='Check_Question')
+            
+            ## Check current question
+            if st.session_state['init_data']['show_results']:
+                st.session_state['init_data']['show_results']=False
+                
+            else:
+                if Check_Question:
+                    if Selected_Question=='Are you bald?':
+                        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+                            st.session_state['init_data']['current_querys']=["An illustration of a male person's face","An illustration of a female person's face",
+                                                                        "An illustration of a bald man's face","An illustration of a haired person's face", 
+                                                                        "An illustration of a bald person's face","An illustration of a person's face"]
+                        
+                        else:
+                            st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
+                                                                        'A picture of a bald man','A picture of a haired man', 
+                                                                        'A picture of a bald person','A picture of a person']
+                        st.session_state['init_data']['function_predict']=Predict_bald
+                        
+                    elif Selected_Question=='Do you have BLACK HAIR?':
+                        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+                            st.session_state['init_data']['current_querys']=["An illustration of a black haired person's face",
+                                                                        "An illustration of a chocolate brown haired person's face",
+                                                                        "An illustration of a neon tangerine haired person's face",
+                                                                        "An illustration of a luminous blonde haired person's face",
+                                                                        "An illustration of a luminous milky white haired person's face"]
+                        else:
+                            st.session_state['init_data']['current_querys']=["A picture of a black haired person",
+                                                                        "A picture of a tawny haired person",
+                                                                        "A picture of a blond haired person",
+                                                                        "A picture of a gray haired person",
+                                                                        "A picture of a red haired person",
+                                                                        "A picture of a green haired person",
+                                                                        "A picture of a blue haired person",
+                                                                        "A picture of a bald-head person"]
+                        st.session_state['init_data']['function_predict']=Predict_0_vs_all
+                            
+                    elif Selected_Question=='Do you have BROWN HAIR?':
+                        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+                            st.session_state['init_data']['current_querys']=["An illustration of a chocolate brown haired person's face",
+                                                                        "An illustration of a black haired person's face",
+                                                                        "An illustration of a neon tangerine haired person's face",
+                                                                        "An illustration of a luminous blonde haired person's face",
+                                                                        "An illustration of a luminous milky white haired person's face"]
+                        else:
+                            st.session_state['init_data']['current_querys']=["A picture of a tawny haired person",
+                                                                        "A picture of a black haired person",
+                                                                        "A picture of a blond haired person",
+                                                                        "A picture of a gray haired person",
+                                                                        "A picture of a red haired person",
                                                                         "A picture of a green haired person",
                                                                         "A picture of a blue haired person",
                                                                         "A picture of a bald-head person"]
