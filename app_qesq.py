@@ -173,7 +173,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                             st.session_state['init_data']['current_querys']=["An illustration of a black haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a neon tangerine haired person's face",
-                                                                        "An illustration of a banana yellow haired person's face",
+                                                                        "An illustration of a warm blond haired person's face",
                                                                         "An illustration of a milky white haired person's face"]
                         else:
                             st.session_state['init_data']['current_querys']=["A picture of a black haired person",
@@ -191,7 +191,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                             st.session_state['init_data']['current_querys']=["An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a black haired person's face",
                                                                         "An illustration of a neon tangerine haired person's face",
-                                                                        "An illustration of a banana yellow haired person's face",
+                                                                        "An illustration of a warm blond haired person's face",
                                                                         "An illustration of a milky white haired person's face"]
                         else:
                             st.session_state['init_data']['current_querys']=["A picture of a tawny haired person",
@@ -208,12 +208,12 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                         st.session_state['init_data']['current_querys']=["An illustration of a neon tangerine haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a black haired person's face",
-                                                                        "An illustration of a banana yellow haired person's face",
+                                                                        "An illustration of a warm blond haired person's face",
                                                                         "An illustration of a milky white haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all  
                                                  
                     elif Selected_Question=='Do you have YELLOW HAIR?':
-                        st.session_state['init_data']['current_querys']=["An illustration of a banana yellow haired person's face",
+                        st.session_state['init_data']['current_querys']=["An illustration of a warm blond haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a neon tangerine haired person's face",
                                                                         "An illustration of a black haired person's face",
@@ -224,7 +224,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                         st.session_state['init_data']['current_querys']=["An illustration of a milky white haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a neon tangerine haired person's face",
-                                                                        "An illustration of a banana yellow haired person's face",
+                                                                        "An illustration of a warm blond haired person's face",
                                                                         "An illustration of a black haired person's face"]
                         st.session_state['init_data']['function_predict']=Predict_0_vs_all                         
 
@@ -943,7 +943,7 @@ def Main_Program():
         st.markdown("<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select the set of images to play with:</h2>", unsafe_allow_html=True)
         Selected_Images_Source=st.selectbox('Choose between: Celebrities images, Original "Guess Who" game images or Your own images (selecting a source path with your images zip file)', 
                                                     ['Use Celeba dataset','Use Original "Guess Who" game images', 'Use images from specific path'],
-                                                    index=1, key='Selected_Images_Source', help=None)
+                                                    index=0, key='Selected_Images_Source', help=None)
                                                     
         ## Current options selection                                           
         st.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Selected options:</h2>", unsafe_allow_html=True)
