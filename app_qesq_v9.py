@@ -944,9 +944,9 @@ def Set_Texts():
 
         Text_Show_Elements_17="Write your own querys by introducing 2 opposite descriptions.</h3>"
 
-        Text_Show_Elements_18="Write your "True" query:"
+        Text_Show_Elements_18="Write your 'True' query:"
 
-        Text_Show_Elements_19="Write your "False" query:"
+        Text_Show_Elements_19="Write your 'False' query:"
 
         Text_Show_Elements_21="Current Querys: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"
 
