@@ -976,7 +976,7 @@ def ReLoad_Data(N):
     st.session_state['init_data']['image_current_paths']=[]
     st.session_state['init_data']['image_current_paths2']=[]
     st.session_state['init_data']['winner_options']=[]
-    st.session_state['init_data']['image_current_predictions']=np.zeros((N))+2}
+    st.session_state['init_data']['image_current_predictions']=np.zeros((N))+2
 
 ## --------------- MAIN FUCTION ---------------
 def Main_Program():
