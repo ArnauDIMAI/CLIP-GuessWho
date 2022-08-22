@@ -1420,7 +1420,7 @@ def Main_Program():
         Player_1_Image=st.selectbox(Text_Select_Winner_10, Image_Names_List, index=0, key='Player_1_Image', help=None)    
                            
         ## Button - start game
-        if Player_1_Image!=Text_Select_Winner_2
+        if Player_1_Image!=Text_Select_Winner_2:
             st.markdown(Text_Select_Winner_11+Player_1_Image+Text_Show_Elements_5, unsafe_allow_html=True)
             Next_Player_Selection = st.button(Text_Select_Winner_6, key='Next_Player_Selection')
             if Next_Player_Selection:
