@@ -1195,7 +1195,7 @@ def Main_Program():
 
         List_Images_Source=["Usar imatges de famosos (el dataset Celeba)","Usar imatges del joc original 'Quí és Quí?'","Usar imatges d'amics", "Usar imatges d'un arxiu 'zip'"]
 
-        List_Language=['Anglès','Català']
+        List_Language=['Català','Anglès',]
 
         Text_Show_Final_Results_1="<h1 style='text-align:left; color:gray; margin:0px;'>FELICITATS <span style='text-align:left; color:green; margin:0px;'>"
 
