@@ -784,10 +784,10 @@ def Select_Dataset():
             "A picture of a person"] 
                     
 
-def Show_Info():
+def Show_Info(Text_questions_list_1):
     #st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>INFO</h2>", unsafe_allow_html=True)
     #st.sidebar.write(st.session_state['init_data'])
-    st.sidebar.markdown(Text_Questions_List_1, unsafe_allow_html=True)
+    st.sidebar.markdown(Text_questions_list_1, unsafe_allow_html=True)
     st.sidebar.write(st.session_state['init_data']['feature_questions'])
 
 def Load_Data(N):
@@ -1270,16 +1270,17 @@ def Main_Program():
         Text_Calculate_Results_3='SEGÜENT JUGADOR'
 
         Text_Calculate_Results_4='SEGÜENT CONSULTA'
+        
+        
+    ## --------------- SHOW INFO --------------
+    Show_Info(Text_Questions_List_1)
+
 
     ## --------------- RESET APP ---------------
     st.sidebar.markdown(Text_Reset_App_1, unsafe_allow_html=True)
     st.session_state['init_data']['reset_app'] = st.sidebar.button(Text_Reset_App_2, key='Reset_App')
     if st.session_state['init_data']['reset_app']:
         Load_Data(st.session_state['init_data']['N_images'])
-
-
-    ## --------------- SHOW INFO --------------
-    #Show_Info()     
     
     
     ## --------------- CHANGE PLAYER TURN --------------- 
@@ -1500,9 +1501,6 @@ def Main_Program():
         Load_Data(st.session_state['init_data']['N_images'])   
         
         
-    ## --------------- SHOW INFO --------------
-    Show_Info()
-
 ## --------------- CACHE FUCTION ---------------
 @st.cache(ttl=12*3600)
 def CLIP_Loading():
