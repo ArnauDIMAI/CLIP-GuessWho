@@ -886,12 +886,21 @@ def Load_Data(N):
         'winner_options':[],
         'image_current_predictions':np.zeros((N))+2}
 
-def Set_Texts():
+
+## --------------- MAIN FUCTION ---------------
+def Main_Program():
+
+    ## --------------- LOAD DATA ---------------
+    if 'init_data' not in st.session_state:
+        Load_Data(20)
+    
+    ## --------------- SET TEXTS ---------------
     if st.session_state['init_data']['language']==0:
         List_Query_Type=['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner']
 
         List_Images_Source=['Use Celeba dataset','Use Original "Guess Who" game images', 'Use friends dataset', 'Use images from specific path']
-
+        
+        List_Language=['English','Catalan']
 
         Text_Show_Final_Results_1="<h1 style='text-align:left; color:gray; margin:0px;'>CONGRATULATIONS <span style='text-align:left; color:green; margin:0px;'>"
 
@@ -1015,7 +1024,9 @@ def Set_Texts():
         Text_Inicializations_7="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "
 
         Text_Inicializations_8=" (autoselect winners randomly)</h3>"
-
+        
+        Text_Inicializations_9="Select the language"
+        
         Text_Inicializations_11="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "
 
         Text_Inicializations_13="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "
@@ -1075,6 +1086,7 @@ def Set_Texts():
 
         List_Images_Source=["Usar imatges de famosos (el dataset Celeba)","Usar imatges del joc original 'Quí és Quí?'","Usar imatges d'amics", "Usar imatges d'un arxiu 'zip'"]
 
+        List_Language=['Anglès','Català']
 
         Text_Show_Final_Results_1="<h1 style='text-align:left; color:gray; margin:0px;'>FELICITATS <span style='text-align:left; color:green; margin:0px;'>"
 
@@ -1198,6 +1210,8 @@ def Set_Texts():
         Text_Inicializations_7="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Jugadors: "
 
         Text_Inicializations_8=" (seleccionar les imatges guanyadores aleatòriament)</h3>"
+        
+        Text_Inicializations_9="Tria l'idioma"
 
         Text_Inicializations_11="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Número d'imatges: "
 
@@ -1253,19 +1267,6 @@ def Set_Texts():
 
         Text_Calculate_Results_4='SEGÜENT CONSULTA'
 
-
-## --------------- MAIN FUCTION ---------------
-def Main_Program():
-
-    ## --------------- LOAD DATA ---------------
-    if 'init_data' not in st.session_state:
-        Load_Data(20)
-    
-    ## --------------- SET TEXTS ---------------
-
-    Set_Texts()
-
-
     ## --------------- RESET APP ---------------
     st.sidebar.markdown(Text_Reset_App_1, unsafe_allow_html=True)
     st.session_state['init_data']['reset_app'] = st.sidebar.button(Text_Reset_App_2, key='Reset_App')
@@ -1304,6 +1305,9 @@ def Main_Program():
     if st.session_state['init_data']['status']==0:
         st.markdown(Text_Inicializations_1, unsafe_allow_html=True)
          
+        ## Idioma
+        Selected_Language=st.selectbox(Text_Inicializations_9, List_Language, index=0, key='Selected_language', help=None)
+        
         ## Number of players
         N_Players=st.number_input(Text_Inicializations_2, min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
         
@@ -1337,6 +1341,7 @@ def Main_Program():
             st.session_state['init_data']['n_images']=N_Images
             st.session_state['init_data']['n_images2']=N_Images
             st.session_state['init_data']['N_players']=N_Players
+            st.session_state['init_data']['Language']=Selected_Language
             st.session_state['init_data']['random_winner']=Winner_selection_random
             st.session_state['init_data']['current_images_discarted']=np.zeros((N_Images))
             st.session_state['init_data']['current_images_discarted2']=np.zeros((N_Images))
