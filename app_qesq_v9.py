@@ -895,7 +895,7 @@ def Main_Program():
         Load_Data(20)
     
     ## --------------- SET TEXTS ---------------
-    if st.session_state['init_data']['language']=='English' or st.session_state['init_data']['language']=='Anglès'
+    if st.session_state['init_data']['language']=='English' or st.session_state['init_data']['language']=='Anglès':
         List_Query_Type=['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner']
 
         List_Images_Source=['Use Celeba dataset','Use Original "Guess Who" game images', 'Use friends dataset', 'Use images from specific path']
@@ -1081,7 +1081,7 @@ def Main_Program():
 
         Text_Calculate_Results_4='NEXT QUERY'
     
-    elif st.session_state['init_data']['language']=='Catalan' or st.session_state['init_data']['language']=='Català'
+    elif st.session_state['init_data']['language']=='Catalan' or st.session_state['init_data']['language']=='Català':
         List_Query_Type=['Fer una pregunta', 'Fer una consulta en anglès', 'Fer una doble consulta en anglès','Seleccionar un guanyador']
 
         List_Images_Source=["Usar imatges de famosos (el dataset Celeba)","Usar imatges del joc original 'Quí és Quí?'","Usar imatges d'amics", "Usar imatges d'un arxiu 'zip'"]
