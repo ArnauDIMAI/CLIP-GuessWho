@@ -671,7 +671,6 @@ def Load_Image(current_index, current_path):
     del image_current_path,archive
     return np.array(image_file)
 
-
 def Select_Dataset():   
     if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
         ## Select zip file
@@ -782,7 +781,6 @@ def Select_Dataset():
             "A picture of a person", "A picture of a person with hair", 
             "A picture of a person with natural lips", "A picture of a person", 
             "A picture of a person"] 
-                    
 
 def Show_Info(Text_questions_list_1):
     #st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>INFO</h2>", unsafe_allow_html=True)
@@ -886,6 +884,100 @@ def Load_Data(N):
         'winner_options':[],
         'image_current_predictions':np.zeros((N))+2}
 
+
+def ReLoad_Data(N):
+    st.session_state['init_data']={
+    st.session_state['init_data']['status']=0
+    st.session_state['init_data']['award1']=100
+    st.session_state['init_data']['award2']=100
+    st.session_state['init_data']['N_images']=N
+    st.session_state['init_data']['n_images']=N
+    st.session_state['init_data']['n_images2']=N
+    # st.session_state['init_data']['Selected_Images_Source']='Use Celeba dataset'
+    # st.session_state['init_data']['zip_file']='guess_who_images.zip'
+    # st.session_state['init_data']['previous_zip_file']='guess_who_images.zip'
+    # st.session_state['init_data']['special_images_names']=False
+    st.session_state['init_data']['images_not_selected']=True
+    # st.session_state['init_data']['token_type']=0
+    # st.session_state['init_data']['feature_questions']=['Are you a MAN?', 'Are you a WOMAN?', 'Are you an ATTRACTIVE person?', 'Are you an CHUBBY person?', 'Are you YOUNG?',
+    #                 'Are you a person with RECEDING HAIRLINES?', 'Are you SMILING?','Are you BALD?', 
+    #                 'Do you have BLACK HAIR?', 'Do you have BROWN HAIR?', 'Do you have BLOND HAIR?', 'Do you have RED HAIR?',
+    #                 'Do you have GRAY HAIR?', 'Do you have STRAIGHT HAIR?', 'Do you have WAVY HAIR?',
+    #                 'Do you have a BEARD?', 'Do you have a MUSTACHE?', 'Do you have SIDEBURNS?',
+    #                 'Do you have a GOATEE?', 'Do you wear HEAVY MAKEUP?', 'Do you wear EYEGLASSES?',
+    #                 'Do you have BUSHY EYEBROWS?', 'Do you have a DOUBLE CHIN?', 
+    #                 'Do you have a high CHEECKBONES?', 'Do you have SLIGHTLY OPEN MOUTH?', 
+    #                 'Do you have NARROWED EYES?', 'Do you have an OVAL FACE?', 
+    #                 'Do you have PALE SKIN?', 'Do you have a POINTY NOSE?', 'Do you have ROSY CHEEKS?', 
+    #                 "Do you have FIVE O'CLOCK SHADOW?", 'Do you have ARCHED EYEBROWS?', 'Do you have BUGS UNDER your EYES?', 
+    #                 'Do you have BANGS?', 'Do you have a BIG LIPS?', 'Do you have a BIG NOSE?',
+    #                 'Are you wearing EARRINGS?', 'Are you wearing a HAT?', 
+    #                 'Are you wearing LIPSTICK?', 'Are you wearing NECKLACE?', 
+    #                 'Are you wearing NECKTIE?']
+    # st.session_state['init_data']['selected_question']='Are you a MAN?'
+    # st.session_state['init_data']['questions_index']=0
+    st.session_state['init_data']['show_results']=False
+    # st.session_state['init_data']['current_querys']=['A picture of a person','A picture of a person']
+    # st.session_state['init_data']['function_predict']=Predict_0_vs_1
+    # st.session_state['init_data']['querys_list_yes']=['A picture of a male person', 'A picture of a female person', 'A picture of an attractive person', 'A picture of a fat person', 'A picture of a young person', 
+    #         'A picture of a receding-hairline person  ', 'A picture of a smily person', 'A picture of a bald person',
+    #         'A picture of a person with black hair', 'A picture of a person with brown hair', 'A picture of a person with blond hair', 'A picture of a person with red hair', 
+    #         'A picture of a person with gray hair', 'A picture of a person with straight hair', 'A picture of a person with wavy hair', 
+    #         'A picture of a unshaved person', 'A picture of a mustachioed person', 'A picture of a person with bushy sideburns', 
+    #         'A picture of a person with goatee', 'A picture of a person with heavy makeup', 'A picture of a person with eyeglasses',             
+    #         'A picture of a person with bushy eyebrows', 'A picture of a double chin person', 
+    #         'A picture of a person with high cheekbones', 'A picture of a person with opened mouth', 
+    #         'A picture of a person with narrow eyes', 'A picture of a person with an oval-shaped face', 
+    #         'A picture of a person wiht pale skin', 'A picture of a pointy-nosed person ', 'A picture of a person with colored cheeks', 
+    #         "A picture of a five o'clock shadow person", 'A picture of a rounded eyebrows person', 'A picture of a person with bags under the eyes', 
+    #         'A picture of a person with bangs', 'A picture of a wide-liped person', 'A picture of a big-nosed person',            
+    #         'A picture of a person with earrings', 'A picture of a person with hat', 
+    #         'A picture of a person with lipstick', 'A picture of a necklaced person', 
+    #         'A picture of a necktied person'
+    #         ]
+    st.session_state['init_data']['querys_list_no']=['A picture of a female person', 'A picture of a male person', 'A picture of an ugly person', 'A picture of a slender person', 'A picture of an aged person', 
+            'A picture of a hairy person', 'A picture of a person', 'A picture of a hairy person',
+            'A picture of a person', 'A picture of a person', 'A picture of a person', 'A picture of a person', 
+            'A picture of a person', 'A picture of a person with wavy hair', 'A picture of a person with straight hair', 
+            'A picture of a glabrous person', 'A picture of a person', 'A picture of a person with shaved sideburns', 
+            'A picture of a person', 'A picture of a person with light makeup', 'A picture of a person ',             
+            'A picture of a person with sparse eyebrows', 'A picture of a person with a double chin', 
+            'A picture of a person with low cheekbones', 'A picture of a person with closed mouth', 
+            'A picture of a person with wide eyes', 'A picture of a person with a normal-shaped face', 
+            'A picture of a person wiht tanned skin', 'A picture of a flat-nosed person', 'A picture of a person with pale cheeks', 
+            "A picture of a shaved or unshaved person", 'A picture of a person a straight eyebrows person', 'A picture of a person with with smooth skin under the eyes', 
+            'A picture of a person', 'A picture of a narrow-liped person', 'A picture of a small-nosed person',            
+            'A picture of a person', 'A picture of a person with hair', 
+            'A picture of a person with natural lips', 'A picture of a person', 
+            'A picture of a person'
+            ]
+    # st.session_state['init_data']['token_type']=0
+    # st.session_state['init_data']['user_input']='A picture of a person'
+    # st.session_state['init_data']['user_input_querys1']='A picture of a person'
+    # st.session_state['init_data']['user_input_querys2']='A picture of a person'
+    st.session_state['init_data']['image_current_probs']=np.zeros((N,2))
+    st.session_state['init_data']['selected_winner']='Winner not selected'
+    st.session_state['init_data']['selected_winner2']='Winner not selected'
+    st.session_state['init_data']['reset_app']=False
+    st.session_state['init_data']['change_player']=False
+    st.session_state['init_data']['player2_turn']=False
+    st.session_state['init_data']['finished_game']=False
+    st.session_state['init_data']['reload_game']=False       
+    # st.session_state['init_data']['random_winner']=False
+    st.session_state['init_data']['show_images']=[]
+    st.session_state['init_data']['previous_discarding_images_number']=0
+    st.session_state['init_data']['selected_winner_index']=0
+    st.session_state['init_data']['selected_winner_index2']=0
+    st.session_state['init_data']['current_images_discarted']=np.zeros((N))
+    st.session_state['init_data']['current_images_discarted2']=np.zeros((N))
+    st.session_state['init_data']['current_winner_index']=0
+    st.session_state['init_data']['current_winner_index2']=0
+    st.session_state['init_data']['current_image_names']=[]
+    st.session_state['init_data']['current_image_names2']=[]
+    st.session_state['init_data']['image_current_paths']=[]
+    st.session_state['init_data']['image_current_paths2']=[]
+    st.session_state['init_data']['winner_options']=[]
+    st.session_state['init_data']['image_current_predictions']=np.zeros((N))+2}
 
 ## --------------- MAIN FUCTION ---------------
 def Main_Program():
@@ -1082,7 +1174,23 @@ def Main_Program():
         Text_Calculate_Results_3='NEXT PLAYER'
 
         Text_Calculate_Results_4='NEXT QUERY'
-    
+        
+        st.session_state['init_data']['feature_questions']=['Are you a MAN?', 'Are you a WOMAN?', 'Are you an ATTRACTIVE person?', 'Are you an CHUBBY person?', 'Are you YOUNG?',
+                        'Are you a person with RECEDING HAIRLINES?', 'Are you SMILING?','Are you BALD?', 
+                        'Do you have BLACK HAIR?', 'Do you have BROWN HAIR?', 'Do you have BLOND HAIR?', 'Do you have RED HAIR?',
+                        'Do you have GRAY HAIR?', 'Do you have STRAIGHT HAIR?', 'Do you have WAVY HAIR?',
+                        'Do you have a BEARD?', 'Do you have a MUSTACHE?', 'Do you have SIDEBURNS?',
+                        'Do you have a GOATEE?', 'Do you wear HEAVY MAKEUP?', 'Do you wear EYEGLASSES?',
+                        'Do you have BUSHY EYEBROWS?', 'Do you have a DOUBLE CHIN?', 
+                        'Do you have a high CHEECKBONES?', 'Do you have SLIGHTLY OPEN MOUTH?', 
+                        'Do you have NARROWED EYES?', 'Do you have an OVAL FACE?', 
+                        'Do you have PALE SKIN?', 'Do you have a POINTY NOSE?', 'Do you have ROSY CHEEKS?', 
+                        "Do you have FIVE O'CLOCK SHADOW?", 'Do you have ARCHED EYEBROWS?', 'Do you have BUGS UNDER your EYES?', 
+                        'Do you have BANGS?', 'Do you have a BIG LIPS?', 'Do you have a BIG NOSE?',
+                        'Are you wearing EARRINGS?', 'Are you wearing a HAT?', 
+                        'Are you wearing LIPSTICK?', 'Are you wearing NECKLACE?', 
+                        'Are you wearing NECKTIE?']
+                        
     elif st.session_state['init_data']['language']=='Catalan' or st.session_state['init_data']['language']=='Català':
         List_Query_Type=['Fer una pregunta', 'Fer una consulta en anglès', 'Fer una doble consulta en anglès','Seleccionar un guanyador']
 
@@ -1271,6 +1379,22 @@ def Main_Program():
 
         Text_Calculate_Results_4='SEGÜENT CONSULTA'
         
+        st.session_state['init_data']['feature_questions']=['Ets un HOME?', 'Ets una DONA?', 'Ets una persona ATRACTIVA?', 'Ets una persona GRASSONETA ?', 'Ets JOVE?',
+                        "Ets una persona que PERD EL CABELL?", "SOMRIUS?", "Ets CALB?",
+                        'Tens els CABELLS NEGRE?', 'Tens els CABELLS MARRONS?', 'Tens els CABELLS ROSSOS?', 'Tens els CABELLS ROJOS?',
+                        'Tens els els CABELLS GRISOS?', 'Tens els CABELLS LLISOS?', 'Tens els CABELLS ONDULATS?',
+                        'Tens BARBA?', 'Tens BIGOTI?', 'Tens PATILLES?',
+                        'Tens una PERILLA?', 'Portes MAQUILLATGE?', 'Portes ULLERES?',
+                        'Tens CELLES PELUDES?', 'Tens DOBLE BARBETA?',
+                        'Tens els PÒMULS ALTS?', 'Tens la BOCA LLEUGERAMENT OBERTA?',
+                        'Tens ELS ULLS ENTRETANCATS?', 'Tens la CARA OVALADA?',
+                        'Tens la PEL PÀL·LIDA?', 'Tens el NAS DE PUNTA?', 'Tens les GALTES ROSADES?',
+                        "Tens OMBRA DE LES 5 EN PUNT?", "Tens CELLES ARQUEJADES?", "FAS ULLERES?",
+                        "Ten SERELL?", "Tens els LLAVIS GRANS?", "Tens el NAS GRAN?",
+                        'Portes ARRACADES?', 'Portes BARRET?',
+                        'Portes PINTALLAVIS?', 'Portes COLLARETS?',
+                        'Portes CORBATA?']
+        
         
     ## --------------- SHOW INFO --------------
     Show_Info(Text_Questions_List_1)
@@ -1312,7 +1436,7 @@ def Main_Program():
          
         ## Idioma
         Selected_Language=st.selectbox(Text_Inicializations_9, List_Language, index=0, key='Selected_language', help=None)
-        st.session_state['init_data']['Language']=Selected_Language
+        st.session_state['init_data']['language']=Selected_Language
         
         ## Number of players
         N_Players=st.number_input(Text_Inicializations_2, min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
@@ -1338,7 +1462,7 @@ def Main_Program():
             st.markdown(Text_Inicializations_7+str(N_Players)+Text_Show_Elements_5, unsafe_allow_html=True)
         st.markdown(Text_Inicializations_11+str(N_Images)+Text_Show_Elements_5, unsafe_allow_html=True)
         st.markdown(Text_Inicializations_13+Selected_Images_Source+Text_Show_Elements_5, unsafe_allow_html=True)
-        st.markdown(Text_Inicializations_10+st.session_state['init_data']['Language'], unsafe_allow_html=True)
+        st.markdown(Text_Inicializations_10+st.session_state['init_data']['language'], unsafe_allow_html=True)
            
         ## Start game button
         Use_Images = st.button(Text_Inicializations_15, key='Use_Images')
