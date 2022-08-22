@@ -886,7 +886,6 @@ def Load_Data(N):
 
 
 def ReLoad_Data(N):
-    st.session_state['init_data']={
     st.session_state['init_data']['status']=0
     st.session_state['init_data']['award1']=100
     st.session_state['init_data']['award2']=100
@@ -1622,7 +1621,7 @@ def Main_Program():
 
     ## --------------- RELOAD GAME ---------------
     if st.session_state['init_data']['reload_game']:
-        Load_Data(st.session_state['init_data']['N_images'])   
+        ReLoad_Data(st.session_state['init_data']['N_images'])   
         
         
 ## --------------- CACHE FUCTION ---------------
