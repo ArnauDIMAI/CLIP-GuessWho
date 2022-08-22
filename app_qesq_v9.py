@@ -792,7 +792,7 @@ def Show_Info():
 
 def Load_Data(N):
     st.session_state['init_data']={
-        'language':0,
+        'language':'English',
         'status':0,
         'award1':100,
         'award2':100,
@@ -1024,8 +1024,10 @@ def Main_Program():
         Text_Inicializations_7="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "
 
         Text_Inicializations_8=" (autoselect winners randomly)</h3>"
-        
+
         Text_Inicializations_9="Select the language"
+        
+        Text_Inicializations_10="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Language selected: "
         
         Text_Inicializations_11="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "
 
@@ -1212,7 +1214,9 @@ def Main_Program():
         Text_Inicializations_8=" (seleccionar les imatges guanyadores aleatòriament)</h3>"
         
         Text_Inicializations_9="Tria l'idioma"
-
+        
+        Text_Inicializations_10="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Idioma seleccionat: "
+        
         Text_Inicializations_11="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Número d'imatges: "
 
         Text_Inicializations_13="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Imatges a usar: "
@@ -1307,6 +1311,7 @@ def Main_Program():
          
         ## Idioma
         Selected_Language=st.selectbox(Text_Inicializations_9, List_Language, index=0, key='Selected_language', help=None)
+        st.session_state['init_data']['Language']=Selected_Language
         
         ## Number of players
         N_Players=st.number_input(Text_Inicializations_2, min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
@@ -1332,6 +1337,7 @@ def Main_Program():
             st.markdown(Text_Inicializations_7+str(N_Players)+Text_Show_Elements_5, unsafe_allow_html=True)
         st.markdown(Text_Inicializations_11+str(N_Images)+Text_Show_Elements_5, unsafe_allow_html=True)
         st.markdown(Text_Inicializations_13+Selected_Images_Source+Text_Show_Elements_5, unsafe_allow_html=True)
+        st.markdown(Text_Inicializations_10+st.session_state['init_data']['Language'], unsafe_allow_html=True)
            
         ## Start game button
         Use_Images = st.button(Text_Inicializations_15, key='Use_Images')
@@ -1341,7 +1347,6 @@ def Main_Program():
             st.session_state['init_data']['n_images']=N_Images
             st.session_state['init_data']['n_images2']=N_Images
             st.session_state['init_data']['N_players']=N_Players
-            st.session_state['init_data']['Language']=Selected_Language
             st.session_state['init_data']['random_winner']=Winner_selection_random
             st.session_state['init_data']['current_images_discarted']=np.zeros((N_Images))
             st.session_state['init_data']['current_images_discarted2']=np.zeros((N_Images))
