@@ -1498,7 +1498,10 @@ def Main_Program():
     ## --------------- RELOAD GAME ---------------
     if st.session_state['init_data']['reload_game']:
         Load_Data(st.session_state['init_data']['N_images'])   
-
+        
+        
+    ## --------------- SHOW INFO --------------
+    Show_Info()
 
 ## --------------- CACHE FUCTION ---------------
 @st.cache(ttl=12*3600)
@@ -1517,10 +1520,6 @@ st.set_page_config(
 
 ## --------------- START PRGRAM ---------------
 Main_Program()
-
-
-## --------------- SHOW INFO --------------
-Show_Info()
 
 
 ## --------------- CLEAR RESOURCES ---------------
