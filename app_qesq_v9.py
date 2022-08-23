@@ -730,6 +730,8 @@ def Select_Dataset():
             st.session_state['init_data']['zip_file']='guess_who_images.zip'
         elif st.session_state['init_data']['Selected_Images_Source']=='Use friends dataset':
             st.session_state['init_data']['zip_file']='frifam.zip'
+        elif st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+            st.session_state['init_data']['zip_file']='Original.zip'
         else:
             st.session_state['init_data']['zip_file']='Use images from specific path'
 
@@ -791,7 +793,7 @@ def Show_Info(Text_questions_list_1):
 def Load_Data(N):
     st.session_state['init_data']={
         'language':'English',
-        'status':0,
+        'status':-1,
         'award1':100,
         'award2':100,
         'N_images':N,
@@ -886,7 +888,7 @@ def Load_Data(N):
 
 
 def ReLoad_Data(N):
-    st.session_state['init_data']['status']=0
+    st.session_state['init_data']['status']=-1
     st.session_state['init_data']['award1']=100
     st.session_state['init_data']['award2']=100
     st.session_state['init_data']['N_images']=N
@@ -1121,6 +1123,8 @@ def Main_Program():
         Text_Inicializations_10="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Language selected: "
         
         Text_Inicializations_11="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "
+        
+        Text_Inicializations_12="<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select language / Escull l'idioma</h2>"
 
         Text_Inicializations_13="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "
 
@@ -1219,7 +1223,7 @@ def Main_Program():
         Text_Finished_Game_9="Triar una pregunta d'una llista, crear la teva consulta en anglès o selecciona directament un guanyador:"
 
 
-        Tex_Images_Source_1="Tria entre: imatges de famosos, imatges del joc original 'Quí és Quí?', imatges d'amcs o ñes imatges que vulguis (proporcionant un arxiu '.zip')"
+        Tex_Images_Source_1="Tria entre: imatges de famosos, imatges del joc original 'Quí és Quí?', imatges d'amcs o les imatges que vulguis (proporcionant un arxiu '.zip')"
 
 
         Text_Show_Elements_1="<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"
@@ -1325,10 +1329,12 @@ def Main_Program():
         Text_Inicializations_10="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Idioma seleccionat: "
         
         Text_Inicializations_11="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Número d'imatges: "
+        
+        Text_Inicializations_12="<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select language / Escull l'idioma</h2>"
 
         Text_Inicializations_13="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Imatges a usar: "
 
-        Text_Inicializations_15="COMENÄR EL JOC (prem per iniciar el joc després de triar les opcions)"
+        Text_Inicializations_15="COMENÇAR EL JOC (prem per iniciar el joc després de triar les opcions)"
 
 
         Text_Image_Selection_1="<h3 style='text-align:left; float:left; color:gray; margin:0px;'>Prem per canviar les imatges aleatòriament.</h3>"
@@ -1428,14 +1434,21 @@ def Main_Program():
         else:
             st.markdown(Text_Title_6 + str(st.session_state['init_data']['award1'])+ Text_Title_5, unsafe_allow_html=True)
 
-
-    ## --------------- INITIALIZATIONS ---------------
-    if st.session_state['init_data']['status']==0:
-        st.markdown(Text_Inicializations_1, unsafe_allow_html=True)
+    ## --------------- LANGUAGE ---------------
+    if st.session_state['init_data']['status']==-1:
+        st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
          
         ## Idioma
         Selected_Language=st.selectbox(Text_Inicializations_9, List_Language, index=0, key='Selected_language', help=None)
         st.session_state['init_data']['language']=Selected_Language
+        Set_Language=st.button(st.session_state['init_data']['language'], key='Set_language')
+        if Set_Language:
+            st.session_state['init_data']['status']=0
+
+
+    ## --------------- INITIALIZATIONS ---------------
+    if st.session_state['init_data']['status']==0:
+        st.markdown(Text_Inicializations_1, unsafe_allow_html=True)
         
         ## Number of players
         N_Players=st.number_input(Text_Inicializations_2, min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
