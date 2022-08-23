@@ -106,22 +106,22 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_ima
             Finsih_Game = st.button(Text_Show_Final_Results_4, key='Finsih_Game')
     return Current_award
 
-def Ask_Question(Player_indicator, Win_index, Current_award):
+def Ask_Question(Player_indicator,Win_index,Current_award,Text_show_elements_1,Text_show_elements_2,Text_show_elements_3,Text_show_elements_4,Text_show_elements_5,Text_show_elements_6,Text_show_elements_8,Text_show_elements_9,Text_show_elements_11,Text_show_elements_13,Text_show_elements_14,Text_show_elements_15,Text_show_elements_17,Text_show_elements_18,Text_show_elements_19,Text_show_elements_21,Text_show_elements_22,Text_show_elements_24,Text_show_elements_26,Text_show_elements_28,Text_show_elements_29,Text_show_elements_31,Text_show_elements_36,Text_show_elements_38):
 
         ## Finished Game:
     if st.session_state['init_data']['finished_game']:
         st.session_state['init_data']['reload_game']=True
         Restart_App = st.button('GO TO OPTIONS SELECTION TO START NEW GAME', key='Restart_App')
         if Current_award==1 or Current_award==-1:
-            st.markdown(Text_Finished_Game_1+Player_indicator+Text_Finished_Game_2+str(Current_award)+Text_Finished_Game_3, unsafe_allow_html=True)
+            st.markdown(Text_finished_game_1+Player_indicator+Text_finished_game_2+str(Current_award)+Text_finished_game_3, unsafe_allow_html=True)
         else:
-            st.markdown(Text_Finished_Game_1+Player_indicator+Text_Finished_Game_1+str(Current_award)+Text_Finished_Game_1, unsafe_allow_html=True)
+            st.markdown(Text_finished_game_1+Player_indicator+Text_finished_game_1+str(Current_award)+Text_finished_game_1, unsafe_allow_html=True)
     else:
     
-        st.markdown(Text_Finished_Game_7+Player_indicator+Text_Finished_Game_8, unsafe_allow_html=True)
+        st.markdown(Text_finished_game_7+Player_indicator+Text_finished_game_8, unsafe_allow_html=True)
 
         ## SelectBox - Select query type (game mode)
-        Selected_Feature=st.selectbox(Text_Finished_Game_9, List_Query_Type, index=0, key='selected_feature', help=None)
+        Selected_Feature=st.selectbox(Text_finished_game_9, List_Query_Type, index=0, key='selected_feature', help=None)
 
         
         ## --------------- SHOW ELEMENTS - QUESTIONS MODE ---------------
@@ -130,7 +130,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
             st.session_state['init_data']['token_type']=0
 
             ## Text - Questions mode
-            st.markdown(Text_Show_Elements_1+Player_indicator+Text_Show_Elements_2, unsafe_allow_html=True)
+            st.markdown(Text_show_elements_1+Player_indicator+Text_show_elements_2, unsafe_allow_html=True)
             
             ## SelectBox - Select question
             Selected_Question=st.selectbox('Suggested questions:', st.session_state['init_data']['feature_questions'], index=0, key='Selected_Question', help=None)
@@ -143,10 +143,10 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
             st.session_state['init_data']['questions_index']=st.session_state['init_data']['feature_questions'].index(Selected_Question)
                
             ## Text - Show current question
-            st.markdown(Text_Show_Elements_3+Player_indicator+Text_Show_Elements_4+Selected_Question+Text_Show_Elements_5, unsafe_allow_html=True)
+            st.markdown(Text_show_elements_3+Player_indicator+Text_show_elements_4+Selected_Question+Text_show_elements_5, unsafe_allow_html=True)
             
             ## Button - Use current question
-            Check_Question = st.button(Text_Show_Elements_6, key='Check_Question')
+            Check_Question = st.button(Text_show_elements_6, key='Check_Question')
             
             ## Check current question
             if st.session_state['init_data']['show_results']:
@@ -301,17 +301,17 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
             st.session_state['init_data']['token_type']=-1
 
             ## Text - Query mode
-            st.markdown(Text_Show_Elements_1+Player_indicator+Text_Show_Elements_8, unsafe_allow_html=True)
+            st.markdown(Text_show_elements_1+Player_indicator+Text_show_elements_8, unsafe_allow_html=True)
             
             ## TextInput - Select query
-            User_Input = st.text_input(Text_Show_Elements_9, 'A picture of a person', key='User_Input', help=None)
+            User_Input = st.text_input(Text_show_elements_9, 'A picture of a person', key='User_Input', help=None)
             st.session_state['init_data']['user_input']=User_Input  # Save Info
 
             ## Text - Show current query
-            st.markdown(Text_Show_Elements_3+Player_indicator+Text_Show_Elements_11+User_Input+Text_Show_Elements_5, unsafe_allow_html=True)
+            st.markdown(Text_show_elements_3+Player_indicator+Text_show_elements_11+User_Input+Text_show_elements_5, unsafe_allow_html=True)
             
             ## Button - Use current query
-            Check_Query = st.button(Text_Show_Elements_13, key='Check_Query')
+            Check_Query = st.button(Text_show_elements_13, key='Check_Query')
             
             ## Check current question            
             if st.session_state['init_data']['show_results']:
@@ -326,7 +326,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                         st.session_state['init_data']['show_results']=True
                         
                     else:
-                        st.markdown(Text_Show_Elements_14+Player_indicator+Text_Show_Elements_15, unsafe_allow_html=True)
+                        st.markdown(Text_show_elements_14+Player_indicator+Text_show_elements_15, unsafe_allow_html=True)
                
                
         ## --------------- SHOW ELEMENTS - 2 QUERYS MODE ---------------
@@ -336,19 +336,19 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
             st.session_state['init_data']['token_type']=-2
 
             ## Text - Querys mode
-            st.markdown(Text_Show_Elements_1+Player_indicator+Text_Show_Elements_17, unsafe_allow_html=True)
+            st.markdown(Text_show_elements_1+Player_indicator+Text_show_elements_17, unsafe_allow_html=True)
             
             ## SelectBox - Select querys
-            User_Input_Querys1 = st.text_input(Text_Show_Elements_18, 'A picture of a person', key='User_Input_Querys1', help=None)
-            User_Input_Querys2 = st.text_input(Text_Show_Elements_19, 'A picture of a person', key='User_Input_Querys2', help=None)
+            User_Input_Querys1 = st.text_input(Text_show_elements_18, 'A picture of a person', key='User_Input_Querys1', help=None)
+            User_Input_Querys2 = st.text_input(Text_show_elements_19, 'A picture of a person', key='User_Input_Querys2', help=None)
             st.session_state['init_data']['user_input_querys1']=User_Input_Querys1
             st.session_state['init_data']['user_input_querys2']=User_Input_Querys2
                              
             ## Text - Show current querys
-            st.markdown(Text_Show_Elements_3+Player_indicator+Text_Show_Elements_21+User_Input_Querys1+Text_Show_Elements_22+User_Input_Querys2+Text_Show_Elements_5, unsafe_allow_html=True)
+            st.markdown(Text_show_elements_3+Player_indicator+Text_show_elements_21+User_Input_Querys1+Text_show_elements_22+User_Input_Querys2+Text_show_elements_5, unsafe_allow_html=True)
             
             ## Button - Use current querys
-            Check_Querys = st.button(Text_Show_Elements_24, key='Check_Querys')
+            Check_Querys = st.button(Text_show_elements_24, key='Check_Querys')
             
             ## Check current querys
             if st.session_state['init_data']['show_results']:
@@ -363,7 +363,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                         st.session_state['init_data']['show_results']=True
                         
                     else:
-                        st.markdown(Text_Show_Elements_14+Player_indicator+Text_Show_Elements_26, unsafe_allow_html=True)
+                        st.markdown(Text_show_elements_14+Player_indicator+Text_show_elements_26, unsafe_allow_html=True)
 
 
         ## --------------- SHOW ELEMENTS - WINNER MODE ---------------
@@ -373,20 +373,20 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
             st.session_state['init_data']['token_type']=-3
 
             ## Text - Winner mode
-            st.markdown(Text_Show_Elements_1+Player_indicator+Text_Show_Elements_28, unsafe_allow_html=True)
+            st.markdown(Text_show_elements_1+Player_indicator+Text_show_elements_28, unsafe_allow_html=True)
             
             if st.session_state['init_data']['player2_turn']:
-                st.session_state['init_data']['selected_winner2']=st.selectbox(Text_Show_Elements_29, st.session_state['init_data']['winner_options'], index=0, key='Selected_Winner', help=None)
+                st.session_state['init_data']['selected_winner2']=st.selectbox(Text_show_elements_29, st.session_state['init_data']['winner_options'], index=0, key='Selected_Winner', help=None)
 				
                 ## Text - Show current winner
-                st.markdown(Text_Show_Elements_3+Player_indicator+Text_Show_Elements_31+st.session_state['init_data']['selected_winner2']+Text_Show_Elements_5, unsafe_allow_html=True)
+                st.markdown(Text_show_elements_3+Player_indicator+Text_show_elements_31+st.session_state['init_data']['selected_winner2']+Text_show_elements_5, unsafe_allow_html=True)
             else:
-                st.session_state['init_data']['selected_winner']=st.selectbox(Text_Show_Elements_29, st.session_state['init_data']['winner_options'], index=0, key='Selected_Winner', help=None)
+                st.session_state['init_data']['selected_winner']=st.selectbox(Text_show_elements_29, st.session_state['init_data']['winner_options'], index=0, key='Selected_Winner', help=None)
                 ## Text - Show current winner
-                st.markdown(Text_Show_Elements_3+Player_indicator+Text_Show_Elements_31+st.session_state['init_data']['selected_winner']+Text_Show_Elements_5, unsafe_allow_html=True)
+                st.markdown(Text_show_elements_3+Player_indicator+Text_show_elements_31+st.session_state['init_data']['selected_winner']+Text_show_elements_5, unsafe_allow_html=True)
             
             ## Button - Use current winner
-            Check_Winner = st.button(Text_Show_Elements_36, key='Check_Winner')
+            Check_Winner = st.button(Text_show_elements_36, key='Check_Winner')
             st.session_state['init_data']['button_winner']=Check_Winner  # Save Info
                                                 
             ## Check current winner
@@ -401,7 +401,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                             st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['selected_winner_index2']]=1    
                             st.session_state['init_data']['show_results']=True
                         else:
-                            st.markdown(Text_Show_Elements_14+Player_indicator+Text_Show_Elements_38, unsafe_allow_html=True)
+                            st.markdown(Text_show_elements_14+Player_indicator+Text_show_elements_38, unsafe_allow_html=True)
                     else:
                         if st.session_state['init_data']['selected_winner'] in st.session_state['init_data']['current_image_names']:
                             st.session_state['init_data']['selected_winner_index']=np.where(st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'])[0]
@@ -409,7 +409,7 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                             st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['selected_winner_index']]=1    
                             st.session_state['init_data']['show_results']=True
                         else:
-                            st.markdown(Text_Show_Elements_14+Player_indicator+Text_Show_Elements_38, unsafe_allow_html=True)
+                            st.markdown(Text_show_elements_14+Player_indicator+Text_show_elements_38, unsafe_allow_html=True)
 
 
         ## --------------- ACTIONS SHOWING RESULTS ---------------
@@ -430,18 +430,18 @@ def Ask_Question(Player_indicator, Win_index, Current_award):
                     
             if st.session_state['init_data']['token_type']==-2:
                 if st.session_state['init_data']['image_current_predictions'][Win_index]:
-                    st.markdown(Text_Show_Results_9+st.session_state['init_data']['user_input_querys1']+Text_Show_Elements_5, unsafe_allow_html=True)
+                    st.markdown(Text_Show_Results_9+st.session_state['init_data']['user_input_querys1']+Text_show_elements_5, unsafe_allow_html=True)
                 else:
-                    st.markdown(Text_Show_Results_9+st.session_state['init_data']['user_input_querys2']+Text_Show_Elements_5, unsafe_allow_html=True)
+                    st.markdown(Text_Show_Results_9+st.session_state['init_data']['user_input_querys2']+Text_show_elements_5, unsafe_allow_html=True)
               
             if st.session_state['init_data']['player2_turn']:
                 if st.session_state['init_data']['token_type']==-3:
                     if not st.session_state['init_data']['selected_winner2']==st.session_state['init_data']['current_image_names'][Win_index]:
-                        st.markdown(Text_Show_Results_13+st.session_state['init_data']['selected_winner2']+Text_Show_Elements_5, unsafe_allow_html=True)
+                        st.markdown(Text_Show_Results_13+st.session_state['init_data']['selected_winner2']+Text_show_elements_5, unsafe_allow_html=True)
             else:
                 if st.session_state['init_data']['token_type']==-3:
                     if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][Win_index]:
-                        st.markdown(Text_Show_Results_13+st.session_state['init_data']['selected_winner']+Text_Show_Elements_5, unsafe_allow_html=True)
+                        st.markdown(Text_Show_Results_13+st.session_state['init_data']['selected_winner']+Text_show_elements_5, unsafe_allow_html=True)
 
 def CLIP_Process():
     ## Tokenization process
@@ -1689,17 +1689,17 @@ def Main_Program():
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==31: 
-        Ask_Question(Text_Ask_Question_0, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'])
+        Ask_Question(Text_Ask_Question_0, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38)
                 
         
     ## 2 PLAYER GAME - PLAYER 1 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==131:
-        Ask_Question(Text_Ask_Question_1, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'])
+        Ask_Question(Text_Ask_Question_1, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38)
     
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==132:    
-        Ask_Question(Text_Ask_Question_2, st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'])
+        Ask_Question(Text_Ask_Question_2, st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'],Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38)
 
 
 	    ## --------------- CALCULATE RESULTS ---------------
