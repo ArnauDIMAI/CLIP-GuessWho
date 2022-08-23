@@ -1576,7 +1576,7 @@ def Main_Program():
 
     ## --------------- IMAGE SELECTION ---------------
     if st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==101:
-        if Selected_Images_Source=='Use images from specific path':
+        if st.session_state['init_data']['Selected_Images_Source']=='Use images from specific path':
             ## Specific source text
             st.markdown(Text_Language_1, unsafe_allow_html=True)
                 
