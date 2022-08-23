@@ -671,120 +671,6 @@ def Load_Image(current_index, current_path):
     del image_current_path,archive
     return np.array(image_file)
 
-def Select_Dataset():   
-    if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
-        ## Select zip file
-        st.session_state['init_data']['zip_file']='Original.zip'
-
-        st.session_state['init_data']['feature_questions']=["Are you a MAN?", "Are you a WOMAN?", "Are you an ATTRACTIVE person?", "Are you an CHUBBY person?", "Are you YOUNG?",
-                    "Are you a person with RECEDING HAIRLINES?", "Are you SMILING?","Are you BALD?", 
-                    "Do you have BLACK HAIR?", "Do you have BROWN HAIR?", "Do you have ORANGE HAIR?", "Do you have YELLOW HAIR?",
-                    "Do you have WHITE HAIR?", "Do you have STRAIGHT HAIR?", "Do you have WAVY HAIR?",
-                    "Do you have a BEARD?", "Do you have a MUSTACHE?", "Do you have SIDEBURNS?",
-                    "Do you have a GOATEE?", "Do you wear HEAVY MAKEUP?", "Do you wear EYEGLASSES?",
-                    "Do you have BUSHY EYEBROWS?", "Do you have a DOUBLE CHIN?", 
-                    "Do you have a high CHEECKBONES?", "Do you have SLIGHTLY OPEN MOUTH?", 
-                    "Do you have NARROWED EYES?", "Do you have an OVAL FACE?", 
-                    "Do you have PALE SKIN?", "Do you have a POINTY NOSE?", "Do you have ROSY CHEEKS?", 
-                    "Do you have FIVE O'CLOCK SHADOW?", "Do you have ARCHED EYEBROWS?", "Do you have BUGS UNDER your EYES?", 
-                    "Do you have BANGS?", "Do you have a BIG LIPS?", "Do you have a BIG NOSE?",
-                    "Are you wearing EARRINGS?", "Are you wearing a HAT?", 
-                    "Are you wearing LIPSTICK?", "Are you wearing NECKLACE?", 
-                    "Are you wearing NECKTIE?"]
-    
-        st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
-            "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
-            "An illustration of a person's face with black hair", "An illustration of a person's face with brown hair", "An illustration of a person's face with orange hair", "An illustration of a person's face with yellow hair", 
-            "An illustration of a person's face with white hair", "An illustration of a person's face with straight hair", "An illustration of a person's face with wavy hair", 
-            "A picture of a unshaved person", "A picture of a mustachioed person", "An illustration of a person's face with bushy sideburns", 
-            "An illustration of a person's face with goatee", "An illustration of a person's face with heavy makeup", "An illustration of a person's face with eyeglasses",             
-            "An illustration of a person's face with bushy eyebrows", "A picture of a double chin person", 
-            "An illustration of a person's face with high cheekbones", "An illustration of a person's face with opened mouth", 
-            "An illustration of a person's face with narrow eyes", "An illustration of a person's face with an oval-shaped face", 
-            "An illustration of a person's face wiht pale skin", "A picture of a pointy-nosed person ", "An illustration of a person's face with colored cheeks", 
-            "A picture of a five o'clock shadow person", "A picture of a rounded eyebrows person", "An illustration of a person's face with bags under the eyes", 
-            "An illustration of a person's face with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
-            "An illustration of a person's face with earrings", "An illustration of a person's face with hat", 
-            "An illustration of a person's face with lipstick", "A picture of a necklaced person", 
-            "A picture of a necktied person"]
-    
-        st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
-            "A picture of a hairy person", "An illustration of a person's face", "A picture of a hairy person",
-            "An illustration of a person's face", "An illustration of a person's face", "An illustration of a person's face", "An illustration of a person's face", 
-            "An illustration of a person's face", "An illustration of a person's face with wavy hair", "An illustration of a person's face with straight hair", 
-            "A picture of a glabrous person", "An illustration of a person's face", "An illustration of a person's face with shaved sideburns", 
-            "An illustration of a person's face", "An illustration of a person's face with light makeup", "An illustration of a person's face ",             
-            "An illustration of a person's face with sparse eyebrows", "An illustration of a person's face with a double chin", 
-            "An illustration of a person's face with low cheekbones", "An illustration of a person's face with closed mouth", 
-            "An illustration of a person's face with wide eyes", "An illustration of a person's face with a normal-shaped face", 
-            "An illustration of a person's face wiht tanned skin", "A picture of a flat-nosed person", "An illustration of a person's face with pale cheeks", 
-            "A picture of a shaved or unshaved person", "An illustration of a person's face a straight eyebrows person", "An illustration of a person's face with with smooth skin under the eyes", 
-            "An illustration of a person's face", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
-            "An illustration of a person's face", "An illustration of a person's face with hair", 
-            "An illustration of a person's face with natural lips", "An illustration of a person's face", 
-            "An illustration of a person's face"]    
-    
-    else:
-        ## Select zip file
-        Dataset_Index=List_Images_Source.Index(st.session_state['init_data']['Selected_Images_Source'])
-        if Dataset_Index==0:
-            st.session_state['init_data']['zip_file']='guess_who_images.zip'
-        elif Dataset_Index==1:
-            st.session_state['init_data']['zip_file']='Original.zip'
-        elif Dataset_Index==2:
-            st.session_state['init_data']['zip_file']='frifam.zip'
-        else:
-            st.session_state['init_data']['zip_file']='Use images from specific path'
-
-    
-        st.session_state['init_data']['feature_questions']=["Are you a MAN?", "Are you a WOMAN?", "Are you an ATTRACTIVE person?", "Are you an CHUBBY person?", "Are you YOUNG?",
-                    "Are you a person with RECEDING HAIRLINES?", "Are you SMILING?","Are you BALD?", 
-                    "Do you have BLACK HAIR?", "Do you have BROWN HAIR?", "Do you have BLOND HAIR?", "Do you have RED HAIR?",
-                    "Do you have GRAY HAIR?", "Do you have STRAIGHT HAIR?", "Do you have WAVY HAIR?",
-                    "Do you have a BEARD?", "Do you have a MUSTACHE?", "Do you have SIDEBURNS?",
-                    "Do you have a GOATEE?", "Do you wear HEAVY MAKEUP?", "Do you wear EYEGLASSES?",
-                    "Do you have BUSHY EYEBROWS?", "Do you have a DOUBLE CHIN?", 
-                    "Do you have a high CHEECKBONES?", "Do you have SLIGHTLY OPEN MOUTH?", 
-                    "Do you have NARROWED EYES?", "Do you have an OVAL FACE?", 
-                    "Do you have PALE SKIN?", "Do you have a POINTY NOSE?", "Do you have ROSY CHEEKS?", 
-                    "Do you have FIVE O'CLOCK SHADOW?", "Do you have ARCHED EYEBROWS?", "Do you have BUGS UNDER your EYES?", 
-                    "Do you have BANGS?", "Do you have a BIG LIPS?", "Do you have a BIG NOSE?",
-                    "Are you wearing EARRINGS?", "Are you wearing a HAT?", 
-                    "Are you wearing LIPSTICK?", "Are you wearing NECKLACE?", 
-                    "Are you wearing NECKTIE?"]
-    
-        st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
-            "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
-            "A picture of a person with black hair", "A picture of a person with brown hair", "A picture of a person with blond hair", "A picture of a person with red hair", 
-            "A picture of a person with gray hair", "A picture of a person with straight hair", "A picture of a person with wavy hair", 
-            "A picture of a unshaved person", "A picture of a mustachioed person", "A picture of a person with bushy sideburns", 
-            "A picture of a person with goatee", "A picture of a person with heavy makeup", "A picture of a person with eyeglasses",             
-            "A picture of a person with bushy eyebrows", "A picture of a double chin person", 
-            "A picture of a person with high cheekbones", "A picture of a person with opened mouth", 
-            "A picture of a person with narrow eyes", "A picture of a person with an oval-shaped face", 
-            "A picture of a person wiht pale skin", "A picture of a pointy-nosed person ", "A picture of a person with colored cheeks", 
-            "A picture of a five o'clock shadow person", "A picture of a rounded eyebrows person", "A picture of a person with bags under the eyes", 
-            "A picture of a person with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
-            "A picture of a person with earrings", "A picture of a person with hat", 
-            "A picture of a person with lipstick", "A picture of a necklaced person", 
-            "A picture of a necktied person"]
-    
-        st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
-            "A picture of a hairy person", "A picture of a person", "A picture of a hairy person",
-            "A picture of a person", "A picture of a person", "A picture of a person", "A picture of a person", 
-            "A picture of a person", "A picture of a person with wavy hair", "A picture of a person with straight hair", 
-            "A picture of a glabrous person", "A picture of a person", "A picture of a person with shaved sideburns", 
-            "A picture of a person", "A picture of a person with light makeup", "A picture of a person ",             
-            "A picture of a person with sparse eyebrows", "A picture of a person with a double chin", 
-            "A picture of a person with low cheekbones", "A picture of a person with closed mouth", 
-            "A picture of a person with wide eyes", "A picture of a person with a normal-shaped face", 
-            "A picture of a person wiht tanned skin", "A picture of a flat-nosed person", "A picture of a person with pale cheeks", 
-            "A picture of a shaved or unshaved person", "A picture of a person a straight eyebrows person", "A picture of a person with with smooth skin under the eyes", 
-            "A picture of a person", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
-            "A picture of a person", "A picture of a person with hair", 
-            "A picture of a person with natural lips", "A picture of a person", 
-            "A picture of a person"] 
-
 def Show_Info(Text_questions_list_1):
     #st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>INFO</h2>", unsafe_allow_html=True)
     #st.sidebar.write(st.session_state['init_data'])
@@ -937,22 +823,22 @@ def ReLoad_Data(N):
     #         'A picture of a person with lipstick', 'A picture of a necklaced person', 
     #         'A picture of a necktied person'
     #         ]
-    st.session_state['init_data']['querys_list_no']=['A picture of a female person', 'A picture of a male person', 'A picture of an ugly person', 'A picture of a slender person', 'A picture of an aged person', 
-            'A picture of a hairy person', 'A picture of a person', 'A picture of a hairy person',
-            'A picture of a person', 'A picture of a person', 'A picture of a person', 'A picture of a person', 
-            'A picture of a person', 'A picture of a person with wavy hair', 'A picture of a person with straight hair', 
-            'A picture of a glabrous person', 'A picture of a person', 'A picture of a person with shaved sideburns', 
-            'A picture of a person', 'A picture of a person with light makeup', 'A picture of a person ',             
-            'A picture of a person with sparse eyebrows', 'A picture of a person with a double chin', 
-            'A picture of a person with low cheekbones', 'A picture of a person with closed mouth', 
-            'A picture of a person with wide eyes', 'A picture of a person with a normal-shaped face', 
-            'A picture of a person wiht tanned skin', 'A picture of a flat-nosed person', 'A picture of a person with pale cheeks', 
-            "A picture of a shaved or unshaved person", 'A picture of a person a straight eyebrows person', 'A picture of a person with with smooth skin under the eyes', 
-            'A picture of a person', 'A picture of a narrow-liped person', 'A picture of a small-nosed person',            
-            'A picture of a person', 'A picture of a person with hair', 
-            'A picture of a person with natural lips', 'A picture of a person', 
-            'A picture of a person'
-            ]
+    # st.session_state['init_data']['querys_list_no']=['A picture of a female person', 'A picture of a male person', 'A picture of an ugly person', 'A picture of a slender person', 'A picture of an aged person', 
+    #         'A picture of a hairy person', 'A picture of a person', 'A picture of a hairy person',
+    #         'A picture of a person', 'A picture of a person', 'A picture of a person', 'A picture of a person', 
+    #         'A picture of a person', 'A picture of a person with wavy hair', 'A picture of a person with straight hair', 
+    #         'A picture of a glabrous person', 'A picture of a person', 'A picture of a person with shaved sideburns', 
+    #         'A picture of a person', 'A picture of a person with light makeup', 'A picture of a person ',             
+    #         'A picture of a person with sparse eyebrows', 'A picture of a person with a double chin', 
+    #         'A picture of a person with low cheekbones', 'A picture of a person with closed mouth', 
+    #         'A picture of a person with wide eyes', 'A picture of a person with a normal-shaped face', 
+    #         'A picture of a person wiht tanned skin', 'A picture of a flat-nosed person', 'A picture of a person with pale cheeks', 
+    #         "A picture of a shaved or unshaved person", 'A picture of a person a straight eyebrows person', 'A picture of a person with with smooth skin under the eyes', 
+    #         'A picture of a person', 'A picture of a narrow-liped person', 'A picture of a small-nosed person',            
+    #         'A picture of a person', 'A picture of a person with hair', 
+    #         'A picture of a person with natural lips', 'A picture of a person', 
+    #         'A picture of a person'
+    #         ]
     # st.session_state['init_data']['token_type']=0
     # st.session_state['init_data']['user_input']='A picture of a person'
     # st.session_state['init_data']['user_input_querys1']='A picture of a person'
@@ -1186,22 +1072,105 @@ def Main_Program():
 
         Text_Calculate_Results_4='NEXT QUERY'
         
-        st.session_state['init_data']['feature_questions']=['Are you a MAN?', 'Are you a WOMAN?', 'Are you an ATTRACTIVE person?', 'Are you an CHUBBY person?', 'Are you YOUNG?',
-                        'Are you a person with RECEDING HAIRLINES?', 'Are you SMILING?','Are you BALD?', 
-                        'Do you have BLACK HAIR?', 'Do you have BROWN HAIR?', 'Do you have BLOND HAIR?', 'Do you have RED HAIR?',
-                        'Do you have GRAY HAIR?', 'Do you have STRAIGHT HAIR?', 'Do you have WAVY HAIR?',
-                        'Do you have a BEARD?', 'Do you have a MUSTACHE?', 'Do you have SIDEBURNS?',
-                        'Do you have a GOATEE?', 'Do you wear HEAVY MAKEUP?', 'Do you wear EYEGLASSES?',
-                        'Do you have BUSHY EYEBROWS?', 'Do you have a DOUBLE CHIN?', 
-                        'Do you have a high CHEECKBONES?', 'Do you have SLIGHTLY OPEN MOUTH?', 
-                        'Do you have NARROWED EYES?', 'Do you have an OVAL FACE?', 
-                        'Do you have PALE SKIN?', 'Do you have a POINTY NOSE?', 'Do you have ROSY CHEEKS?', 
-                        "Do you have FIVE O'CLOCK SHADOW?", 'Do you have ARCHED EYEBROWS?', 'Do you have BUGS UNDER your EYES?', 
-                        'Do you have BANGS?', 'Do you have a BIG LIPS?', 'Do you have a BIG NOSE?',
-                        'Are you wearing EARRINGS?', 'Are you wearing a HAT?', 
-                        'Are you wearing LIPSTICK?', 'Are you wearing NECKLACE?', 
-                        'Are you wearing NECKTIE?']
                         
+        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+            st.session_state['init_data']['feature_questions']=["Are you a MAN?", "Are you a WOMAN?", "Are you an ATTRACTIVE person?", "Are you an CHUBBY person?", "Are you YOUNG?",
+                        "Are you a person with RECEDING HAIRLINES?", "Are you SMILING?","Are you BALD?", 
+                        "Do you have BLACK HAIR?", "Do you have BROWN HAIR?", "Do you have ORANGE HAIR?", "Do you have YELLOW HAIR?",
+                        "Do you have WHITE HAIR?", "Do you have STRAIGHT HAIR?", "Do you have WAVY HAIR?",
+                        "Do you have a BEARD?", "Do you have a MUSTACHE?", "Do you have SIDEBURNS?",
+                        "Do you have a GOATEE?", "Do you wear HEAVY MAKEUP?", "Do you wear EYEGLASSES?",
+                        "Do you have BUSHY EYEBROWS?", "Do you have a DOUBLE CHIN?", 
+                        "Do you have a high CHEECKBONES?", "Do you have SLIGHTLY OPEN MOUTH?", 
+                        "Do you have NARROWED EYES?", "Do you have an OVAL FACE?", 
+                        "Do you have PALE SKIN?", "Do you have a POINTY NOSE?", "Do you have ROSY CHEEKS?", 
+                        "Do you have FIVE O'CLOCK SHADOW?", "Do you have ARCHED EYEBROWS?", "Do you have BUGS UNDER your EYES?", 
+                        "Do you have BANGS?", "Do you have a BIG LIPS?", "Do you have a BIG NOSE?",
+                        "Are you wearing EARRINGS?", "Are you wearing a HAT?", 
+                        "Are you wearing LIPSTICK?", "Are you wearing NECKLACE?", 
+                        "Are you wearing NECKTIE?"]
+        
+            st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
+                "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
+                "An illustration of a person's face with black hair", "An illustration of a person's face with brown hair", "An illustration of a person's face with orange hair", "An illustration of a person's face with yellow hair", 
+                "An illustration of a person's face with white hair", "An illustration of a person's face with straight hair", "An illustration of a person's face with wavy hair", 
+                "A picture of a unshaved person", "A picture of a mustachioed person", "An illustration of a person's face with bushy sideburns", 
+                "An illustration of a person's face with goatee", "An illustration of a person's face with heavy makeup", "An illustration of a person's face with eyeglasses",             
+                "An illustration of a person's face with bushy eyebrows", "A picture of a double chin person", 
+                "An illustration of a person's face with high cheekbones", "An illustration of a person's face with opened mouth", 
+                "An illustration of a person's face with narrow eyes", "An illustration of a person's face with an oval-shaped face", 
+                "An illustration of a person's face wiht pale skin", "A picture of a pointy-nosed person ", "An illustration of a person's face with colored cheeks", 
+                "A picture of a five o'clock shadow person", "A picture of a rounded eyebrows person", "An illustration of a person's face with bags under the eyes", 
+                "An illustration of a person's face with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
+                "An illustration of a person's face with earrings", "An illustration of a person's face with hat", 
+                "An illustration of a person's face with lipstick", "A picture of a necklaced person", 
+                "A picture of a necktied person"]
+        
+            st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
+                "A picture of a hairy person", "An illustration of a person's face", "A picture of a hairy person",
+                "An illustration of a person's face", "An illustration of a person's face", "An illustration of a person's face", "An illustration of a person's face", 
+                "An illustration of a person's face", "An illustration of a person's face with wavy hair", "An illustration of a person's face with straight hair", 
+                "A picture of a glabrous person", "An illustration of a person's face", "An illustration of a person's face with shaved sideburns", 
+                "An illustration of a person's face", "An illustration of a person's face with light makeup", "An illustration of a person's face ",             
+                "An illustration of a person's face with sparse eyebrows", "An illustration of a person's face with a double chin", 
+                "An illustration of a person's face with low cheekbones", "An illustration of a person's face with closed mouth", 
+                "An illustration of a person's face with wide eyes", "An illustration of a person's face with a normal-shaped face", 
+                "An illustration of a person's face wiht tanned skin", "A picture of a flat-nosed person", "An illustration of a person's face with pale cheeks", 
+                "A picture of a shaved or unshaved person", "An illustration of a person's face a straight eyebrows person", "An illustration of a person's face with with smooth skin under the eyes", 
+                "An illustration of a person's face", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
+                "An illustration of a person's face", "An illustration of a person's face with hair", 
+                "An illustration of a person's face with natural lips", "An illustration of a person's face", 
+                "An illustration of a person's face"]    
+        
+        else:
+            st.session_state['init_data']['feature_questions']=["Are you a MAN?", "Are you a WOMAN?", "Are you an ATTRACTIVE person?", "Are you an CHUBBY person?", "Are you YOUNG?",
+                        "Are you a person with RECEDING HAIRLINES?", "Are you SMILING?","Are you BALD?", 
+                        "Do you have BLACK HAIR?", "Do you have BROWN HAIR?", "Do you have BLOND HAIR?", "Do you have RED HAIR?",
+                        "Do you have GRAY HAIR?", "Do you have STRAIGHT HAIR?", "Do you have WAVY HAIR?",
+                        "Do you have a BEARD?", "Do you have a MUSTACHE?", "Do you have SIDEBURNS?",
+                        "Do you have a GOATEE?", "Do you wear HEAVY MAKEUP?", "Do you wear EYEGLASSES?",
+                        "Do you have BUSHY EYEBROWS?", "Do you have a DOUBLE CHIN?", 
+                        "Do you have a high CHEECKBONES?", "Do you have SLIGHTLY OPEN MOUTH?", 
+                        "Do you have NARROWED EYES?", "Do you have an OVAL FACE?", 
+                        "Do you have PALE SKIN?", "Do you have a POINTY NOSE?", "Do you have ROSY CHEEKS?", 
+                        "Do you have FIVE O'CLOCK SHADOW?", "Do you have ARCHED EYEBROWS?", "Do you have BUGS UNDER your EYES?", 
+                        "Do you have BANGS?", "Do you have a BIG LIPS?", "Do you have a BIG NOSE?",
+                        "Are you wearing EARRINGS?", "Are you wearing a HAT?", 
+                        "Are you wearing LIPSTICK?", "Are you wearing NECKLACE?", 
+                        "Are you wearing NECKTIE?"]
+                        
+            st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
+                "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
+                "A picture of a person with black hair", "A picture of a person with brown hair", "A picture of a person with blond hair", "A picture of a person with red hair", 
+                "A picture of a person with gray hair", "A picture of a person with straight hair", "A picture of a person with wavy hair", 
+                "A picture of a unshaved person", "A picture of a mustachioed person", "A picture of a person with bushy sideburns", 
+                "A picture of a person with goatee", "A picture of a person with heavy makeup", "A picture of a person with eyeglasses",             
+                "A picture of a person with bushy eyebrows", "A picture of a double chin person", 
+                "A picture of a person with high cheekbones", "A picture of a person with opened mouth", 
+                "A picture of a person with narrow eyes", "A picture of a person with an oval-shaped face", 
+                "A picture of a person wiht pale skin", "A picture of a pointy-nosed person ", "A picture of a person with colored cheeks", 
+                "A picture of a five o'clock shadow person", "A picture of a rounded eyebrows person", "A picture of a person with bags under the eyes", 
+                "A picture of a person with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
+                "A picture of a person with earrings", "A picture of a person with hat", 
+                "A picture of a person with lipstick", "A picture of a necklaced person", 
+                "A picture of a necktied person"]
+        
+            st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
+                "A picture of a hairy person", "A picture of a person", "A picture of a hairy person",
+                "A picture of a person", "A picture of a person", "A picture of a person", "A picture of a person", 
+                "A picture of a person", "A picture of a person with wavy hair", "A picture of a person with straight hair", 
+                "A picture of a glabrous person", "A picture of a person", "A picture of a person with shaved sideburns", 
+                "A picture of a person", "A picture of a person with light makeup", "A picture of a person ",             
+                "A picture of a person with sparse eyebrows", "A picture of a person with a double chin", 
+                "A picture of a person with low cheekbones", "A picture of a person with closed mouth", 
+                "A picture of a person with wide eyes", "A picture of a person with a normal-shaped face", 
+                "A picture of a person wiht tanned skin", "A picture of a flat-nosed person", "A picture of a person with pale cheeks", 
+                "A picture of a shaved or unshaved person", "A picture of a person a straight eyebrows person", "A picture of a person with with smooth skin under the eyes", 
+                "A picture of a person", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
+                "A picture of a person", "A picture of a person with hair", 
+                "A picture of a person with natural lips", "A picture of a person", 
+                "A picture of a person"] 
+                
     elif st.session_state['init_data']['language']=='Catalan' or st.session_state['init_data']['language']=='Català':
         List_Query_Type=['Fer una pregunta', 'Fer una consulta en anglès', 'Fer una doble consulta en anglès','Seleccionar un guanyador']
 
@@ -1398,8 +1367,59 @@ def Main_Program():
         Text_Calculate_Results_3='SEGÜENT JUGADOR'
 
         Text_Calculate_Results_4='SEGÜENT CONSULTA'
+                     
+                     
+        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+            st.session_state['init_data']['feature_questions']=['Ets un HOME?', 'Ets una DONA?', 'Ets una persona ATRACTIVA?', 'Ets una persona GRASSONETA ?', 'Ets JOVE?',
+                        "Ets una persona que PERD EL CABELL?", "SOMRIUS?", "Ets CALB?",
+                        'Tens els CABELLS NEGRE?', 'Tens els CABELLS MARRONS?', 'Tens els CABELLS TARONJA?', 'Tens els CABELLS ROSSOS?',
+                        'Tens els els CABELLS BLANCS?', 'Tens els CABELLS LLISOS?', 'Tens els CABELLS ONDULATS?',
+                        'Tens BARBA?', 'Tens BIGOTI?', 'Tens PATILLES?',
+                        'Tens una PERILLA?', 'Portes MAQUILLATGE?', 'Portes ULLERES?',
+                        'Tens CELLES PELUDES?', 'Tens DOBLE BARBETA?',
+                        'Tens els PÒMULS ALTS?', 'Tens la BOCA LLEUGERAMENT OBERTA?',
+                        'Tens ELS ULLS ENTRETANCATS?', 'Tens la CARA OVALADA?',
+                        'Tens la PEL PÀL·LIDA?', 'Tens el NAS DE PUNTA?', 'Tens les GALTES ROSADES?',
+                        "Tens OMBRA DE LES 5 EN PUNT?", "Tens CELLES ARQUEJADES?", "FAS ULLERES?",
+                        "Ten SERELL?", "Tens els LLAVIS GRANS?", "Tens el NAS GRAN?",
+                        'Portes ARRACADES?', 'Portes BARRET?',
+                        'Portes PINTALLAVIS?', 'Portes COLLARETS?',
+                        'Portes CORBATA?']
         
-        st.session_state['init_data']['feature_questions']=['Ets un HOME?', 'Ets una DONA?', 'Ets una persona ATRACTIVA?', 'Ets una persona GRASSONETA ?', 'Ets JOVE?',
+            st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
+                "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
+                "An illustration of a person's face with black hair", "An illustration of a person's face with brown hair", "An illustration of a person's face with orange hair", "An illustration of a person's face with yellow hair", 
+                "An illustration of a person's face with white hair", "An illustration of a person's face with straight hair", "An illustration of a person's face with wavy hair", 
+                "A picture of a unshaved person", "A picture of a mustachioed person", "An illustration of a person's face with bushy sideburns", 
+                "An illustration of a person's face with goatee", "An illustration of a person's face with heavy makeup", "An illustration of a person's face with eyeglasses",             
+                "An illustration of a person's face with bushy eyebrows", "A picture of a double chin person", 
+                "An illustration of a person's face with high cheekbones", "An illustration of a person's face with opened mouth", 
+                "An illustration of a person's face with narrow eyes", "An illustration of a person's face with an oval-shaped face", 
+                "An illustration of a person's face wiht pale skin", "A picture of a pointy-nosed person ", "An illustration of a person's face with colored cheeks", 
+                "A picture of a five o'clock shadow person", "A picture of a rounded eyebrows person", "An illustration of a person's face with bags under the eyes", 
+                "An illustration of a person's face with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
+                "An illustration of a person's face with earrings", "An illustration of a person's face with hat", 
+                "An illustration of a person's face with lipstick", "A picture of a necklaced person", 
+                "A picture of a necktied person"]
+        
+            st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
+                "A picture of a hairy person", "An illustration of a person's face", "A picture of a hairy person",
+                "An illustration of a person's face", "An illustration of a person's face", "An illustration of a person's face", "An illustration of a person's face", 
+                "An illustration of a person's face", "An illustration of a person's face with wavy hair", "An illustration of a person's face with straight hair", 
+                "A picture of a glabrous person", "An illustration of a person's face", "An illustration of a person's face with shaved sideburns", 
+                "An illustration of a person's face", "An illustration of a person's face with light makeup", "An illustration of a person's face ",             
+                "An illustration of a person's face with sparse eyebrows", "An illustration of a person's face with a double chin", 
+                "An illustration of a person's face with low cheekbones", "An illustration of a person's face with closed mouth", 
+                "An illustration of a person's face with wide eyes", "An illustration of a person's face with a normal-shaped face", 
+                "An illustration of a person's face wiht tanned skin", "A picture of a flat-nosed person", "An illustration of a person's face with pale cheeks", 
+                "A picture of a shaved or unshaved person", "An illustration of a person's face a straight eyebrows person", "An illustration of a person's face with with smooth skin under the eyes", 
+                "An illustration of a person's face", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
+                "An illustration of a person's face", "An illustration of a person's face with hair", 
+                "An illustration of a person's face with natural lips", "An illustration of a person's face", 
+                "An illustration of a person's face"]    
+        
+        else:
+            st.session_state['init_data']['feature_questions']=['Ets un HOME?', 'Ets una DONA?', 'Ets una persona ATRACTIVA?', 'Ets una persona GRASSONETA ?', 'Ets JOVE?',
                         "Ets una persona que PERD EL CABELL?", "SOMRIUS?", "Ets CALB?",
                         'Tens els CABELLS NEGRE?', 'Tens els CABELLS MARRONS?', 'Tens els CABELLS ROSSOS?', 'Tens els CABELLS ROJOS?',
                         'Tens els els CABELLS GRISOS?', 'Tens els CABELLS LLISOS?', 'Tens els CABELLS ONDULATS?',
@@ -1414,7 +1434,38 @@ def Main_Program():
                         'Portes ARRACADES?', 'Portes BARRET?',
                         'Portes PINTALLAVIS?', 'Portes COLLARETS?',
                         'Portes CORBATA?']
+                        
+            st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
+                "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
+                "A picture of a person with black hair", "A picture of a person with brown hair", "A picture of a person with blond hair", "A picture of a person with red hair", 
+                "A picture of a person with gray hair", "A picture of a person with straight hair", "A picture of a person with wavy hair", 
+                "A picture of a unshaved person", "A picture of a mustachioed person", "A picture of a person with bushy sideburns", 
+                "A picture of a person with goatee", "A picture of a person with heavy makeup", "A picture of a person with eyeglasses",             
+                "A picture of a person with bushy eyebrows", "A picture of a double chin person", 
+                "A picture of a person with high cheekbones", "A picture of a person with opened mouth", 
+                "A picture of a person with narrow eyes", "A picture of a person with an oval-shaped face", 
+                "A picture of a person wiht pale skin", "A picture of a pointy-nosed person ", "A picture of a person with colored cheeks", 
+                "A picture of a five o'clock shadow person", "A picture of a rounded eyebrows person", "A picture of a person with bags under the eyes", 
+                "A picture of a person with bangs", "A picture of a wide-liped person", "A picture of a big-nosed person",            
+                "A picture of a person with earrings", "A picture of a person with hat", 
+                "A picture of a person with lipstick", "A picture of a necklaced person", 
+                "A picture of a necktied person"]
         
+            st.session_state['init_data']['querys_list_no']=["A picture of a female person", "A picture of a male person", "A picture of an ugly person", "A picture of a slender person", "A picture of an aged person", 
+                "A picture of a hairy person", "A picture of a person", "A picture of a hairy person",
+                "A picture of a person", "A picture of a person", "A picture of a person", "A picture of a person", 
+                "A picture of a person", "A picture of a person with wavy hair", "A picture of a person with straight hair", 
+                "A picture of a glabrous person", "A picture of a person", "A picture of a person with shaved sideburns", 
+                "A picture of a person", "A picture of a person with light makeup", "A picture of a person ",             
+                "A picture of a person with sparse eyebrows", "A picture of a person with a double chin", 
+                "A picture of a person with low cheekbones", "A picture of a person with closed mouth", 
+                "A picture of a person with wide eyes", "A picture of a person with a normal-shaped face", 
+                "A picture of a person wiht tanned skin", "A picture of a flat-nosed person", "A picture of a person with pale cheeks", 
+                "A picture of a shaved or unshaved person", "A picture of a person a straight eyebrows person", "A picture of a person with with smooth skin under the eyes", 
+                "A picture of a person", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
+                "A picture of a person", "A picture of a person with hair", 
+                "A picture of a person with natural lips", "A picture of a person", 
+                "A picture of a person"]        
         
     ## --------------- SHOW INFO --------------
     Show_Info(Text_Questions_List_1)
@@ -1510,8 +1561,18 @@ def Main_Program():
             else:
                 st.session_state['init_data']['status']=101
             st.session_state['init_data']['player2_turn']=False
-            Select_Dataset()
 
+            ## Select zip file
+            Dataset_Index=List_Images_Source.Index(st.session_state['init_data']['Selected_Images_Source'])
+            if Dataset_Index==0:
+                st.session_state['init_data']['zip_file']='guess_who_images.zip'
+            elif Dataset_Index==1:
+                st.session_state['init_data']['zip_file']='Original.zip'
+            elif Dataset_Index==2:
+                st.session_state['init_data']['zip_file']='frifam.zip'
+            else:
+                st.session_state['init_data']['zip_file']='Use images from specific path'
+            
 
     ## --------------- IMAGE SELECTION ---------------
     if st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==101:
