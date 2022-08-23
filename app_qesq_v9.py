@@ -418,30 +418,30 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
             ## Show current results
             if st.session_state['init_data']['token_type']==0:
                 if st.session_state['init_data']['image_current_predictions'][Win_index]:
-                    st.markdown(Text_Show_Results_1+st.session_state['init_data']['selected_question']+Text_Show_Results_2, unsafe_allow_html=True)
+                    st.markdown(Text_show_results_1+st.session_state['init_data']['selected_question']+Text_show_results_2, unsafe_allow_html=True)
                 else:
-                    st.markdown(Text_Show_Results_1+st.session_state['init_data']['selected_question']+Text_Show_Results_4, unsafe_allow_html=True)
+                    st.markdown(Text_show_results_1+st.session_state['init_data']['selected_question']+Text_show_results_4, unsafe_allow_html=True)
                     
             if st.session_state['init_data']['token_type']==-1:
                 if st.session_state['init_data']['image_current_predictions'][Win_index]:
-                    st.markdown(Text_Show_Results_1+st.session_state['init_data']['user_input']+Text_Show_Results_6, unsafe_allow_html=True)
+                    st.markdown(Text_show_results_1+st.session_state['init_data']['user_input']+Text_show_results_6, unsafe_allow_html=True)
                 else:
-                    st.markdown(Text_Show_Results_1+st.session_state['init_data']['user_input']+Text_Show_Results_8, unsafe_allow_html=True)
+                    st.markdown(Text_show_results_1+st.session_state['init_data']['user_input']+Text_show_results_8, unsafe_allow_html=True)
                     
             if st.session_state['init_data']['token_type']==-2:
                 if st.session_state['init_data']['image_current_predictions'][Win_index]:
-                    st.markdown(Text_Show_Results_9+st.session_state['init_data']['user_input_querys1']+Text_show_elements_5, unsafe_allow_html=True)
+                    st.markdown(Text_show_results_9+st.session_state['init_data']['user_input_querys1']+Text_show_elements_5, unsafe_allow_html=True)
                 else:
-                    st.markdown(Text_Show_Results_9+st.session_state['init_data']['user_input_querys2']+Text_show_elements_5, unsafe_allow_html=True)
+                    st.markdown(Text_show_results_9+st.session_state['init_data']['user_input_querys2']+Text_show_elements_5, unsafe_allow_html=True)
               
             if st.session_state['init_data']['player2_turn']:
                 if st.session_state['init_data']['token_type']==-3:
                     if not st.session_state['init_data']['selected_winner2']==st.session_state['init_data']['current_image_names'][Win_index]:
-                        st.markdown(Text_Show_Results_13+st.session_state['init_data']['selected_winner2']+Text_show_elements_5, unsafe_allow_html=True)
+                        st.markdown(Text_show_results_13+st.session_state['init_data']['selected_winner2']+Text_show_elements_5, unsafe_allow_html=True)
             else:
                 if st.session_state['init_data']['token_type']==-3:
                     if not st.session_state['init_data']['selected_winner']==st.session_state['init_data']['current_image_names'][Win_index]:
-                        st.markdown(Text_Show_Results_13+st.session_state['init_data']['selected_winner']+Text_show_elements_5, unsafe_allow_html=True)
+                        st.markdown(Text_show_results_13+st.session_state['init_data']['selected_winner']+Text_show_elements_5, unsafe_allow_html=True)
 
 def CLIP_Process():
     ## Tokenization process
