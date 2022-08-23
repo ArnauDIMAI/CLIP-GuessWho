@@ -1563,7 +1563,7 @@ def Main_Program():
             st.session_state['init_data']['player2_turn']=False
 
             ## Select zip file
-            Dataset_Index=List_Images_Source.Index(st.session_state['init_data']['Selected_Images_Source'])
+            Dataset_Index=List_Images_Source.index(st.session_state['init_data']['Selected_Images_Source'])
             if Dataset_Index==0:
                 st.session_state['init_data']['zip_file']='guess_who_images.zip'
             elif Dataset_Index==1:
