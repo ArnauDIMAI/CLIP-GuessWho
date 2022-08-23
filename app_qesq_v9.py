@@ -726,12 +726,13 @@ def Select_Dataset():
     
     else:
         ## Select zip file
-        if st.session_state['init_data']['Selected_Images_Source']=='Use Celeba dataset':
+        Dataset_Index=List_Images_Source.Index(st.session_state['init_data']['Selected_Images_Source'])
+        if Dataset_Index==0:
             st.session_state['init_data']['zip_file']='guess_who_images.zip'
-        elif st.session_state['init_data']['Selected_Images_Source']=='Use friends dataset':
-            st.session_state['init_data']['zip_file']='frifam.zip'
-        elif st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+        elif Dataset_Index==1:
             st.session_state['init_data']['zip_file']='Original.zip'
+        elif Dataset_Index==2:
+            st.session_state['init_data']['zip_file']='frifam.zip'
         else:
             st.session_state['init_data']['zip_file']='Use images from specific path'
 
