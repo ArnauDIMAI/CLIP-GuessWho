@@ -106,7 +106,7 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_ima
             Finsih_Game = st.button(Text_Show_Final_Results_4, key='Finsih_Game')
     return Current_award
 
-def Ask_Question(Player_indicator,Win_index,Current_award,Text_show_elements_1,Text_show_elements_2,Text_show_elements_3,Text_show_elements_4,Text_show_elements_5,Text_show_elements_6,Text_show_elements_8,Text_show_elements_9,Text_show_elements_11,Text_show_elements_13,Text_show_elements_14,Text_show_elements_15,Text_show_elements_17,Text_show_elements_18,Text_show_elements_19,Text_show_elements_21,Text_show_elements_22,Text_show_elements_24,Text_show_elements_26,Text_show_elements_28,Text_show_elements_29,Text_show_elements_31,Text_show_elements_36,Text_show_elements_38,Text_finished_game_1,Text_finished_game_2,Text_finished_game_3,Text_finished_game_7,Text_finished_game_8,Text_finished_game_9):
+def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_show_elements_1,Text_show_elements_2,Text_show_elements_3,Text_show_elements_4,Text_show_elements_5,Text_show_elements_6,Text_show_elements_8,Text_show_elements_9,Text_show_elements_11,Text_show_elements_13,Text_show_elements_14,Text_show_elements_15,Text_show_elements_17,Text_show_elements_18,Text_show_elements_19,Text_show_elements_21,Text_show_elements_22,Text_show_elements_24,Text_show_elements_26,Text_show_elements_28,Text_show_elements_29,Text_show_elements_31,Text_show_elements_36,Text_show_elements_38,Text_finished_game_1,Text_finished_game_2,Text_finished_game_3,Text_finished_game_7,Text_finished_game_8,Text_finished_game_9):
 
         ## Finished Game:
     if st.session_state['init_data']['finished_game']:
@@ -121,11 +121,11 @@ def Ask_Question(Player_indicator,Win_index,Current_award,Text_show_elements_1,T
         st.markdown(Text_finished_game_7+Player_indicator+Text_finished_game_8, unsafe_allow_html=True)
 
         ## SelectBox - Select query type (game mode)
-        Selected_Feature=st.selectbox(Text_finished_game_9, List_Query_Type, index=0, key='selected_feature', help=None)
+        Selected_Feature=st.selectbox(Text_finished_game_9, List_query_type, index=0, key='selected_feature', help=None)
 
         
         ## --------------- SHOW ELEMENTS - QUESTIONS MODE ---------------
-        if Selected_Feature==List_Query_Type[0]:
+        if Selected_Feature==List_query_type[0]:
             ## Game mode id
             st.session_state['init_data']['token_type']=0
 
@@ -295,7 +295,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,Text_show_elements_1,T
                     
                     
          ## --------------- SHOW ELEMENTS - 1 QUERY MOD ---------------
-        if Selected_Feature==List_Query_Type[1]:
+        if Selected_Feature==List_query_type[1]:
             
             ## Game mode id
             st.session_state['init_data']['token_type']=-1
@@ -330,7 +330,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,Text_show_elements_1,T
                
                
         ## --------------- SHOW ELEMENTS - 2 QUERYS MODE ---------------
-        if Selected_Feature==List_Query_Type[2]:
+        if Selected_Feature==List_query_type[2]:
             
             ## Game mode id
             st.session_state['init_data']['token_type']=-2
@@ -367,7 +367,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,Text_show_elements_1,T
 
 
         ## --------------- SHOW ELEMENTS - WINNER MODE ---------------
-        if Selected_Feature==List_Query_Type[3]:
+        if Selected_Feature==List_query_type[3]:
             
             ## Game mode id
             st.session_state['init_data']['token_type']=-3
@@ -1689,17 +1689,17 @@ def Main_Program():
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==31: 
-        Ask_Question(Text_Ask_Question_0, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9)
+        Ask_Question(Text_Ask_Question_0, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9)
                 
         
     ## 2 PLAYER GAME - PLAYER 1 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==131:
-        Ask_Question(Text_Ask_Question_1, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9)
+        Ask_Question(Text_Ask_Question_1, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9)
     
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==132:    
-        Ask_Question(Text_Ask_Question_2, st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'],Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9)
+        Ask_Question(Text_Ask_Question_2, st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9)
 
 
 	    ## --------------- CALCULATE RESULTS ---------------
