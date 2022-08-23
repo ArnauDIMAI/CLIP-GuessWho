@@ -875,13 +875,11 @@ def Main_Program():
         Load_Data(20)
     
     ## --------------- SET TEXTS ---------------
-    if st.session_state['init_data']['language']=='English' or st.session_state['init_data']['language']=='Anglès':
+    if st.session_state['init_data']['language']=='English':
         List_Query_Type=['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner']
 
         List_Images_Source=['Use Celeba dataset','Use Original "Guess Who" game images', 'Use friends dataset', 'Use images from specific path']
         
-        List_Language=['English','Catalan']
-
         Text_Show_Final_Results_1="<h1 style='text-align:left; color:gray; margin:0px;'>CONGRATULATIONS <span style='text-align:left; color:green; margin:0px;'>"
 
         Text_Show_Final_Results_2="<span style='text-align:left; color:gray; margin:0px;'>! THE WINNER PICTURE IS: <span style='text-align:left; color:green; margin:0px;'>"
@@ -1005,8 +1003,6 @@ def Main_Program():
         Text_Inicializations_7="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Players: "
 
         Text_Inicializations_8=" (autoselect winners randomly)</h3>"
-
-        Text_Inicializations_9="Select the language"
         
         Text_Inicializations_10="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Language selected: "
         
@@ -1172,12 +1168,10 @@ def Main_Program():
                 "A picture of a person with natural lips", "A picture of a person", 
                 "A picture of a person"] 
                 
-    elif st.session_state['init_data']['language']=='Catalan' or st.session_state['init_data']['language']=='Català':
+    elif st.session_state['init_data']['language']=='Catalan':
         List_Query_Type=['Fer una pregunta', 'Fer una consulta en anglès', 'Fer una doble consulta en anglès','Seleccionar un guanyador']
 
         List_Images_Source=["Usar imatges de famosos (el dataset Celeba)","Usar imatges del joc original 'Quí és Quí?'","Usar imatges d'amics", "Usar imatges d'un arxiu 'zip'"]
-
-        List_Language=['Català','Anglès',]
 
         Text_Show_Final_Results_1="<h1 style='text-align:left; color:gray; margin:0px;'>FELICITATS <span style='text-align:left; color:green; margin:0px;'>"
 
@@ -1301,9 +1295,7 @@ def Main_Program():
         Text_Inicializations_7="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Jugadors: "
 
         Text_Inicializations_8=" (seleccionar les imatges guanyadores aleatòriament)</h3>"
-        
-        Text_Inicializations_9="Tria l'idioma"
-        
+                
         Text_Inicializations_10="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Idioma seleccionat: "
         
         Text_Inicializations_11="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Número d'imatges: "
@@ -1504,12 +1496,15 @@ def Main_Program():
     ## --------------- LANGUAGE ---------------
     if st.session_state['init_data']['status']==-1:
         st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
-         
-        ## Idioma
-        Selected_Language=st.selectbox(Text_Inicializations_9, List_Language, index=0, key='Selected_language', help=None)
-        st.session_state['init_data']['language']=Selected_Language
-        Set_Language=st.button(st.session_state['init_data']['language'], key='Set_language')
-        if Set_Language:
+        Set_English=st.button('English', key='Set_english')
+        Set_Catalan=st.button('Catalan', key='Set_catalan')
+        
+        if Set_English:
+            st.session_state['init_data']['language']='English'
+            st.session_state['init_data']['status']=0
+            
+        if Set_Catalan:
+            st.session_state['init_data']['language']='Català'
             st.session_state['init_data']['status']=0
 
 
