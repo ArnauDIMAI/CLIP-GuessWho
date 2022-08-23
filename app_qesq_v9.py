@@ -1521,7 +1521,7 @@ def Main_Program():
             Uploaded_File = st.file_uploader(Text_Language_2, type=[".zip"],accept_multiple_files=False, key="Uploaded_file")                    
 
             if Uploaded_File is not None:
-                if Uploaded_File=!st.session_state['init_data']['zip_file']:            
+                if Uploaded_File!=st.session_state['init_data']['zip_file']:            
                     st.session_state['init_data']['zip_file']= Uploaded_File
                     Select_Images_Randomly()
                 
