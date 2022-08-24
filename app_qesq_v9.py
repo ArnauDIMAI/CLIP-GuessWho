@@ -1011,7 +1011,7 @@ def Main_Program():
         Text_Inicializations_12="<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select language / Escull l'idioma</h2>"
 
         Text_Inicializations_13="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "
-
+        
         Text_Inicializations_15="START GAME (press to start playing after select the game options)"
         
         
@@ -1303,7 +1303,7 @@ def Main_Program():
         Text_Inicializations_12="<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Select language / Escull l'idioma</h2>"
 
         Text_Inicializations_13="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Imatges a usar: "
-
+        
         Text_Inicializations_15="COMENÇAR EL JOC (prem per iniciar el joc després de triar les opcions)"
         
         
@@ -1507,11 +1507,21 @@ def Main_Program():
               
         if Set_English:
             st.session_state['init_data']['language']='English'
-            st.session_state['init_data']['status']=0
+            state.Set_catalan=False
+            Set_Catalan=False
+            st.experimental_rerun()
+            Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
+            if Confirm_Language:
+                st.session_state['init_data']['status']=0
             
-        if Set_Catalan:
+        elif Set_Catalan:
             st.session_state['init_data']['language']='Català'
-            st.session_state['init_data']['status']=0
+            state.Set_english=False
+            Set_English=False
+            st.experimental_rerun()
+            Confirm_Language=st.button("CONFIRMAR IDIOMA: "+st.session_state['init_data']['language'], key='Confirm_language')
+            if Confirm_Language:
+                st.session_state['init_data']['status']=0
 
 
     ## --------------- INITIALIZATIONS ---------------
