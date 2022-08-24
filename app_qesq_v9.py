@@ -1497,8 +1497,6 @@ def Main_Program():
     ## --------------- LANGUAGE ---------------
     if st.session_state['init_data']['status']==-1:
         st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
-        st.session_state["Set_english"] = False
-        st.session_state["Set_catalan"] = False
         
         col1, col2 = st.columns([1,5])
 
