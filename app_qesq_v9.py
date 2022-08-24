@@ -1498,7 +1498,7 @@ def Main_Program():
     if st.session_state['init_data']['status']==-1:
         st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
         
-        col1, col2 = st.columns([1,1])
+        col1, col2 = st.columns([1,5])
 
         with col1:
             Set_English=st.button('English', key='Set_english')
