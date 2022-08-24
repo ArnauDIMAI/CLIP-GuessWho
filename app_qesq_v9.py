@@ -1502,13 +1502,17 @@ def Main_Program():
     if st.session_state['init_data']['status']==-1:
         st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
         
-        Set_Language=st.selectbox(Text_Inicializations_14, ['English', 'Català'], index=0, key='Set_language', help=None)
+        Set_Language=st.selectbox(Text_Inicializations_14, ['...','English', 'Català'], index=0, key='Set_language', help=None)
 
-        st.session_state['init_data']['language']=Set_Language
-            
-        Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
-        if Confirm_Language:
+        if Set_Language!='...':
+            st.session_state['init_data']['language']=Set_Language
             st.session_state['init_data']['status']=0
+            st.write(st.session_state['init_data']['status'])
+            st.experimental_rerun()  
+            
+        #Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
+        #if Confirm_Language:
+        #    st.write(st.session_state['init_data']['status'])
 
 
     ## --------------- INITIALIZATIONS ---------------
