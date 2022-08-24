@@ -1168,7 +1168,7 @@ def Main_Program():
                 "A picture of a person with natural lips", "A picture of a person", 
                 "A picture of a person"] 
                 
-    elif st.session_state['init_data']['language']=='Catalan':
+    elif st.session_state['init_data']['language']=='Català':
         List_Query_Type=['Fer una pregunta', 'Fer una consulta en anglès', 'Fer una doble consulta en anglès','Seleccionar un guanyador']
 
         List_Images_Source=["Usar imatges de famosos (el dataset Celeba)","Usar imatges del joc original 'Quí és Quí?'","Usar imatges d'amics", "Usar imatges d'un arxiu 'zip'"]
@@ -1459,7 +1459,8 @@ def Main_Program():
                 "A picture of a person", "A picture of a person with hair", 
                 "A picture of a person with natural lips", "A picture of a person", 
                 "A picture of a person"]        
-        
+     
+     
     ## --------------- SHOW INFO --------------
     Show_Info(Text_Questions_List_1)
 
@@ -1496,9 +1497,14 @@ def Main_Program():
     ## --------------- LANGUAGE ---------------
     if st.session_state['init_data']['status']==-1:
         st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
-        Set_English=st.button('English', key='Set_english')
-        Set_Catalan=st.button('Catalan', key='Set_catalan')
         
+        col1, col2 = st.columns([1,1])
+
+        with col1:
+            Set_English=st.button('English', key='Set_english')
+        with col2:
+            Set_Catalan=st.button('Catalan', key='Set_catalan')
+              
         if Set_English:
             st.session_state['init_data']['language']='English'
             st.session_state['init_data']['status']=0
