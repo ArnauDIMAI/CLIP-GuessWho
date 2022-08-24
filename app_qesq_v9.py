@@ -1503,9 +1503,8 @@ def Main_Program():
         st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
         
         Set_Language=st.selectbox(Text_Inicializations_14, ['English', 'Català'], index=0, key='Set_language', help=None)
-        
-        if Set_Language!=st.session_state['init_data']['language']:
-            st.session_state['init_data']['language']=Set_Language
+
+        st.session_state['init_data']['language']=Set_Language
             
         Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
         if Confirm_Language:
