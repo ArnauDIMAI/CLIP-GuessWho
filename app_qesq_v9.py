@@ -1501,9 +1501,9 @@ def Main_Program():
         col1, col2 = st.columns([1,5])
 
         with col1:
-            Set_English=st.button('English', key='Set_english')
+            Set_English=st.checkbox('English', key='Set_english')
         with col2:
-            Set_Catalan=st.button('Catalan', key='Set_catalan')
+            Set_Catalan=st.checkbox('Catalan', key='Set_catalan')
               
         if Set_English:
             st.session_state['init_data']['language']='English'
