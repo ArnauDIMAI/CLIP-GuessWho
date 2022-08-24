@@ -1507,7 +1507,7 @@ def Main_Program():
               
         if Set_English:
             st.session_state['init_data']['language']='English'
-            state.Set_catalan=False
+            st.session_state.Set_catalan=False
             Set_Catalan=False
             st.experimental_rerun()
             Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
@@ -1516,7 +1516,7 @@ def Main_Program():
             
         elif Set_Catalan:
             st.session_state['init_data']['language']='Català'
-            state.Set_english=False
+            st.session_state.Set_english=False
             Set_English=False
             st.experimental_rerun()
             Confirm_Language=st.button("CONFIRMAR IDIOMA: "+st.session_state['init_data']['language'], key='Confirm_language')
