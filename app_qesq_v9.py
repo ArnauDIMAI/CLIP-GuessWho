@@ -77,8 +77,12 @@ def Predict_bald():
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
 
-def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_images, Img_discarded):
+def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_images, Img_discarded,Text_show_final_results_1,Text_show_final_results_2,Text_show_final_results_3,Text_show_final_results_4):
     ## --------------- APPLY DISCARDING ---------------
+    
+            
+    
+    
     if st.session_state['init_data']['show_results']:        
         st.session_state['init_data']['previous_discarding_images_number']=N_img
         Image_discarding()
@@ -101,9 +105,9 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_ima
         if np.sum(Img_discarded==0)==1:
             st.session_state['init_data']['finished_game']=True
             st.session_state['init_data']['change_player']=False
-            st.markdown(Text_Show_Final_Results_1+Player_indicator+Text_Show_Final_Results_2+Current_images[Win_index]+Text_Show_Final_Results_3, unsafe_allow_html=True)
+            st.markdown(Text_show_final_results_1+Player_indicator+Text_show_final_results_2+Current_images[Win_index]+Text_show_final_results_3, unsafe_allow_html=True)
 
-            Finsih_Game = st.button(Text_Show_Final_Results_4, key='Finsih_Game')
+            Finsih_Game = st.button(Text_show_final_results_4, key='Finsih_Game')
     return Current_award
 
 def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_show_elements_1,Text_show_elements_2,Text_show_elements_3,Text_show_elements_4,Text_show_elements_5,Text_show_elements_6,Text_show_elements_8,Text_show_elements_9,Text_show_elements_11,Text_show_elements_13,Text_show_elements_14,Text_show_elements_15,Text_show_elements_17,Text_show_elements_18,Text_show_elements_19,Text_show_elements_21,Text_show_elements_22,Text_show_elements_24,Text_show_elements_26,Text_show_elements_28,Text_show_elements_29,Text_show_elements_31,Text_show_elements_36,Text_show_elements_38,Text_finished_game_1,Text_finished_game_2,Text_finished_game_3,Text_finished_game_7,Text_finished_game_8,Text_finished_game_9,Text_show_results_1,Text_show_results_2,Text_show_results_4,Text_show_results_6,Text_show_results_8,Text_show_results_9,Text_show_results_13):
@@ -1716,13 +1720,13 @@ def Main_Program():
 
         ## DISCARDING IMAGES AND FINAL RESULTS
         if st.session_state['init_data']['player2_turn']:
-            st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], Text_Calculate_Results_1, st.session_state['init_data']['current_winner_index2'],st.session_state['init_data']['current_image_names2'],st.session_state['init_data']['current_images_discarted2']) 
+            st.session_state['init_data']['award2']=Final_Results(st.session_state['init_data']['n_images2'], st.session_state['init_data']['award2'], Text_Calculate_Results_1, st.session_state['init_data']['current_winner_index2'],st.session_state['init_data']['current_image_names2'],st.session_state['init_data']['current_images_discarted2'],Text_Show_Final_Results_1,Text_Show_Final_Results_2,Text_Show_Final_Results_3,Text_Show_Final_Results_4) 
 
         else:
             if st.session_state['init_data']['N_players']>1:
-               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], Text_Calculate_Results_1, st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
+               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], Text_Calculate_Results_1, st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted'],Text_Show_Final_Results_1,Text_Show_Final_Results_2,Text_Show_Final_Results_3,Text_Show_Final_Results_4) 
             else:
-               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], Text_Ask_Question_0, st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted']) 
+               st.session_state['init_data']['award1']=Final_Results(st.session_state['init_data']['n_images'], st.session_state['init_data']['award1'], Text_Ask_Question_0, st.session_state['init_data']['current_winner_index'],st.session_state['init_data']['current_image_names'],st.session_state['init_data']['current_images_discarted'],Text_Show_Final_Results_1,Text_Show_Final_Results_2,Text_Show_Final_Results_3,Text_Show_Final_Results_4) 
                 
           
         ## BUTTON NEXT
