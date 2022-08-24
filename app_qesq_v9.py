@@ -673,9 +673,9 @@ def Load_Image(current_index, current_path):
 
 def Show_Info(Text_questions_list_1):
     #st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>INFO</h2>", unsafe_allow_html=True)
-    #st.sidebar.write(st.session_state['init_data'])
     st.sidebar.markdown(Text_questions_list_1, unsafe_allow_html=True)
     st.sidebar.write(st.session_state['init_data']['feature_questions'])
+    st.sidebar.write(st.session_state['init_data'])
 
 def Load_Data(N):
     st.session_state['init_data']={
@@ -1463,10 +1463,6 @@ def Main_Program():
                 "A picture of a person", "A picture of a person with hair", 
                 "A picture of a person with natural lips", "A picture of a person", 
                 "A picture of a person"]        
-     
-     
-    ## --------------- SHOW INFO --------------
-    Show_Info(Text_Questions_List_1)
 
 
     ## --------------- RESET APP ---------------
@@ -1474,7 +1470,11 @@ def Main_Program():
     st.session_state['init_data']['reset_app'] = st.sidebar.button(Text_Reset_App_2, key='Reset_App')
     if st.session_state['init_data']['reset_app']:
         Load_Data(st.session_state['init_data']['N_images'])
-    
+         
+     
+    ## --------------- SHOW INFO --------------
+    Show_Info(Text_Questions_List_1)
+
     
     ## --------------- CHANGE PLAYER TURN --------------- 
     if st.session_state['init_data']['change_player']:
@@ -1506,12 +1506,10 @@ def Main_Program():
         
         if Set_Language!=st.session_state['init_data']['language']:
             st.session_state['init_data']['language']=Set_Language
-            st.experimental_rerun()  
             
         Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
         if Confirm_Language:
             st.session_state['init_data']['status']=0
-            st.experimental_rerun()
 
 
     ## --------------- INITIALIZATIONS ---------------
