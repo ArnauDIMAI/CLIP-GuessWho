@@ -1012,6 +1012,8 @@ def Main_Program():
 
         Text_Inicializations_13="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Images to use: "
         
+        Text_Inicializations_14="Languages list"
+        
         Text_Inicializations_15="START GAME (press to start playing after select the game options)"
         
         
@@ -1304,6 +1306,8 @@ def Main_Program():
 
         Text_Inicializations_13="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Imatges a usar: "
         
+        Text_Inicializations_14="Llista d'idiomes"
+        
         Text_Inicializations_15="COMENÇAR EL JOC (prem per iniciar el joc després de triar les opcions)"
         
         
@@ -1498,29 +1502,16 @@ def Main_Program():
     if st.session_state['init_data']['status']==-1:
         st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
         
-        Set_Language(Text_Inicializations_14, List_Images_Source, index=0, key='Set_language', help=None)
+        Set_Language=st.selectbox(Text_Inicializations_14, ['English', 'Català'], index=0, key='Set_language', help=None)
         
-        col1, col2 = st.columns([1,5])
-
-        with col1:
-            Set_English=st.button('English', key='Set_english')
-        with col2:
-            Set_Catalan=st.button('Catalan', key='Set_catalan')
-              
-        if Set_English:
-            st.session_state['init_data']['language']='English'
-            Set_Catalan=False
-            st.experimental_rerun()
-            Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
-            if Confirm_Language:
-                st.session_state['init_data']['status']=0
+        if Set_Language!=st.session_state['init_data']['language']:
+            st.session_state['init_data']['language']=Set_Language
+            st.experimental_rerun()  
             
-        elif Set_Catalan:
-            st.session_state['init_data']['language']='Català'
+        Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
+        if Confirm_Language:
+            st.session_state['init_data']['status']=0
             st.experimental_rerun()
-            Confirm_Language=st.button("CONFIRMAR IDIOMA: "+st.session_state['init_data']['language'], key='Confirm_language')
-            if Confirm_Language:
-                st.session_state['init_data']['status']=0
 
 
     ## --------------- INITIALIZATIONS ---------------
