@@ -873,6 +873,7 @@ def Main_Program():
     ## --------------- LOAD DATA ---------------
     if 'init_data' not in st.session_state:
         Load_Data(20)
+    current_status=st.session_state['init_data']['status']
     
     ## --------------- SET TEXTS ---------------
     if st.session_state['init_data']['language']=='English':
@@ -1508,11 +1509,11 @@ def Main_Program():
             st.session_state['init_data']['language']=Set_Language
             st.session_state['init_data']['status']=0
             st.write(st.session_state['init_data']['status'])
-            st.experimental_rerun()  
+            # st.experimental_rerun()  
             
-        #Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
-        #if Confirm_Language:
-        #    st.write(st.session_state['init_data']['status'])
+        # Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
+        # if Confirm_Language:
+        #     st.write(st.session_state['init_data']['status'])
 
 
     ## --------------- INITIALIZATIONS ---------------
@@ -1743,6 +1744,12 @@ def Main_Program():
         ReLoad_Data(st.session_state['init_data']['N_images'])   
         
         
+    ## --------------- CHECK STATUS CHANGE ---------------
+
+    if current_status!=st.session_state['init_data']['status']:
+        st.experimental_rerun()
+
+    
 ## --------------- CACHE FUCTION ---------------
 @st.cache(ttl=12*3600)
 def CLIP_Loading():
