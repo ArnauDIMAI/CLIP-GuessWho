@@ -1545,7 +1545,7 @@ def Main_Program():
     ## --------------- INITIALIZATIONS ---------------
     if st.session_state['init_data']['status']==0:
         st.markdown(Text_Inicializations_1, unsafe_allow_html=True)
-        st.markdown(Text_Inicializations_1, unsafe_allow_html=True)
+        st.markdown(Text_Inicializations_9, unsafe_allow_html=True)
         
         ## Number of players
         N_Players=st.number_input(Text_Inicializations_2, min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
