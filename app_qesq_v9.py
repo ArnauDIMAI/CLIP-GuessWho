@@ -1025,6 +1025,8 @@ def Main_Program():
 
         Text_Inicializations_8=" (autoselect winners randomly)</h3>"
         
+        Text_Inicializations_9="<h4 style='text-align:left; float:left; color:gray; margin:0px;'>This application uses the CLIP algorithm, which allows matching images and text in English, due it was trained with many images obtained from Internet and their natural language descriptions. The funny thing is that CLIP is who answer the questions asked by the players, and therefore it is responsible for discarding the images after each question. Internally CLIP responds to the true or false query about the winner image, and then discards all the images that do not coincide with the answer of the winner one. CLIP is not an infallible algorithm and therefore may make mistakes when answering the questions. What we do know for sure is that CLIP will always answer the same if the same query is made, since it is a deterministic algorithm. Here is DAL-E, an application made with CLIP that allows you to create images from text (https://openai.com/blog/dall-e/).</h4>"
+	
         Text_Inicializations_10="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Language selected: "
         
         Text_Inicializations_11="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Number of images: "
@@ -1318,6 +1320,8 @@ def Main_Program():
         Text_Inicializations_7="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Jugadors: "
 
         Text_Inicializations_8=" (seleccionar les imatges guanyadores aleatòriament)</h3>"
+        
+        Text_Inicializations_9="<h4 style='text-align:left; float:left; color:gray; margin:0px;'>Aquesta aplicació utilitza l'algoritme CLIP, que permet combinar imatges i text en anglès, ja que s'ha entrenat amb moltes imatges obtingudes d'Internet i les seves descripcions en llenguatge natural. El més curiós és que CLIP és qui respon a les preguntes que fan els jugadors, i per tant s'encarrega de descartar les imatges després de cada pregunta. Internament, CLIP respon a la consulta vertadera o falsa sobre la imatge guanyadora, i després descarta totes les imatges que no coincideixen amb la resposta de la guanyadora. CLIP no és un algorisme infal·lible i, per tant, pot cometre errors en respondre les preguntes. El que sí que sabem del cert és que CLIP sempre respondrà igual si es fa la mateixa consulta, ja que és un algorisme determinista. Aquí teniu DAL-E, una aplicació feta amb CLIP que permet crear imatges a partir de text (https://openai.com/blog/dall-e/).</h4>"
                 
         Text_Inicializations_10="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Idioma seleccionat: "
         
@@ -1523,9 +1527,13 @@ def Main_Program():
     if st.session_state['init_data']['status']==-1:
         st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
         
-        Set_English=st.button("ENGLISH", key='Set_english')
-	
-        Set_Catala=st.button("CATALÀ", key='Set_catala')
+	col1, col2 = st.columns([1,5])
+
+	with col1:
+		Set_English=st.button("ENGLISH", key='Set_english')
+
+	with col2:
+		Set_Catala=st.button("CATALÀ", key='Set_catala')
 
         if Set_English:
             st.session_state['init_data']['language']='English'
@@ -1535,13 +1543,10 @@ def Main_Program():
             st.session_state['init_data']['language']='Català'
             st.session_state['init_data']['status']=0
             
-        # Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
-        # if Confirm_Language:
-        #     st.write(st.session_state['init_data']['status'])
-
 
     ## --------------- INITIALIZATIONS ---------------
     if st.session_state['init_data']['status']==0:
+        st.markdown(Text_Inicializations_1, unsafe_allow_html=True)
         st.markdown(Text_Inicializations_1, unsafe_allow_html=True)
         
         ## Number of players
