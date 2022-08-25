@@ -1036,6 +1036,10 @@ def Main_Program():
         Text_Inicializations_14="Languages list"
         
         Text_Inicializations_15="START GAME (press to start playing after select the game options)"
+	
+        Text_Inicializations_16=<h3 style='text-align:left; float:left; color:green; margin:0px;'>Description<h3>
+	
+        Text_Inicializations_17=<h3 style='text-align:left; float:left; color:green; margin:0px;'>Let's go to play<h3>
         
         
         Text_Language_1="<h2 style='text-align:left; float:left; color:black; margin:0px;'>Select a '.zip' file with the images to play in '.jpg' or '.png' format.</h2>"
@@ -1334,6 +1338,10 @@ def Main_Program():
         Text_Inicializations_14="Llista d'idiomes"
         
         Text_Inicializations_15="COMENÇAR EL JOC (prem per iniciar el joc després de triar les opcions)"
+	
+        Text_Inicializations_16=<h3 style='text-align:left; float:left; color:green; margin:0px;'>Descripció<h3>
+	
+        Text_Inicializations_17=<h3 style='text-align:left; float:left; color:green; margin:0px;'>Anem a jugar<h3>
         
         
         Text_Language_1="<h2 style='text-align:left; float:left; color:black; margin:0px;'>Selecciona un arxiu '.zip' amb les imatges a jugar en format '.jpg' o '.png'.</h2>"
@@ -1545,7 +1553,9 @@ def Main_Program():
     ## --------------- INITIALIZATIONS ---------------
     if st.session_state['init_data']['status']==0:
         st.markdown(Text_Inicializations_9, unsafe_allow_html=True)
+        st.markdown(Text_Inicializations_16, unsafe_allow_html=True)
         st.markdown(Text_Inicializations_1, unsafe_allow_html=True)
+        st.markdown(Text_Inicializations_17, unsafe_allow_html=True)
 
         ## Number of players
         N_Players=st.number_input(Text_Inicializations_2, min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
