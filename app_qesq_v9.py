@@ -1776,7 +1776,6 @@ def Main_Program():
     if current_status!=st.session_state['init_data']['status'] and (not st.session_state['init_data']['finished_game']) and current_status!=st.session_state['init_data']['status']!=-1:
         st.experimental_rerun()
 
-
 ## --------------- START PRGRAM ---------------
 Main_Program()
 
