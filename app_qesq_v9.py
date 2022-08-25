@@ -1537,11 +1537,11 @@ def Main_Program():
             st.session_state['init_data']['language']='English'
             st.session_state['init_data']['status']=0
 
-        if Set_Catala:
+    if Set_Catala:
             st.session_state['init_data']['language']='Català'
             st.session_state['init_data']['status']=0
-            
-
+	
+	  
     ## --------------- INITIALIZATIONS ---------------
     if st.session_state['init_data']['status']==0:
         st.markdown(Text_Inicializations_1, unsafe_allow_html=True)
