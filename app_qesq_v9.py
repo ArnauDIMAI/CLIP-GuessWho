@@ -1037,9 +1037,9 @@ def Main_Program():
         
         Text_Inicializations_15="START GAME (press to start playing after select the game options)"
 	
-        Text_Inicializations_16="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Description<h3>"
+        Text_Inicializations_16="<h3 style='text-align:left; float:left; color:blue; margin:0px;'>Description<h3>"
 	
-        Text_Inicializations_17="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Let's go to play<h3>"
+        Text_Inicializations_17="<h3 style='text-align:left; float:left; color:blue; margin:0px;'>Let's go to play<h3>"
         
         
         Text_Language_1="<h2 style='text-align:left; float:left; color:black; margin:0px;'>Select a '.zip' file with the images to play in '.jpg' or '.png' format.</h2>"
@@ -1339,9 +1339,9 @@ def Main_Program():
         
         Text_Inicializations_15="COMENÇAR EL JOC (prem per iniciar el joc després de triar les opcions)"
 	
-        Text_Inicializations_16="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Descripció<h3>"
+        Text_Inicializations_16="<h3 style='text-align:left; float:left; color:blue; margin:0px;'>Descripció<h3>"
 	
-        Text_Inicializations_17="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Anem a jugar<h3>"
+        Text_Inicializations_17="<h3 style='text-align:left; float:left; color:blue; margin:0px;'>Anem a jugar<h3>"
         
         
         Text_Language_1="<h2 style='text-align:left; float:left; color:black; margin:0px;'>Selecciona un arxiu '.zip' amb les imatges a jugar en format '.jpg' o '.png'.</h2>"
