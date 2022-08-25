@@ -1523,13 +1523,17 @@ def Main_Program():
     if st.session_state['init_data']['status']==-1:
         st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
         
-        Set_Language=st.selectbox(Text_Inicializations_14, ['...','English', 'Català'], index=0, key='Set_language', help=None)
+        Set_English=st.button("ENGLISH", key='Set_english')
+	
+        Set_Catala=st.button("CATALÀ", key='Set_catala')
 
-        if Set_Language!='...':
-            st.session_state['init_data']['language']=Set_Language
+        if Set_English:
+            st.session_state['init_data']['language']='English'
             st.session_state['init_data']['status']=0
-            st.write(st.session_state['init_data']['status'])
-            # st.experimental_rerun()  
+
+        if Set_Catala:
+            st.session_state['init_data']['language']='Català'
+            st.session_state['init_data']['status']=0
             
         # Confirm_Language=st.button("CONFIRM LANGUAGE: "+st.session_state['init_data']['language'], key='Confirm_language')
         # if Confirm_Language:
@@ -1766,7 +1770,7 @@ def Main_Program():
         
     ## --------------- CHECK STATUS CHANGE ---------------
 
-    if current_status!=st.session_state['init_data']['status'] and not st.session_state['init_data']['finished_game']:
+    if current_status!=st.session_state['init_data']['status'] and (not st.session_state['init_data']['finished_game']) and current_status!=st.session_state['init_data']['status']!=-1:
         st.experimental_rerun()
 
 
