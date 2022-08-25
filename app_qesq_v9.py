@@ -1528,10 +1528,10 @@ def Main_Program():
             st.markdown(Text_Inicializations_12, unsafe_allow_html=True)
             col1, col2 = st.columns([1,5])
             with col1:
-		Set_English=st.button("ENGLISH", key='Set_english')
+                Set_English=st.button("ENGLISH", key='Set_english')
 
             with col2:
-		Set_Catala=st.button("CATALÀ", key='Set_catala')
+                Set_Catala=st.button("CATALÀ", key='Set_catala')
 
     if Set_English:
             st.session_state['init_data']['language']='English'
