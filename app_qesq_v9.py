@@ -1533,13 +1533,13 @@ def Main_Program():
             with col2:
                 Set_Catala=st.button("CATALÀ", key='Set_catala')
 
-    if Set_English:
-            st.session_state['init_data']['language']='English'
-            st.session_state['init_data']['status']=0
+            if Set_English:
+                st.session_state['init_data']['language']='English'
+                st.session_state['init_data']['status']=0
 
-    if Set_Catala:
-            st.session_state['init_data']['language']='Català'
-            st.session_state['init_data']['status']=0
+            if Set_Catala:
+                st.session_state['init_data']['language']='Català'
+                st.session_state['init_data']['status']=0
 	
 	  
     ## --------------- INITIALIZATIONS ---------------
