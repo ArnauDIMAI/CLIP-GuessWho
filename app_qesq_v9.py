@@ -1231,7 +1231,7 @@ def Main_Program():
 
         Text_Show_Elements_5="</h3>"
 
-        Text_Show_Elements_6='USAR AQUESTA PREGUNTA'
+        Text_Show_Elements_6='FER AQUESTA PREGUNTA'
 
         Text_Show_Elements_8="Escriu la teva consulta en anglès i prem el botó.</h3>"
 
@@ -1239,7 +1239,7 @@ def Main_Program():
 
         Text_Show_Elements_11="Current Query: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"
 
-        Text_Show_Elements_13="USAR UNA CONSULTA"
+        Text_Show_Elements_13="FER AQUESTA CONSULTA"
 
         Text_Show_Elements_14="<h3 style='text-align:left; float:left; color:red; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"
 
@@ -1255,7 +1255,7 @@ def Main_Program():
 
         Text_Show_Elements_22=" vs "
 
-        Text_Show_Elements_24='USAR DOBLE CONSULTA'
+        Text_Show_Elements_24='FER AQUESTA DOBLE CONSULTA'
 
         Text_Show_Elements_26="Les teves dos consultes han de ser diferents.</h3>"
 
