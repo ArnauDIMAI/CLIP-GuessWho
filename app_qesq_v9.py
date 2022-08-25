@@ -96,9 +96,6 @@ def Predict_bald():
 def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_images, Img_discarded,Text_show_final_results_1,Text_show_final_results_2,Text_show_final_results_3,Text_show_final_results_4):
     ## --------------- APPLY DISCARDING ---------------
     
-            
-    
-    
     if st.session_state['init_data']['show_results']:        
         st.session_state['init_data']['previous_discarding_images_number']=N_img
         Image_discarding()
@@ -126,8 +123,23 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_ima
             Finsih_Game = st.button(Text_show_final_results_4, key='Finsih_Game')
     return Current_award
 
-def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_show_elements_1,Text_show_elements_2,Text_show_elements_3,Text_show_elements_4,Text_show_elements_5,Text_show_elements_6,Text_show_elements_8,Text_show_elements_9,Text_show_elements_11,Text_show_elements_13,Text_show_elements_14,Text_show_elements_15,Text_show_elements_17,Text_show_elements_18,Text_show_elements_19,Text_show_elements_21,Text_show_elements_22,Text_show_elements_24,Text_show_elements_26,Text_show_elements_28,Text_show_elements_29,Text_show_elements_31,Text_show_elements_36,Text_show_elements_38,Text_finished_game_1,Text_finished_game_2,Text_finished_game_3,Text_finished_game_7,Text_finished_game_8,Text_finished_game_9,Text_show_results_1,Text_show_results_2,Text_show_results_4,Text_show_results_6,Text_show_results_8,Text_show_results_9,Text_show_results_13):
+def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_show_elements_1,Text_show_elements_2,Text_show_elements_3,Text_show_elements_4,Text_show_elements_5,Text_show_elements_6,Text_show_elements_8,Text_show_elements_9,Text_show_elements_11,Text_show_elements_13,Text_show_elements_14,Text_show_elements_15,Text_show_elements_17,Text_show_elements_18,Text_show_elements_19,Text_show_elements_21,Text_show_elements_22,Text_show_elements_24,Text_show_elements_26,Text_show_elements_28,Text_show_elements_29,Text_show_elements_31,Text_show_elements_36,Text_show_elements_38,Text_finished_game_1,Text_finished_game_2,Text_finished_game_3,Text_finished_game_4,Text_finished_game_7,Text_finished_game_8,Text_finished_game_9,Text_show_results_1,Text_show_results_2,Text_show_results_4,Text_show_results_6,Text_show_results_8,Text_show_results_9,Text_show_results_13):
 
+
+        Text_Finished_Game_1="<h1 style='text-align:left; color:black; margin:0px;'>¡¡¡ <span style='text-align:left; color:green; margin:0px;'>"
+
+        Text_Finished_Game_2="<span style='text-align:left; color:black; margin:0px;'>YOU WIN WITH <span style='text-align:left; color:green; margin:0px;'>"
+
+        Text_Finished_Game_3="<span style='text-align:left; color:black; margin:0px;'> POINT !!!</h1>"
+	
+        Text_Finished_Game_4="<span style='text-align:left; color:black; margin:0px;'> POINTS !!!</h1>"
+
+        Text_Finished_Game_7="<h2 style='text-align:left; float:left; color:gray; margin:0px;'>"
+
+        Text_Finished_Game_8="Select a type of Query to play.</h2>"
+
+        Text_Finished_Game_9="Ask a question from a list, create your query or select a winner:"	
+	
         ## Finished Game:
     if st.session_state['init_data']['finished_game']:
         st.session_state['init_data']['reload_game']=True
@@ -135,7 +147,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
         if Current_award==1 or Current_award==-1:
             st.markdown(Text_finished_game_1+Player_indicator+Text_finished_game_2+str(Current_award)+Text_finished_game_3, unsafe_allow_html=True)
         else:
-            st.markdown(Text_finished_game_1+Player_indicator+Text_finished_game_1+str(Current_award)+Text_finished_game_1, unsafe_allow_html=True)
+            st.markdown(Text_finished_game_1+Player_indicator+Text_finished_game_2+str(Current_award)+Text_Finished_Game_4, unsafe_allow_html=True)
     else:
     
         st.markdown(Text_finished_game_7+Player_indicator+Text_finished_game_8, unsafe_allow_html=True)
@@ -915,6 +927,8 @@ def Main_Program():
         Text_Finished_Game_2="<span style='text-align:left; color:black; margin:0px;'>YOU WIN WITH <span style='text-align:left; color:green; margin:0px;'>"
 
         Text_Finished_Game_3="<span style='text-align:left; color:black; margin:0px;'> POINT !!!</h1>"
+	
+        Text_Finished_Game_4="<span style='text-align:left; color:black; margin:0px;'> POINTS !!!</h1>"
 
         Text_Finished_Game_7="<h2 style='text-align:left; float:left; color:gray; margin:0px;'>"
 
@@ -1212,6 +1226,8 @@ def Main_Program():
         Text_Finished_Game_2="<span style='text-align:left; color:black; margin:0px;'>HAS GUANYAT AMB <span style='text-align:left; color:green; margin:0px;'>"
 
         Text_Finished_Game_3="<span style='text-align:left; color:black; margin:0px;'> PUNTS !!!</h1>"
+	
+        Text_Finished_Game_4="<span style='text-align:left; color:black; margin:0px;'> PUNTS !!!</h1>"
 
         Text_Finished_Game_7="<h2 style='text-align:left; float:left; color:gray; margin:0px;'>"
 
@@ -1725,7 +1741,7 @@ def Main_Program():
         
     ## 2 PLAYER GAME - PLAYER 1 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==131:
-        Ask_Question(Text_Ask_Question_1, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
+        Ask_Question(Text_Ask_Question_1, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,ç,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
     
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
