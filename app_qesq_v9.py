@@ -300,7 +300,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,List_i
                                                                         'A picture of a person with glasses',
                                                                         'A picture of a person with sunglasses',
                                                                         'A picture of a person']
-                            st.session_state['init_data']['function_predict']=Predict_all_vs_last']
+                            st.session_state['init_data']['function_predict']=Predict_all_vs_last 
 				
                         else:
                             st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index']],
