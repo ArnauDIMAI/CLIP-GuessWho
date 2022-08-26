@@ -1037,7 +1037,7 @@ def Main_Program():
         
         Text_Inicializations_15="START GAME (press to start playing after select the game options)"
 	
-        Text_Inicializations_16="<h3 style='text-align:left; float:left; color:blue; margin:0px;'>Description<h3>"
+        Text_Inicializations_16="<p></p><hr><h3 style='text-align:left; float:left; color:blue; margin:0px;'>Description<h3>"
 	
         Text_Inicializations_17="<p></p><hr><h3 style='text-align:left; float:left; color:blue; margin:0px;'>Let's go to play<h3>"
         
@@ -1319,7 +1319,7 @@ def Main_Program():
 
         Text_Inicializations_5="<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Tria el número d'imatges a fer servir:</h2>"
 
-        Text_Inicializations_6="<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>Opcions seleccionades:</h2>"
+        Text_Inicializations_6="<p></p><hr><h3 style='text-align:left; float:left; color:blue; margin:0px;'>Opcions seleccionades:</h2>"
 
         Text_Inicializations_7="<h3 style='text-align:left; float:left; color:green; margin:0px;'>Jugadors: "
 
@@ -1339,7 +1339,7 @@ def Main_Program():
         
         Text_Inicializations_15="COMENÇAR EL JOC (prem per iniciar el joc després de triar les opcions)"
 	
-        Text_Inicializations_16="<h3 style='text-align:left; float:left; color:blue; margin:0px;'>Descripció<h3>"
+        Text_Inicializations_16="<p></p><hr><h3 style='text-align:left; float:left; color:blue; margin:0px;'>Descripció<h3>"
 	
         Text_Inicializations_17="<p></p><hr><h3 style='text-align:left; float:left; color:blue; margin:0px;'>Anem a jugar<h3>"
         
@@ -1730,17 +1730,17 @@ def Main_Program():
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==31: 
-        Ask_Question(Text_Ask_Question_0, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
+        Ask_Question(Text_Ask_Question_0, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_finished_game_4,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
                 
         
     ## 2 PLAYER GAME - PLAYER 1 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==131:
-        Ask_Question(Text_Ask_Question_1, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,ç,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
+        Ask_Question(Text_Ask_Question_1, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_finished_game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_finished_game_4,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
     
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==132:    
-        Ask_Question(Text_Ask_Question_2, st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
+        Ask_Question(Text_Ask_Question_2, st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_finished_game_4,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
 
 
 	    ## --------------- CALCULATE RESULTS ---------------
