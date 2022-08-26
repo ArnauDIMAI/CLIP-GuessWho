@@ -700,10 +700,13 @@ def Load_Data(N):
         'award1':100,
         'award2':100,
         'N_images':N,
+        'N_images_init':N,
         'n_images':N,
         'n_images2':N,
         'N_players':1,
+        'N_players_init':1,
         'Selected_Images_Source':'Use Celeba dataset',
+        'Selected_Images_Source_init':'Use Celeba dataset',
         'zip_file':'guess_who_images.zip',
         'previous_zip_file':'guess_who_images.zip',
         'special_images_names':False,
@@ -790,14 +793,16 @@ def Load_Data(N):
         'image_current_predictions':np.zeros((N))+2}
 
 
-def ReLoad_Data(N):
+def ReLoad_Data():
     st.session_state['init_data']['status']=-1
     st.session_state['init_data']['award1']=100
     st.session_state['init_data']['award2']=100
-    st.session_state['init_data']['N_images']=N
-    st.session_state['init_data']['n_images']=N
-    st.session_state['init_data']['n_images2']=N
+    st.session_state['init_data']['N_images_init']=st.session_state['init_data']['N_images']
+    st.session_state['init_data']['n_images']=st.session_state['init_data']['N_images']
+    st.session_state['init_data']['n_images2']=st.session_state['init_data']['N_images']
+    st.session_state['init_data']['N_players_init']=st.session_state['init_data']['N_players']
     # st.session_state['init_data']['Selected_Images_Source']='Use Celeba dataset'
+    st.session_state['init_data']['Selected_Images_Source_init']=st.session_state['init_data']['Selected_Images_Source']
     # st.session_state['init_data']['zip_file']='guess_who_images.zip'
     # st.session_state['init_data']['previous_zip_file']='guess_who_images.zip'
     # st.session_state['init_data']['special_images_names']=False
@@ -1558,7 +1563,7 @@ def Main_Program():
         st.markdown(Text_Inicializations_1, unsafe_allow_html=True)
 
         ## Number of players
-        N_Players=st.number_input(Text_Inicializations_2, min_value=1, max_value=2, value=1, step=1, format='%d', key='N_Players', help=None)
+        N_Players=st.number_input(Text_Inicializations_2, min_value=1, max_value=2, value=st.session_state['init_data']['N_players_init'], step=1, format='%d', key='N_Players', help=None)
         
         if N_Players==2:
             Winner_selection_random=st.checkbox(Text_Inicializations_3, value=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
@@ -1566,12 +1571,12 @@ def Main_Program():
             Winner_selection_random=False
             
         ## Number of images
-        N_Images=st.number_input(Text_Inicializations_4, min_value=5, max_value=24, value=20, step=1, format='%d', key='N_images', help=None)
+        N_Images=st.number_input(Text_Inicializations_4, min_value=5, max_value=24, value=st.session_state['init_data']['N_images_init'], step=1, format='%d', key='N_images', help=None)
 
         ## Type of images
         st.markdown(Text_Inicializations_5, unsafe_allow_html=True)
-        Selected_Images_Source=st.selectbox(Tex_Images_Source_1, List_Images_Source, index=0, key='Selected_Images_Source', help=None)
-  						  
+        Selected_Images_Source=st.selectbox(Tex_Images_Source_1, List_Images_Source, index=List_Images_Source.index(st.session_state['init_data']['Selected_Images_Source_init']), key='Selected_Images_Source', help=None)
+  						 
         ## Current options selection                                           
         st.markdown(Text_Inicializations_6, unsafe_allow_html=True)
         if Winner_selection_random:
@@ -1777,7 +1782,7 @@ def Main_Program():
 
     ## --------------- RELOAD GAME ---------------
     if st.session_state['init_data']['reload_game']:
-        ReLoad_Data(st.session_state['init_data']['N_images'])   
+        ReLoad_Data()   
         
         
     ## --------------- CHECK STATUS CHANGE ---------------
