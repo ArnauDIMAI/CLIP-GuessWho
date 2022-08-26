@@ -67,16 +67,13 @@ def Predict_0_vs_all():
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
   
 def Predict_all_vs_last():
-    st.write('All:')
-    n_max=len(st.session_state['init_data']['image_current_probs'][:,0])-1
+    n_max=len(st.session_state['init_data']['image_current_probs'][0,:])-1
     st.session_state['init_data']['image_current_predictions']=[]
     for i in range(n_max+1):
         if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==n_max:
             st.session_state['init_data']['image_current_predictions'].append(0)        
         else:
             st.session_state['init_data']['image_current_predictions'].append(1)
-        st.write(st.session_state['init_data']['image_current_probs'])
-        st.write(st.session_state['init_data']['image_current_predictions'])
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])   
 def Predict_bald():
