@@ -123,7 +123,7 @@ def Final_Results(N_img, Current_award, Player_indicator, Win_index, Current_ima
             Finsih_Game = st.button(Text_show_final_results_4, key='Finsih_Game')
     return Current_award
 
-def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_show_elements_1,Text_show_elements_2,Text_show_elements_3,Text_show_elements_4,Text_show_elements_5,Text_show_elements_6,Text_show_elements_8,Text_show_elements_9,Text_show_elements_11,Text_show_elements_13,Text_show_elements_14,Text_show_elements_15,Text_show_elements_17,Text_show_elements_18,Text_show_elements_19,Text_show_elements_21,Text_show_elements_22,Text_show_elements_24,Text_show_elements_26,Text_show_elements_28,Text_show_elements_29,Text_show_elements_31,Text_show_elements_36,Text_show_elements_38,Text_finished_game_1,Text_finished_game_2,Text_finished_game_3,Text_finished_game_7,Text_finished_game_8,Text_finished_game_9,Text_show_results_1,Text_show_results_2,Text_show_results_4,Text_show_results_6,Text_show_results_8,Text_show_results_9,Text_show_results_13):
+def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,List_images_source,Text_show_elements_1,Text_show_elements_2,Text_show_elements_3,Text_show_elements_4,Text_show_elements_5,Text_show_elements_6,Text_show_elements_8,Text_show_elements_9,Text_show_elements_11,Text_show_elements_13,Text_show_elements_14,Text_show_elements_15,Text_show_elements_17,Text_show_elements_18,Text_show_elements_19,Text_show_elements_21,Text_show_elements_22,Text_show_elements_24,Text_show_elements_26,Text_show_elements_28,Text_show_elements_29,Text_show_elements_31,Text_show_elements_36,Text_show_elements_38,Text_finished_game_1,Text_finished_game_2,Text_finished_game_3,Text_finished_game_7,Text_finished_game_8,Text_finished_game_9,Text_show_results_1,Text_show_results_2,Text_show_results_4,Text_show_results_6,Text_show_results_8,Text_show_results_9,Text_show_results_13):
         ## Finished Game:
     if st.session_state['init_data']['finished_game']:
         st.session_state['init_data']['reload_game']=True
@@ -170,7 +170,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                 
             else:
                 if Check_Question:
-                    if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[1]:
+                    if st.session_state['init_data']['Selected_Images_Source']==List_images_source[1]:
                         if st.session_state['init_data']['questions_index']==7:
                             st.session_state['init_data']['current_querys']=["An illustration of a male person's face","An illustration of a female person's face",
                                                                         "An illustration of a bald man's face","An illustration of a haired person's face", 
@@ -1097,7 +1097,7 @@ def Main_Program():
         Text_Calculate_Results_4='NEXT QUERY'
         
                         
-        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+        if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[3]:
             st.session_state['init_data']['feature_questions']=["Are you a MAN?", "Are you a WOMAN?", "Are you an ATTRACTIVE person?", "Are you an CHUBBY person?", "Are you YOUNG?",
                         "Are you a person with RECEDING HAIRLINES?", "Are you SMILING?","Are you BALD?", 
                         "Do you have BLACK HAIR?", "Do you have BROWN HAIR?", "Do you have YELLOW HAIR?", "Do you have ORANGE HAIR?",
@@ -1399,7 +1399,7 @@ def Main_Program():
         Text_Calculate_Results_4='SEGÜENT CONSULTA'
                      
                      
-        if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
+        if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[3]:
             st.session_state['init_data']['feature_questions']=['Ets un HOME?', 'Ets una DONA?', 'Ets una persona ATRACTIVA?', 'Ets una persona GRASSONETA ?', 'Ets JOVE?',
                         "Ets una persona que PERD EL CABELL?", "SOMRIUS?", "Ets CALB?",
                         'Tens els CABELLS NEGRE?', 'Tens els CABELLS MARRONS?', 'Tens els CABELLS ROSSOS?', 'Tens els CABELLS TARONJA?',
@@ -1729,17 +1729,17 @@ def Main_Program():
 
     ## 1 PLAYER GAME *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==31: 
-        Ask_Question(Text_Ask_Question_0, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
+        Ask_Question(Text_Ask_Question_0, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,List_Images_Source,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
                 
         
     ## 2 PLAYER GAME - PLAYER 1 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==131:
-        Ask_Question(Text_Ask_Question_1, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_finished_game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
+        Ask_Question(Text_Ask_Question_1, st.session_state['init_data']['current_winner_index'], st.session_state['init_data']['award1'],List_Query_Type,List_Images_SourceText_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_finished_game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
     
     
     ## 2 PLAYER GAME - PLAYER 2 *********************************************************************************************************************************************************
     if st.session_state['init_data']['status']==132:    
-        Ask_Question(Text_Ask_Question_2, st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'],List_Query_Type,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
+        Ask_Question(Text_Ask_Question_2, st.session_state['init_data']['current_winner_index2'], st.session_state['init_data']['award2'],List_Query_Type,List_Images_Source,Text_Show_Elements_1, Text_Show_Elements_2,Text_Show_Elements_3,Text_Show_Elements_4,Text_Show_Elements_5,Text_Show_Elements_6,Text_Show_Elements_8,Text_Show_Elements_9,Text_Show_Elements_11,Text_Show_Elements_13,Text_Show_Elements_14,Text_Show_Elements_15,Text_Show_Elements_17,Text_Show_Elements_18,Text_Show_Elements_19,Text_Show_Elements_21,Text_Show_Elements_22,Text_Show_Elements_24,Text_Show_Elements_26,Text_Show_Elements_28,Text_Show_Elements_29,Text_Show_Elements_31,Text_Show_Elements_36,Text_Show_Elements_38,Text_Finished_Game_1,Text_Finished_Game_2,Text_Finished_Game_3,Text_Finished_Game_7,Text_Finished_Game_8,Text_Finished_Game_9,Text_Show_Results_1,Text_Show_Results_2,Text_Show_Results_4,Text_Show_Results_6,Text_Show_Results_8,Text_Show_Results_9,Text_Show_Results_13)
 
 
 	    ## --------------- CALCULATE RESULTS ---------------
