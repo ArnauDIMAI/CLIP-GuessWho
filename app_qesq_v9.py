@@ -170,14 +170,14 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                 
             else:
                 if Check_Question:
-                    if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
-                        if Selected_Question=='Are you bald?':
+                    if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[1]:
+                        if st.session_state['init_data']['questions_index']==7:
                             st.session_state['init_data']['current_querys']=["An illustration of a male person's face","An illustration of a female person's face",
                                                                         "An illustration of a bald man's face","An illustration of a haired person's face", 
                                                                         "An illustration of a bald person's face","An illustration of a person's face"]
                             st.session_state['init_data']['function_predict']=Predict_bald
                             
-                        elif Selected_Question=='Do you have BLACK HAIR?':
+                        elif st.session_state['init_data']['questions_index']==8:
                             st.session_state['init_data']['current_querys']=["An illustration of a black haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a neon tangerine haired person's face",
@@ -185,15 +185,23 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                                                                         "An illustration of a porcelain white haired person's face"]
                             st.session_state['init_data']['function_predict']=Predict_0_vs_all
                                 
-                        elif Selected_Question=='Do you have BROWN HAIR?':
+                        elif st.session_state['init_data']['questions_index']==9:
                             st.session_state['init_data']['current_querys']=["An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a black haired person's face",
                                                                         "An illustration of a neon tangerine haired person's face",
                                                                         "An illustration of a luminous blonde haired person's face",
                                                                         "An illustration of a porcelain white haired person's face"]
-                            st.session_state['init_data']['function_predict']=Predict_0_vs_all                            
+                            st.session_state['init_data']['function_predict']=Predict_0_vs_all      
                                                      
-                        elif Selected_Question=='Do you have ORANGE HAIR?':
+                        elif st.session_state['init_data']['questions_index']==10:
+                            st.session_state['init_data']['current_querys']=["An illustration of a luminous blonde haired person's face",
+                                                                            "An illustration of a chocolate brown haired person's face",
+                                                                            "An illustration of a neon tangerine haired person's face",
+                                                                            "An illustration of a black haired person's face",
+                                                                            "An illustration of a porcelain white haired person's face"]
+                            st.session_state['init_data']['function_predict']=Predict_0_vs_all                       
+                                                     
+                        elif st.session_state['init_data']['questions_index']==11:
                             st.session_state['init_data']['current_querys']=["An illustration of a neon tangerine haired person's face",
                                                                             "An illustration of a chocolate brown haired person's face",
                                                                             "An illustration of a black haired person's face",
@@ -201,15 +209,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                                                                             "An illustration of a porcelain white haired person's face"]
                             st.session_state['init_data']['function_predict']=Predict_0_vs_all  
                                                      
-                        elif Selected_Question=='Do you have YELLOW HAIR?':
-                            st.session_state['init_data']['current_querys']=["An illustration of a luminous blonde haired person's face",
-                                                                            "An illustration of a chocolate brown haired person's face",
-                                                                            "An illustration of a neon tangerine haired person's face",
-                                                                            "An illustration of a black haired person's face",
-                                                                            "An illustration of a porcelain white haired person's face"]
-                            st.session_state['init_data']['function_predict']=Predict_0_vs_all 
-                                                     
-                        elif Selected_Question=='Do you have WHITE HAIR?':
+                        elif st.session_state['init_data']['questions_index']==12:
                             st.session_state['init_data']['current_querys']=["An illustration of a porcelain white haired person's face",
                                                                             "An illustration of a chocolate brown haired person's face",
                                                                             "An illustration of a neon tangerine haired person's face",
@@ -217,7 +217,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                                                                             "An illustration of a black haired person's face"]
                             st.session_state['init_data']['function_predict']=Predict_0_vs_all                         
 
-                        elif Selected_Question=='Do you wear EYEGLASSES?':
+                        elif st.session_state['init_data']['questions_index']==20:
                             st.session_state['init_data']['current_querys']=["An illustration of a person's face with eyeglasses",
                                                                         "An illustration of a person's face with glasses",
                                                                         "An illustration of a person's face with sunglasses",
@@ -231,13 +231,13 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                     
                     else:
                     
-                        if Selected_Question=='Are you bald?':
+                        if st.session_state['init_data']['questions_index']==7:
                             st.session_state['init_data']['current_querys']=['A picture of a male person','A picture of a female person',
                                                                             'A picture of a bald man','A picture of a haired man', 
                                                                             'A picture of a bald person','A picture of a person']
                             st.session_state['init_data']['function_predict']=Predict_bald
                             
-                        elif Selected_Question=='Do you have BLACK HAIR?':
+                        elif st.session_state['init_data']['questions_index']==8:
                             st.session_state['init_data']['current_querys']=["A picture of a black haired person",
                                                                             "A picture of a tawny haired person",
                                                                             "A picture of a blond haired person",
@@ -248,7 +248,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                                                                             "A picture of a bald-head person"]
                             st.session_state['init_data']['function_predict']=Predict_0_vs_all
                                 
-                        elif Selected_Question=='Do you have BROWN HAIR?':
+                        elif st.session_state['init_data']['questions_index']==9:
                             st.session_state['init_data']['current_querys']=["A picture of a tawny haired person",
                                                                             "A picture of a black haired person",
                                                                             "A picture of a blond haired person",
@@ -260,7 +260,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                             st.session_state['init_data']['function_predict']=Predict_0_vs_all                            
                         
 
-                        elif Selected_Question=='Do you have BLOND HAIR?':
+                        elif st.session_state['init_data']['questions_index']==10:
                             st.session_state['init_data']['current_querys']=['A picture of a blond haired person',
                                                                         'A picture of a tawny haired person',
                                                                         'A picture of a black haired person',
@@ -271,7 +271,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                                                                         'A picture of a bald-head person']
                             st.session_state['init_data']['function_predict']=Predict_0_vs_all
                             
-                        elif Selected_Question=='Do you have RED HAIR?':
+                        elif st.session_state['init_data']['questions_index']==11:
                             st.session_state['init_data']['current_querys']=['A picture of a red haired person',
                                                                         'A picture of a tawny haired person',
                                                                         'A picture of a blond haired person',
@@ -282,7 +282,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                                                                         'A picture of a bald-head person']
                             st.session_state['init_data']['function_predict']=Predict_0_vs_all
                             
-                        elif Selected_Question=='Do you have GRAY HAIR?':
+                        elif st.session_state['init_data']['questions_index']==12:
                             st.session_state['init_data']['current_querys']=['A picture of a gray haired person',
                                                                         'A picture of a tawny haired person',
                                                                         'A picture of a blond haired person',
@@ -293,7 +293,7 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,Text_s
                                                                         'A picture of a bald-head person']
                             st.session_state['init_data']['function_predict']=Predict_0_vs_all
                             
-                        elif Selected_Question=='Do you wear EYEGLASSES?':
+                        elif st.session_state['init_data']['questions_index']==20:
                             st.session_state['init_data']['current_querys']=['A picture of a person with eyeglasses',
                                                                         'A picture of a person with glasses',
                                                                         'A picture of a person with sunglasses',
@@ -1100,7 +1100,7 @@ def Main_Program():
         if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
             st.session_state['init_data']['feature_questions']=["Are you a MAN?", "Are you a WOMAN?", "Are you an ATTRACTIVE person?", "Are you an CHUBBY person?", "Are you YOUNG?",
                         "Are you a person with RECEDING HAIRLINES?", "Are you SMILING?","Are you BALD?", 
-                        "Do you have BLACK HAIR?", "Do you have BROWN HAIR?", "Do you have ORANGE HAIR?", "Do you have YELLOW HAIR?",
+                        "Do you have BLACK HAIR?", "Do you have BROWN HAIR?", "Do you have YELLOW HAIR?", "Do you have ORANGE HAIR?",
                         "Do you have WHITE HAIR?", "Do you have STRAIGHT HAIR?", "Do you have WAVY HAIR?",
                         "Do you have a BEARD?", "Do you have a MUSTACHE?", "Do you have SIDEBURNS?",
                         "Do you have a GOATEE?", "Do you wear HEAVY MAKEUP?", "Do you wear EYEGLASSES?",
@@ -1116,7 +1116,7 @@ def Main_Program():
         
             st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
                 "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
-                "An illustration of a person's face with black hair", "An illustration of a person's face with brown hair", "An illustration of a person's face with orange hair", "An illustration of a person's face with yellow hair", 
+                "An illustration of a person's face with black hair", "An illustration of a person's face with brown hair", "An illustration of a person's face with yellow hair", "An illustration of a person's face with orange hair",
                 "An illustration of a person's face with white hair", "An illustration of a person's face with straight hair", "An illustration of a person's face with wavy hair", 
                 "A picture of a unshaved person", "A picture of a mustachioed person", "An illustration of a person's face with bushy sideburns", 
                 "An illustration of a person's face with goatee", "An illustration of a person's face with heavy makeup", "An illustration of a person's face with eyeglasses",             
@@ -1402,7 +1402,7 @@ def Main_Program():
         if st.session_state['init_data']['Selected_Images_Source']=='Use Original "Guess Who" game images':
             st.session_state['init_data']['feature_questions']=['Ets un HOME?', 'Ets una DONA?', 'Ets una persona ATRACTIVA?', 'Ets una persona GRASSONETA ?', 'Ets JOVE?',
                         "Ets una persona que PERD EL CABELL?", "SOMRIUS?", "Ets CALB?",
-                        'Tens els CABELLS NEGRE?', 'Tens els CABELLS MARRONS?', 'Tens els CABELLS TARONJA?', 'Tens els CABELLS ROSSOS?',
+                        'Tens els CABELLS NEGRE?', 'Tens els CABELLS MARRONS?', 'Tens els CABELLS ROSSOS?', 'Tens els CABELLS TARONJA?',
                         'Tens els els CABELLS BLANCS?', 'Tens els CABELLS LLISOS?', 'Tens els CABELLS ONDULATS?',
                         'Tens BARBA?', 'Tens BIGOTI?', 'Tens PATILLES?',
                         'Tens una PERILLA?', 'Portes MAQUILLATGE?', 'Portes ULLERES?',
@@ -1418,7 +1418,7 @@ def Main_Program():
         
             st.session_state['init_data']['querys_list_yes']=["A picture of a male person", "A picture of a female person", "A picture of an attractive person", "A picture of a fat person", "A picture of a young person", 
                 "A picture of a receding-hairline person  ", "A picture of a smily person", "A picture of a bald person",
-                "An illustration of a person's face with black hair", "An illustration of a person's face with brown hair", "An illustration of a person's face with orange hair", "An illustration of a person's face with yellow hair", 
+                "An illustration of a person's face with black hair", "An illustration of a person's face with brown hair", "An illustration of a person's face with yellow hair",  "An illustration of a person's face with orange hair",
                 "An illustration of a person's face with white hair", "An illustration of a person's face with straight hair", "An illustration of a person's face with wavy hair", 
                 "A picture of a unshaved person", "A picture of a mustachioed person", "An illustration of a person's face with bushy sideburns", 
                 "An illustration of a person's face with goatee", "An illustration of a person's face with heavy makeup", "An illustration of a person's face with eyeglasses",             
@@ -1604,12 +1604,11 @@ def Main_Program():
             st.session_state['init_data']['player2_turn']=False
 
             ## Select zip file
-            Dataset_Index=List_Images_Source.index(st.session_state['init_data']['Selected_Images_Source'])
-            if Dataset_Index==0:
+            if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[0]:
                 st.session_state['init_data']['zip_file']='guess_who_images.zip'
-            elif Dataset_Index==1:
+            elif st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[1]:
                 st.session_state['init_data']['zip_file']='Original.zip'
-            elif Dataset_Index==2:
+            elif st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[2]:
                 st.session_state['init_data']['zip_file']='frifam.zip'
             else:
                 st.session_state['init_data']['zip_file']='Use images from specific path'
@@ -1617,7 +1616,7 @@ def Main_Program():
 
     ## --------------- IMAGE SELECTION ---------------
     if st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==101:
-        if st.session_state['init_data']['Selected_Images_Source']=='Use images from specific path':
+        if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[3]:
             ## Specific source text
             st.markdown(Text_Language_1, unsafe_allow_html=True)
                 
