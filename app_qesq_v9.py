@@ -67,6 +67,7 @@ def Predict_0_vs_all():
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
   
 def Predict_all_vs_last():
+    st.write('All:')
     n_max=len(st.session_state['init_data']['image_current_probs'][:,0])-1
     st.session_state['init_data']['image_current_predictions']=[]
     for i in range(n_max+1):
@@ -74,6 +75,8 @@ def Predict_all_vs_last():
             st.session_state['init_data']['image_current_predictions'].append(0)        
         else:
             st.session_state['init_data']['image_current_predictions'].append(1)
+        st.write(st.session_state['init_data']['image_current_probs'][i,:])
+        st.write(st.session_state['init_data']['image_current_predictions'][i,:])
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])   
 def Predict_bald():
@@ -297,8 +300,8 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,List_i
                                                                         'A picture of a person with glasses',
                                                                         'A picture of a person with sunglasses',
                                                                         'A picture of a person']
-                            st.session_state['init_data']['function_predict']=Predict_all_vs_last    
-                       
+                            st.session_state['init_data']['function_predict']=Predict_all_vs_last']
+				
                         else:
                             st.session_state['init_data']['current_querys']=[st.session_state['init_data']['querys_list_yes'][st.session_state['init_data']['questions_index']],
                                                                             st.session_state['init_data']['querys_list_no'][st.session_state['init_data']['questions_index']]]
