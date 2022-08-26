@@ -706,7 +706,7 @@ def Load_Data(N):
         'N_players':1,
         'N_players_init':1,
         'Selected_Images_Source':'Use Celeba dataset',
-        'Selected_Images_Source_init':'Use Celeba dataset',
+        'Selected_Images_Source_init':0,
         'zip_file':'guess_who_images.zip',
         'previous_zip_file':'guess_who_images.zip',
         'special_images_names':False,
@@ -802,7 +802,7 @@ def ReLoad_Data():
     st.session_state['init_data']['n_images2']=st.session_state['init_data']['N_images']
     st.session_state['init_data']['N_players_init']=st.session_state['init_data']['N_players']
     # st.session_state['init_data']['Selected_Images_Source']='Use Celeba dataset'
-    st.session_state['init_data']['Selected_Images_Source_init']=st.session_state['init_data']['Selected_Images_Source']
+    st.session_state['init_data']['Selected_Images_Source_init']=List_Image_Source.index(st.session_state['init_data']['Selected_Images_Source'])
     # st.session_state['init_data']['zip_file']='guess_who_images.zip'
     # st.session_state['init_data']['previous_zip_file']='guess_who_images.zip'
     # st.session_state['init_data']['special_images_names']=False
@@ -898,6 +898,7 @@ def Main_Program():
     
     ## --------------- SET TEXTS ---------------
     if st.session_state['init_data']['language']=='English':
+	
         List_Query_Type=['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner']
 
         List_Images_Source=['Use Celeba dataset','Use Original "Guess Who" game images', 'Use friends dataset', 'Use images from specific path']
@@ -1100,8 +1101,7 @@ def Main_Program():
         Text_Calculate_Results_3='NEXT PLAYER'
 
         Text_Calculate_Results_4='NEXT QUERY'
-        
-                        
+        	
         if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[1]:
             st.session_state['init_data']['feature_questions']=["Are you a MAN?", "Are you a WOMAN?", "Are you an ATTRACTIVE person?", "Are you an CHUBBY person?", "Are you YOUNG?",
                         "Are you a person with RECEDING HAIRLINES?", "Are you SMILING?","Are you BALD?", 
@@ -1575,7 +1575,7 @@ def Main_Program():
 
         ## Type of images
         st.markdown(Text_Inicializations_5, unsafe_allow_html=True)
-        Selected_Images_Source=st.selectbox(Tex_Images_Source_1, List_Images_Source, index=List_Images_Source.index(st.session_state['init_data']['Selected_Images_Source_init']), key='Selected_Images_Source', help=None)
+        Selected_Images_Source=st.selectbox(Tex_Images_Source_1, List_Images_Source, index=st.session_state['init_data']['Selected_Images_Source_init'], key='Selected_Images_Source', help=None)
   						 
         ## Current options selection                                           
         st.markdown(Text_Inicializations_6, unsafe_allow_html=True)
