@@ -75,8 +75,8 @@ def Predict_all_vs_last():
             st.session_state['init_data']['image_current_predictions'].append(0)        
         else:
             st.session_state['init_data']['image_current_predictions'].append(1)
-        st.write(st.session_state['init_data']['image_current_probs'][i,:])
-        st.write(st.session_state['init_data']['image_current_predictions'][i,:])
+        st.write(st.session_state['init_data']['image_current_probs'])
+        st.write(st.session_state['init_data']['image_current_predictions'])
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])   
 def Predict_bald():
