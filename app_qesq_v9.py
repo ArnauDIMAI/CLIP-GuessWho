@@ -177,7 +177,6 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,List_i
                                                                         "An illustration of a bald person's face","An illustration of a person's face"]
                             st.session_state['init_data']['function_predict']=Predict_bald
                             
-                        elif st.session_state['init_data']['questions_index']==8:
                             st.session_state['init_data']['current_querys']=["An illustration of a black haired person's face",
                                                                         "An illustration of a chocolate brown haired person's face",
                                                                         "An illustration of a neon tangerine haired person's face",
