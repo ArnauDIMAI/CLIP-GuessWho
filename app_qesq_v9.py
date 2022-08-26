@@ -1782,7 +1782,7 @@ def Main_Program():
 
     ## --------------- RELOAD GAME ---------------
     if st.session_state['init_data']['reload_game']:
-        ReLoad_Data(List_Image_Source)   
+        ReLoad_Data(List_Images_Source)   
         
         
     ## --------------- CHECK STATUS CHANGE ---------------
