@@ -864,7 +864,7 @@ def ReLoad_Data(List_image_source):
     # st.session_state['init_data']['user_input']='A picture of a person'
     # st.session_state['init_data']['user_input_querys1']='A picture of a person'
     # st.session_state['init_data']['user_input_querys2']='A picture of a person'
-    st.session_state['init_data']['image_current_probs']=np.zeros((N,2))
+    st.session_state['init_data']['image_current_probs']=np.zeros((st.session_state['init_data']['N_images'],2))
     st.session_state['init_data']['selected_winner']='Winner not selected'
     st.session_state['init_data']['selected_winner2']='Winner not selected'
     st.session_state['init_data']['reset_app']=False
@@ -877,8 +877,8 @@ def ReLoad_Data(List_image_source):
     st.session_state['init_data']['previous_discarding_images_number']=0
     st.session_state['init_data']['selected_winner_index']=0
     st.session_state['init_data']['selected_winner_index2']=0
-    st.session_state['init_data']['current_images_discarted']=np.zeros((N))
-    st.session_state['init_data']['current_images_discarted2']=np.zeros((N))
+    st.session_state['init_data']['current_images_discarted']=np.zeros((st.session_state['init_data']['N_images']))
+    st.session_state['init_data']['current_images_discarted2']=np.zeros((st.session_state['init_data']['N_images']))
     st.session_state['init_data']['current_winner_index']=0
     st.session_state['init_data']['current_winner_index2']=0
     st.session_state['init_data']['current_image_names']=[]
@@ -886,7 +886,7 @@ def ReLoad_Data(List_image_source):
     st.session_state['init_data']['image_current_paths']=[]
     st.session_state['init_data']['image_current_paths2']=[]
     st.session_state['init_data']['winner_options']=[]
-    st.session_state['init_data']['image_current_predictions']=np.zeros((N))+2
+    st.session_state['init_data']['image_current_predictions']=np.zeros((st.session_state['init_data']['N_images']))+2
 
 ## --------------- MAIN FUCTION ---------------
 def Main_Program():
