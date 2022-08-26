@@ -1097,7 +1097,7 @@ def Main_Program():
         Text_Calculate_Results_4='NEXT QUERY'
         
                         
-        if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[3]:
+        if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[1]:
             st.session_state['init_data']['feature_questions']=["Are you a MAN?", "Are you a WOMAN?", "Are you an ATTRACTIVE person?", "Are you an CHUBBY person?", "Are you YOUNG?",
                         "Are you a person with RECEDING HAIRLINES?", "Are you SMILING?","Are you BALD?", 
                         "Do you have BLACK HAIR?", "Do you have BROWN HAIR?", "Do you have YELLOW HAIR?", "Do you have ORANGE HAIR?",
@@ -1399,7 +1399,7 @@ def Main_Program():
         Text_Calculate_Results_4='SEGÜENT CONSULTA'
                      
                      
-        if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[3]:
+        if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[1]:
             st.session_state['init_data']['feature_questions']=['Ets un HOME?', 'Ets una DONA?', 'Ets una persona ATRACTIVA?', 'Ets una persona GRASSONETA ?', 'Ets JOVE?',
                         "Ets una persona que PERD EL CABELL?", "SOMRIUS?", "Ets CALB?",
                         'Tens els CABELLS NEGRE?', 'Tens els CABELLS MARRONS?', 'Tens els CABELLS ROSSOS?', 'Tens els CABELLS TARONJA?',
