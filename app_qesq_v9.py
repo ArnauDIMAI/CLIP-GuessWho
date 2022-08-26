@@ -796,9 +796,9 @@ def ReLoad_Data(List_image_source):
     st.session_state['init_data']['status']=-1
     st.session_state['init_data']['award1']=100
     st.session_state['init_data']['award2']=100
-    st.session_state['init_data']['N_images_init']=st.session_state['init_data']['N_images']
-    st.session_state['init_data']['n_images']=st.session_state['init_data']['N_images']
-    st.session_state['init_data']['n_images2']=st.session_state['init_data']['N_images']
+    st.session_state['init_data']['N_images_init']=st.session_state['init_data']['N_images']+1
+    st.session_state['init_data']['n_images']=st.session_state['init_data']['N_images_init']
+    st.session_state['init_data']['n_images2']=st.session_state['init_data']['N_images_init']
     st.session_state['init_data']['N_players_init']=st.session_state['init_data']['N_players']
     # st.session_state['init_data']['Selected_Images_Source']='Use Celeba dataset'
     st.session_state['init_data']['Selected_Images_Source_init']=List_image_source.index(st.session_state['init_data']['Selected_Images_Source'])
