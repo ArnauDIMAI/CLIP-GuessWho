@@ -793,7 +793,7 @@ def Load_Data(N):
         'image_current_predictions':np.zeros((N))+2}
 
 
-def ReLoad_Data():
+def ReLoad_Data(List_image_source):
     st.session_state['init_data']['status']=-1
     st.session_state['init_data']['award1']=100
     st.session_state['init_data']['award2']=100
@@ -802,7 +802,7 @@ def ReLoad_Data():
     st.session_state['init_data']['n_images2']=st.session_state['init_data']['N_images']
     st.session_state['init_data']['N_players_init']=st.session_state['init_data']['N_players']
     # st.session_state['init_data']['Selected_Images_Source']='Use Celeba dataset'
-    st.session_state['init_data']['Selected_Images_Source_init']=List_Image_Source.index(st.session_state['init_data']['Selected_Images_Source'])
+    st.session_state['init_data']['Selected_Images_Source_init']=List_image_source.index(st.session_state['init_data']['Selected_Images_Source'])
     # st.session_state['init_data']['zip_file']='guess_who_images.zip'
     # st.session_state['init_data']['previous_zip_file']='guess_who_images.zip'
     # st.session_state['init_data']['special_images_names']=False
@@ -1782,7 +1782,7 @@ def Main_Program():
 
     ## --------------- RELOAD GAME ---------------
     if st.session_state['init_data']['reload_game']:
-        ReLoad_Data()   
+        ReLoad_Data(List_Image_Source)   
         
         
     ## --------------- CHECK STATUS CHANGE ---------------
