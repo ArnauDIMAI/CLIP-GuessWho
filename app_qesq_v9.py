@@ -560,6 +560,9 @@ def Show_images():
     for current_index in range(n_img):
         if st.session_state['init_data']['show_results']:
             current_line_width=4
+            st.markdown(current_index, unsafe_allow_html=True)
+            st.markdown(winner_index, unsafe_allow_html=True)
+            st.markdown(st.session_state['init_data']['image_current_predictions'], unsafe_allow_html=True)
             if st.session_state['init_data']['image_current_predictions'][current_index]==st.session_state['init_data']['image_current_predictions'][winner_index]:
                 current_color=np.array([0,255,0])
             else:
