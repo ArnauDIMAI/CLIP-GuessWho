@@ -1321,7 +1321,7 @@ def Main_Program():
 
         Text_Inicializations_4="Tria el número d'imatges"
 
-        Text_Inicializations_5="<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Tria el número d'imatges a fer servir:</h2>"
+        Text_Inicializations_5="<h2 style='text-align:left; float:left; color:gray; margin:0px;'>Tria el conjunt d'imatges a fer servir:</h2>"
 
         Text_Inicializations_6="<p></p><hr><h3 style='text-align:left; float:left; color:blue; margin:0px;'>Opcions seleccionades:</h2>"
 
