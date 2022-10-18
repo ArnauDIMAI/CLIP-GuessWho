@@ -497,12 +497,12 @@ def Image_discarding():
         for i in range(len(st.session_state['init_data']['current_images_discarted2'])):
             if st.session_state['init_data']['current_images_discarted2'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index2']]:
                 st.session_state['init_data']['current_images_discarted2'][i]=1
-
-        previous_names=st.session_state['init_data']['current_image_names2']
-        st.session_state['init_data']['current_image_names2']=[]
-        previous_files=st.session_state['init_data']['image_current_paths2']     
-        st.session_state['init_data']['image_current_paths2']=[] 
+ 
         st.session_state['init_data']['image_current_predictions']=[]
+        previous_names=st.session_state['init_data']['current_image_names2']
+        previous_files=st.session_state['init_data']['image_current_paths2'] 
+        st.session_state['init_data']['current_image_names2']=[]
+        st.session_state['init_data']['image_current_paths2']=[]    
         for i in range(st.session_state['init_data']['n_images2']):
             if st.session_state['init_data']['current_images_discarted2'][current_index]==0:
                 st.session_state['init_data']['image_current_paths2'].append(previous_files[current_index])
@@ -525,11 +525,11 @@ def Image_discarding():
             if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
                 st.session_state['init_data']['current_images_discarted'][i]=1
 
-        previous_names=st.session_state['init_data']['current_image_names']
-        st.session_state['init_data']['current_image_names']=[]
-        st.session_state['init_data']['image_current_paths']=[] 
-        previous_predictions=st.session_state['init_data']['image_current_predictions'] 
         st.session_state['init_data']['image_current_predictions']=[]
+        previous_names=st.session_state['init_data']['current_image_names']
+        previous_files=st.session_state['init_data']['image_current_paths']    
+        st.session_state['init_data']['current_image_names']=[]
+        st.session_state['init_data']['image_current_paths']=[]  
         for i in range(st.session_state['init_data']['n_images']):
             if st.session_state['init_data']['current_images_discarted'][current_index]==0:
                 st.session_state['init_data']['image_current_paths'].append(previous_files[current_index])
