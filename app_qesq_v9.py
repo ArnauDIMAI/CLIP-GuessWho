@@ -489,10 +489,10 @@ def CLIP_Process():
     gc.collect()
        
 def Image_discarding():
-        previous_predictions=st.session_state['init_data']['image_current_predictions'] 
-        current_index=0
-        new_index=0
-		index_not_new=True
+    previous_predictions=st.session_state['init_data']['image_current_predictions'] 
+    current_index=0
+    new_index=0
+    index_not_new=True
     if st.session_state['init_data']['player2_turn']:
         for i in range(len(st.session_state['init_data']['current_images_discarted2'])):
             if st.session_state['init_data']['current_images_discarted2'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index2']]:
