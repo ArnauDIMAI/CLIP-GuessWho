@@ -76,6 +76,7 @@ def Predict_all_vs_last():
             st.session_state['init_data']['image_current_predictions'].append(1)
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])   
+	
 def Predict_bald():
     st.session_state['init_data']['image_current_predictions']=[]
     for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
@@ -429,6 +430,12 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,List_i
 
         ## --------------- ACTIONS SHOWING RESULTS ---------------
         if st.session_state['init_data']['show_results']:
+			## Verify win index error
+            if Win_index>len(st.session_state['init_data']['image_current_predictions'])-1:
+				st.markdown(Win_index, unsafe_allow_html=True)
+				st.markdown(st.session_state['init_data']['image_current_predictions'], unsafe_allow_html=True)
+			
+
 
             ## Show current results
             if st.session_state['init_data']['token_type']==0:
@@ -484,6 +491,10 @@ def CLIP_Process():
     gc.collect()
        
 def Image_discarding():
+        previous_predictions=st.session_state['init_data']['image_current_predictions'] 
+        current_index=0
+        new_index=0
+		index_not_new=True
     if st.session_state['init_data']['player2_turn']:
         for i in range(len(st.session_state['init_data']['current_images_discarted2'])):
             if st.session_state['init_data']['current_images_discarted2'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index2']]:
@@ -493,18 +504,16 @@ def Image_discarding():
         st.session_state['init_data']['current_image_names2']=[]
         previous_files=st.session_state['init_data']['image_current_paths2']     
         st.session_state['init_data']['image_current_paths2']=[] 
-        previous_predictions=st.session_state['init_data']['image_current_predictions'] 
         st.session_state['init_data']['image_current_predictions']=[]
-        current_index=0
-        new_index=0
         for i in range(st.session_state['init_data']['n_images2']):
             if st.session_state['init_data']['current_images_discarted2'][current_index]==0:
                 st.session_state['init_data']['image_current_paths2'].append(previous_files[current_index])
                 st.session_state['init_data']['current_image_names2'].append(previous_names[current_index])
                 st.session_state['init_data']['image_current_predictions'].append(previous_predictions[current_index])
-                if current_index==st.session_state['init_data']['current_winner_index2']:
+                if current_index==st.session_state['init_data']['current_winner_index2'] and index_not_new:
                     st.session_state['init_data']['current_winner_index2']=new_index
-                    
+                    index_not_new=False
+					
                 new_index+=1
                 
             current_index+=1
@@ -520,19 +529,17 @@ def Image_discarding():
 
         previous_names=st.session_state['init_data']['current_image_names']
         st.session_state['init_data']['current_image_names']=[]
-        previous_files=st.session_state['init_data']['image_current_paths']     
         st.session_state['init_data']['image_current_paths']=[] 
         previous_predictions=st.session_state['init_data']['image_current_predictions'] 
         st.session_state['init_data']['image_current_predictions']=[]
-        current_index=0
-        new_index=0
         for i in range(st.session_state['init_data']['n_images']):
             if st.session_state['init_data']['current_images_discarted'][current_index]==0:
                 st.session_state['init_data']['image_current_paths'].append(previous_files[current_index])
                 st.session_state['init_data']['current_image_names'].append(previous_names[current_index])
                 st.session_state['init_data']['image_current_predictions'].append(previous_predictions[current_index])
-                if current_index==st.session_state['init_data']['current_winner_index']:
+                if current_index==st.session_state['init_data']['current_winner_index'] and index_not_new:
                     st.session_state['init_data']['current_winner_index']=new_index
+                    index_not_new=False
                     
                 new_index+=1
                 
@@ -560,9 +567,9 @@ def Show_images():
     for current_index in range(n_img):
         if st.session_state['init_data']['show_results']:
             current_line_width=4
-            st.markdown(current_index, unsafe_allow_html=True)
-            st.markdown(winner_index, unsafe_allow_html=True)
-            st.markdown(st.session_state['init_data']['image_current_predictions'], unsafe_allow_html=True)
+            #st.markdown(current_index, unsafe_allow_html=True)
+            #st.markdown(winner_index, unsafe_allow_html=True)
+            #st.markdown(st.session_state['init_data']['image_current_predictions'], unsafe_allow_html=True)
             if st.session_state['init_data']['image_current_predictions'][current_index]==st.session_state['init_data']['image_current_predictions'][winner_index]:
                 current_color=np.array([0,255,0])
             else:
