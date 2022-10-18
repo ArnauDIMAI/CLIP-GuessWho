@@ -430,12 +430,10 @@ def Ask_Question(Player_indicator,Win_index,Current_award,List_query_type,List_i
 
         ## --------------- ACTIONS SHOWING RESULTS ---------------
         if st.session_state['init_data']['show_results']:
-			## Verify win index error
+            ## Verify win index error
             if Win_index>len(st.session_state['init_data']['image_current_predictions'])-1:
-				st.markdown(Win_index, unsafe_allow_html=True)
-				st.markdown(st.session_state['init_data']['image_current_predictions'], unsafe_allow_html=True)
-			
-
+                st.markdown(Win_index, unsafe_allow_html=True)
+                st.markdown(st.session_state['init_data']['image_current_predictions'], unsafe_allow_html=True)
 
             ## Show current results
             if st.session_state['init_data']['token_type']==0:
