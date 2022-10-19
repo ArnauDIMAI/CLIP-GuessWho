@@ -67,9 +67,10 @@ def Predict_0_vs_all():
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
   
 def Predict_all_vs_last():
+    n_max=len(st.session_state['init_data']['image_current_probs'][:,0])
     st.session_state['init_data']['image_current_predictions']=[]
-    for i in range(len(st.session_state['init_data']['image_current_probs'][0,:]):
-        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==len(st.session_state['init_data']['image_current_probs'][i,:])-1:
+    for i in range(n_max):
+        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==n_max-1:
             st.session_state['init_data']['image_current_predictions'].append(0)        
         else:
             st.session_state['init_data']['image_current_predictions'].append(1)
