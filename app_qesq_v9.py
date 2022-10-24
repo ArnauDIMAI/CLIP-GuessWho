@@ -1,4 +1,78 @@
-else:
+# -*- coding: utf-8 -*-
+
+## Used Imports
+import os
+import io
+import zipfile
+import random
+import numpy as np
+import streamlit as st
+import clip
+import gc
+
+# import psutil  ## show info (cpu, memeory)
+
+from io import BytesIO
+from PIL import Image
+from zipfile import ZipFile 
+from pathlib import Path, PurePath, PureWindowsPath
+# from streamlit import caching
+
+
+## --------------- STREAMLIT APP ---------------
+st.set_page_config(
+    layout="wide",
+    page_icon='Logo DIMAI.png',
+    page_title='QuienEsQuien',
+    initial_sidebar_state="collapsed"
+)
+    
+    
+## --------------- CACHE FUCTION ---------------
+@st.cache(ttl=12*3600)  else:
+def CLIP_Loading():
+	  return clip.load("ViT-B/32", device="cpu", jit=False)
+
+
+## --------------- USED FUNCTIONS ---------------
+
+def Predict_1_vs_0():
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if st.session_state['init_data']['image_current_probs'][i,1]>st.session_state['init_data']['image_current_probs'][i,0]:
+            st.session_state['init_data']['image_current_predictions'].append(1)
+        else:
+            st.session_state['init_data']['image_current_predictions'].append(0)
+    
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
+    
+def Predict_0_vs_1():
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if st.session_state['init_data']['image_current_probs'][i,0]>st.session_state['init_data']['image_current_probs'][i,1]:
+            st.session_state['init_data']['image_current_predictions'].append(1)
+        else:
+            st.session_state['init_data']['image_current_predictions'].append(0)
+
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
+
+def Predict_0_vs_all():
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==0:
+            st.session_state['init_data']['image_current_predictions'].append(1)        
+        else:
+            st.session_state['init_data']['image_current_predictions'].append(0)
+
+    st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])
+  
+def Predict_all_vs_last():
+    n_max=len(st.session_state['init_data']['image_current_probs'][0,:])-1
+    st.session_state['init_data']['image_current_predictions']=[]
+    for i in range(len(st.session_state['init_data']['image_current_probs'][:,0])):
+        if np.argmax(st.session_state['init_data']['image_current_probs'][i,:])==n_max:
+            st.session_state['init_data']['image_current_predictions'].append(0)        
+        else:
             st.session_state['init_data']['image_current_predictions'].append(1)
 
     st.session_state['init_data']['image_current_predictions']=np.array(st.session_state['init_data']['image_current_predictions'])   
