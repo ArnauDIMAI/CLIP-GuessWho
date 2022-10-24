@@ -29,7 +29,7 @@ st.set_page_config(
     
     
 ## --------------- CACHE FUCTION ---------------
-@st.cache(ttl=12*3600)  else:
+@st.cache(ttl=12*3600)
 def CLIP_Loading():
 	  return clip.load("ViT-B/32", device="cpu", jit=False)
 
