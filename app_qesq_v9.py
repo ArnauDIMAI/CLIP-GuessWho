@@ -496,9 +496,9 @@ def Image_discarding():
     new_index=0
     index_not_new=True
     if st.session_state['init_data']['player2_turn']:
-        for i in range(len(st.session_state['init_data']['current_images_discarted2'])):
-            if st.session_state['init_data']['current_images_discarted2'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index2']]:
-                st.session_state['init_data']['current_images_discarted2'][i]=1
+        #for i in range(len(st.session_state['init_data']['current_images_discarted2'])):
+            #if st.session_state['init_data']['current_images_discarted2'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index2']]:
+             #   st.session_state['init_data']['current_images_discarted2'][i]=1
  
         st.session_state['init_data']['image_current_predictions']=[]
         previous_names=st.session_state['init_data']['current_image_names2']
@@ -523,9 +523,9 @@ def Image_discarding():
         st.session_state['init_data']['image_current_paths2']=np.array(st.session_state['init_data']['image_current_paths2']) 
         st.session_state['init_data']['current_images_discarted2']=np.zeros(st.session_state['init_data']['n_images2'])
     else:
-        for i in range(len(st.session_state['init_data']['current_images_discarted'])):
-            if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                st.session_state['init_data']['current_images_discarted'][i]=1
+        #for i in range(len(st.session_state['init_data']['current_images_discarted'])):
+            #if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
+                #st.session_state['init_data']['current_images_discarted'][i]=1
 
         st.session_state['init_data']['image_current_predictions']=[]
         previous_names=st.session_state['init_data']['current_image_names']
@@ -806,7 +806,7 @@ def ReLoad_Data(List_image_source):
     st.session_state['init_data']['status']=-1
     st.session_state['init_data']['award1']=100
     st.session_state['init_data']['award2']=100
-    st.session_state['init_data']['N_images_init']=st.session_state['init_data']['N_images']+1
+    st.session_state['init_data']['N_images_init']=st.session_state['init_data']['N_images']
     st.session_state['init_data']['n_images']=st.session_state['init_data']['N_images_init']
     st.session_state['init_data']['n_images2']=st.session_state['init_data']['N_images_init']
     st.session_state['init_data']['N_players_init']=st.session_state['init_data']['N_players']
@@ -1516,7 +1516,7 @@ def Main_Program():
     st.sidebar.markdown(Text_Reset_App_1, unsafe_allow_html=True)
     st.session_state['init_data']['reset_app'] = st.sidebar.button(Text_Reset_App_2, key='Reset_App')
     if st.session_state['init_data']['reset_app']:
-        Load_Data(st.session_state['init_data']['N_images'])
+        ReLoad_Data(List_image_source)
          
      
     ## --------------- SHOW INFO --------------
@@ -1544,6 +1544,7 @@ def Main_Program():
             st.markdown(Text_Title_3 + str(st.session_state['init_data']['award1'])+ Text_Title_4 + str(st.session_state['init_data']['award2'])+Text_Title_5, unsafe_allow_html=True)
         else:
             st.markdown(Text_Title_6 + str(st.session_state['init_data']['award1'])+ Text_Title_5, unsafe_allow_html=True)
+
 
     ## --------------- LANGUAGE ---------------
     if st.session_state['init_data']['status']==-1:
@@ -1611,6 +1612,7 @@ def Main_Program():
             st.session_state['init_data']['image_current_probs']=np.zeros((N_Images,2))
             st.session_state['init_data']['image_current_predictions']=np.zeros((N_Images))+2
             st.session_state['init_data']['Selected_Images_Source']=Selected_Images_Source
+            st.session_state['init_data']['Selected_Images_Source_init']=List_Images_Source.index(Selected_Images_Source)
             if st.session_state['init_data']['N_players']==1:
                 st.session_state['init_data']['status']=1
             else:
