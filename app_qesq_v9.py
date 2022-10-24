@@ -1267,9 +1267,9 @@ def Main_Program():
 
         Text_Show_Elements_17="Escriu les teves consultes usant dos frases oposades en anglès.</h3>"
 
-        Text_Show_Elements_18="Escriu la teva conulta 'Certa':"
+        Text_Show_Elements_18="Escriu la teva consulta 'Certa':"
 
-        Text_Show_Elements_19="Escriu la teva conulta 'Falsa':"
+        Text_Show_Elements_19="Escriu la teva consulta 'Falsa':"
 
         Text_Show_Elements_21="Consultes a fer: </h3><h3 style='text-align:left; float:center; color:green; margin:0px;'>"
 
