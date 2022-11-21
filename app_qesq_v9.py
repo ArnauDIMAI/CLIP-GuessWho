@@ -802,7 +802,7 @@ def Load_Data(N):
         'image_current_predictions':np.zeros((N))+2}
 
 
-def ReLoad_Data(List_image_source):
+def ReLoad_Data(list_images_source):
     st.session_state['init_data']['status']=-1
     st.session_state['init_data']['award1']=100
     st.session_state['init_data']['award2']=100
@@ -811,7 +811,7 @@ def ReLoad_Data(List_image_source):
     st.session_state['init_data']['n_images2']=st.session_state['init_data']['N_images_init']
     st.session_state['init_data']['N_players_init']=st.session_state['init_data']['N_players']
     # st.session_state['init_data']['Selected_Images_Source']='Use Celeba dataset'
-    st.session_state['init_data']['Selected_Images_Source_init']=List_image_source.index(st.session_state['init_data']['Selected_Images_Source'])
+    st.session_state['init_data']['Selected_Images_Source_init']=list_images_source.index(st.session_state['init_data']['Selected_Images_Source'])
     # st.session_state['init_data']['zip_file']='guess_who_images.zip'
     # st.session_state['init_data']['previous_zip_file']='guess_who_images.zip'
     # st.session_state['init_data']['special_images_names']=False
@@ -1155,7 +1155,7 @@ def Main_Program():
                 "An illustration of a person's face with wide eyes", "An illustration of a person's face with a normal-shaped face", 
                 "An illustration of a person's face wiht tanned skin", "A picture of a flat-nosed person", "An illustration of a person's face with pale cheeks", 
                 "A picture of a shaved or unshaved person", "An illustration of a person's face a straight eyebrows person", "An illustration of a person's face with with smooth skin under the eyes", 
-                "An illustration of a person's face", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
+                "An illustration of a person's face with forehead or hat", "A picture of a narrow-liped person", "A picture of a small-nosed person",            
                 "An illustration of a person's face", "An illustration of a person's face with hair", 
                 "An illustration of a person's face with natural lips", "An illustration of a person's face", 
                 "An illustration of a person's face"]    
@@ -1425,7 +1425,7 @@ def Main_Program():
                         'Tens ELS ULLS ENTRETANCATS?', 'Tens la CARA OVALADA?',
                         'Tens la PEL PÀL·LIDA?', 'Tens el NAS DE PUNTA?', 'Tens les GALTES ROSADES?',
                         "Tens OMBRA DE LES 5 EN PUNT?", "Tens CELLES ARQUEJADES?", "FAS ULLERES?",
-                        "Ten SERELL?", "Tens els LLAVIS GRANS?", "Tens el NAS GRAN?",
+                        "Ten SERRELL?", "Tens els LLAVIS GRANS?", "Tens el NAS GRAN?",
                         'Portes ARRACADES?', 'Portes BARRET?',
                         'Portes PINTALLAVIS?', 'Portes COLLARETS?',
                         'Portes CORBATA?']
@@ -1474,7 +1474,7 @@ def Main_Program():
                         'Tens ELS ULLS ENTRETANCATS?', 'Tens la CARA OVALADA?',
                         'Tens la PEL PÀL·LIDA?', 'Tens el NAS DE PUNTA?', 'Tens les GALTES ROSADES?',
                         "Tens OMBRA DE LES 5 EN PUNT?", "Tens CELLES ARQUEJADES?", "FAS ULLERES?",
-                        "Ten SERELL?", "Tens els LLAVIS GRANS?", "Tens el NAS GRAN?",
+                        "Ten SERRELL?", "Tens els LLAVIS GRANS?", "Tens el NAS GRAN?",
                         'Portes ARRACADES?', 'Portes BARRET?',
                         'Portes PINTALLAVIS?', 'Portes COLLARETS?',
                         'Portes CORBATA?']
@@ -1516,7 +1516,7 @@ def Main_Program():
     st.sidebar.markdown(Text_Reset_App_1, unsafe_allow_html=True)
     st.session_state['init_data']['reset_app'] = st.sidebar.button(Text_Reset_App_2, key='Reset_App')
     if st.session_state['init_data']['reset_app']:
-        ReLoad_Data(List_image_source)
+        ReLoad_Data(List_Images_Source)
          
      
     ## --------------- SHOW INFO --------------
