@@ -1,5 +1,5 @@
 # GUESS WHO
-Main Links: [[Github]](https://github.com/ArnauDIMAI/CLIP-GuessWho) [[App]](https://share.streamlit.io/arnaudimai/clip-guesswho/main/app_qesq_v9.py)
+Main Links: [[Github]](https://github.com/ArnauDIMAI/CLIP-GuessWho) [[App]](https://share.streamlit.io/arnaudimai/clip-guesswho/main/app_qesq.py)
 
 Related Links: [[CLIP]](https://openai.com/blog/clip/) [[Celeba]](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)
 
