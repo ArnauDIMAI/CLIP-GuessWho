@@ -617,7 +617,8 @@ def Select_Images_Randomly():
     test_url = 'https://drive.google.com/file/d/13HrbybMXDIR3DqH1aN96W7iAtfOSzF5X/view?usp=share_link' 	
     test_filename = 'frifam.zip'    
     test_r = requests.get(test_url)    
-    archive = zipfile.ZipFile(io.BytesIO(test_r.content), 'r')    
+    archive2 = zipfile.ZipFile(io.BytesIO(test_r.content), 'r')    
+    archive = zipfile.ZipFile(test_r.content, 'r') 
         
     listOfFileNames = archive.namelist()     
     image_index_all=list(range(len(listOfFileNames)))
