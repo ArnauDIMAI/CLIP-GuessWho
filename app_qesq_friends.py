@@ -610,11 +610,9 @@ def Select_Images_Randomly():
         st.session_state['init_data']['special_images_names']=True
     else:
         st.session_state['init_data']['special_images_names']=False
-	
-	archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
-	
-	
-	listOfFileNames = archive.namelist()     
+    
+    archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')
+    listOfFileNames = archive.namelist()     
     image_index_all=list(range(len(listOfFileNames)))
     
     image_index.append(random.choice(image_index_all))
