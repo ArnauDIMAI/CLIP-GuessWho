@@ -612,12 +612,12 @@ def Select_Images_Randomly():
     else:
         st.session_state['init_data']['special_images_names']=False
     
-    archive = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')    
+    archive2 = zipfile.ZipFile(st.session_state['init_data']['zip_file'], 'r')    
     test_url = 'https://drive.google.com/file/d/13k0__60pkFdrjPl4accubWgv2CkV3VIK/view?usp=sharing'       
     test_url = 'https://drive.google.com/file/d/13HrbybMXDIR3DqH1aN96W7iAtfOSzF5X/view?usp=share_link' 	
     test_filename = 'frifam.zip'    
     test_r = requests.get(test_url)    
-    archive = zipfile.ZipFile(io.BytesIO(test_r.content))    
+    archive = zipfile.ZipFile(io.BytesIO(test_r.content), 'r')    
         
     listOfFileNames = archive.namelist()     
     image_index_all=list(range(len(listOfFileNames)))
