@@ -523,9 +523,9 @@ def Image_discarding():
         st.session_state['init_data']['image_current_paths2']=np.array(st.session_state['init_data']['image_current_paths2']) 
         st.session_state['init_data']['current_images_discarted2']=np.zeros(st.session_state['init_data']['n_images2'])
     else:
-        #for i in range(len(st.session_state['init_data']['current_images_discarted'])):
-            #if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                #st.session_state['init_data']['current_images_discarted'][i]=1
+        for i in range(len(st.session_state['init_data']['current_images_discarted'])):
+            if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
+                st.session_state['init_data']['current_images_discarted'][i]=1
 
         st.session_state['init_data']['image_current_predictions']=[]
         previous_names=st.session_state['init_data']['current_image_names']
