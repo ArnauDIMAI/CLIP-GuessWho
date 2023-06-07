@@ -496,9 +496,9 @@ def Image_discarding():
     new_index=0
     index_not_new=True
     if st.session_state['init_data']['player2_turn']:
-        #for i in range(len(st.session_state['init_data']['current_images_discarted2'])):
-            #if st.session_state['init_data']['current_images_discarted2'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index2']]:
-             #   st.session_state['init_data']['current_images_discarted2'][i]=1
+        for i in range(len(st.session_state['init_data']['current_images_discarted2'])):
+            if st.session_state['init_data']['current_images_discarted2'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index2']]:
+                st.session_state['init_data']['current_images_discarted2'][i]=1
  
         st.session_state['init_data']['image_current_predictions']=[]
         previous_names=st.session_state['init_data']['current_image_names2']
@@ -523,9 +523,9 @@ def Image_discarding():
         st.session_state['init_data']['image_current_paths2']=np.array(st.session_state['init_data']['image_current_paths2']) 
         st.session_state['init_data']['current_images_discarted2']=np.zeros(st.session_state['init_data']['n_images2'])
     else:
-        #for i in range(len(st.session_state['init_data']['current_images_discarted'])):
-            #if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
-                #st.session_state['init_data']['current_images_discarted'][i]=1
+        for i in range(len(st.session_state['init_data']['current_images_discarted'])):
+            if st.session_state['init_data']['current_images_discarted'][i]==0 and st.session_state['init_data']['image_current_predictions'][i]!=st.session_state['init_data']['image_current_predictions'][st.session_state['init_data']['current_winner_index']]:
+                st.session_state['init_data']['current_images_discarted'][i]=1
 
         st.session_state['init_data']['image_current_predictions']=[]
         previous_names=st.session_state['init_data']['current_image_names']
@@ -910,8 +910,8 @@ def Main_Program():
 	
         List_Query_Type=['Ask a Question', 'Create your own query', 'Create your own 2 querys','Select a Winner']
 
-        List_Images_Source=['Use Celeba dataset','Use Original "Guess Who" game images', 'Use friends dataset', 'Use images from specific path']
-        
+        List_Images_Source=['Use Celeba dataset','Use Original "Guess Who" game images','Use images from specific path']
+        ## List_Images_Source=['Use Celeba dataset','Use Original "Guess Who" game images', 'Use friends dataset', 'Use images from specific path']
         Text_Show_Final_Results_1="<h1 style='text-align:left; color:gray; margin:0px;'>CONGRATULATIONS <span style='text-align:left; color:green; margin:0px;'>"
 
         Text_Show_Final_Results_2="<span style='text-align:left; color:gray; margin:0px;'>! THE WINNER PICTURE IS: <span style='text-align:left; color:green; margin:0px;'>"
@@ -936,7 +936,8 @@ def Main_Program():
         Text_Finished_Game_9="Ask a question from a list, create your query or select a winner:"
 
 
-        Tex_Images_Source_1='Choose between: Celebrities images, Original "Guess Who" game images, My friends images or Your own images (selecting a source path with your images zip file)'
+        Tex_Images_Source_1='Choose between: Celebrities images, Original "Guess Who" game images or Your own images (selecting a source path with your images zip file)'
+        ## Tex_Images_Source_1='Choose between: Celebrities images, Original "Guess Who" game images, My friends images or Your own images (selecting a source path with your images zip file)'
 
 
         Text_Show_Elements_1="<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"
