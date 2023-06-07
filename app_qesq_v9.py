@@ -1213,7 +1213,8 @@ def Main_Program():
     else:
         List_Query_Type=['Fer una pregunta', 'Fer una consulta en anglès', 'Fer una doble consulta en anglès','Seleccionar un guanyador']
 
-        List_Images_Source=["Usar imatges de famosos (el dataset Celeba)","Usar imatges del joc original 'Quí és Quí?'","Usar imatges d'amics", "Usar imatges d'un arxiu 'zip'"]
+        List_Images_Source=["Usar imatges de famosos (el dataset Celeba)","Usar imatges del joc original 'Quí és Quí?'", "Usar imatges d'un arxiu 'zip'"]
+        ## List_Images_Source=["Usar imatges de famosos (el dataset Celeba)","Usar imatges del joc original 'Quí és Quí?'","Usar imatges d'amics", "Usar imatges d'un arxiu 'zip'"]
 
         Text_Show_Final_Results_1="<h1 style='text-align:left; color:gray; margin:0px;'>FELICITATS <span style='text-align:left; color:green; margin:0px;'>"
 
