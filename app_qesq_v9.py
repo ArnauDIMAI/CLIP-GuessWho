@@ -899,7 +899,8 @@ def ReLoad_Data(list_images_source):
 
 ## --------------- MAIN FUCTION ---------------
 def Main_Program():
-
+    Uploaded_File==st.session_state['init_data']['zip_file']  ## eliminar si "amics"
+    
     ## --------------- LOAD DATA ---------------
     if 'init_data' not in st.session_state:
         Load_Data(20)
@@ -1241,7 +1242,7 @@ def Main_Program():
 
 
         Tex_Images_Source_1="Tria entre: imatges de famosos, imatges del joc original 'Quí és Quí?' o les imatges que vulguis (proporcionant un arxiu '.zip')"
-        ## Tex_Images_Source_1="Tria entre: imatges de famosos, imatges del joc original 'Quí és Quí?', imatges d'amcs o les imatges que vulguis (proporcionant un arxiu '.zip')"
+        ## Tex_Images_Source_1="Tria entre: imatges de famosos, imatges del joc original 'Quí és Quí?', imatges d'amics o les imatges que vulguis (proporcionant un arxiu '.zip')"
 
 
         Text_Show_Elements_1="<h3 style='text-align:left; float:left; color:gray; margin-left:0px; margin-right:0px; margin-top:15px; margin-bottom:-10px;'>"
