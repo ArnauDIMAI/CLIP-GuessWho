@@ -1626,15 +1626,16 @@ def Main_Program():
                 st.session_state['init_data']['zip_file']='guess_who_images.zip'
             elif st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[1]:
                 st.session_state['init_data']['zip_file']='Original.zip'
-            elif st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[2]:
-                st.session_state['init_data']['zip_file']='frifam.zip'
+            ## elif st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[2]:
+                ## st.session_state['init_data']['zip_file']='frifam.zip'
             else:
                 st.session_state['init_data']['zip_file']='Use images from specific path'
             
 
     ## --------------- IMAGE SELECTION ---------------
     if st.session_state['init_data']['status']==1 or st.session_state['init_data']['status']==101:
-        if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[3]:
+        if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[2]:
+        ## if st.session_state['init_data']['Selected_Images_Source']==List_Images_Source[3]:
             ## Specific source text
             st.markdown(Text_Language_1, unsafe_allow_html=True)
                 
