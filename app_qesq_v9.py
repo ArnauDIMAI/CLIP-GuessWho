@@ -1621,7 +1621,7 @@ def Main_Program():
             if st.session_state['init_data']['N_players']==1:
                 st.session_state['init_data']['status']=1
             else:
-                st.session_state['init_data']['status']=
+                st.session_state['init_data']['status']=101
             st.session_state['init_data']['player2_turn']=False
 
             ## Select zip file
