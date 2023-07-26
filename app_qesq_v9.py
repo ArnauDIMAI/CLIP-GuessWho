@@ -876,8 +876,8 @@ def ReLoad_Data(list_images_source):
     # st.session_state['init_data']['user_input_querys1']='A picture of a person'
     # st.session_state['init_data']['user_input_querys2']='A picture of a person'
     st.session_state['init_data']['image_current_probs']=np.zeros((st.session_state['init_data']['N_images'],2))
-    st.session_state['init_data']['selected_winner']='Winner not selected'
-    st.session_state['init_data']['selected_winner2']='Winner not selected'
+    st.session_state['init_data']['selected_winner']='Winner '
+    st.session_state['init_data']['selected_winner2']='Winner '
     st.session_state['init_data']['reset_app']=False
     st.session_state['init_data']['change_player']=False
     st.session_state['init_data']['player2_turn']=False
@@ -1706,7 +1706,7 @@ def Main_Program():
             Player_2_Image=st.selectbox(Text_Select_Winner_3, Image_Names_List, index=0, key='Player_2_Image', help=None)    
                                
             ## Button - start game
-            if Player_2_Image!='Not selected':
+            if Player_2_Image!=Text_Select_Winner_2:
                 st.markdown(Text_Select_Winner_4+Player_2_Image+Text_Show_Elements_5, unsafe_allow_html=True)
                 Next_Player_Selection = st.button(Text_Select_Winner_6, key='Next_Player_Selection')
                 if Next_Player_Selection:
