@@ -1647,9 +1647,8 @@ def Main_Program():
             if Uploaded_File is not None:
                 if Uploaded_File!=st.session_state['init_data']['zip_file']:            
                     st.session_state['init_data']['zip_file']= Uploaded_File
-		    st.session_state['init_data']['images_loaded']=True
+                    st.session_state['init_data']['images_loaded']=True
                     Select_Images_Randomly()
-                
                 
                 if Uploaded_File==st.session_state['init_data']['zip_file']:  
                     ## Button - randomly change Celeba images
@@ -1666,9 +1665,9 @@ def Main_Program():
                         st.session_state['init_data']['status']=st.session_state['init_data']['status']+10
                         
         else:
-            st.session_state['init_data']['images_loaded']=True	
+            st.session_state['init_data']['images_loaded']=True
             ## Button - randomly change images
-            st.markdown(Text_Image_Selection_1, unsafe_allow_html=True)                   
+            st.markdown(Text_Image_Selection_1, unsafe_allow_html=True)
             Random_Images = st.button(Text_Image_Selection_2, key='Random_Images')
             if st.session_state['init_data']['images_not_selected'] or Random_Images:
                 Select_Images_Randomly()
