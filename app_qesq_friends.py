@@ -700,7 +700,7 @@ def Show_Info(Text_questions_list_1):
     #st.sidebar.markdown("<p></p><hr><h2 style='text-align:left; float:left; color:gray; margin:0px;'>INFO</h2>", unsafe_allow_html=True)
     st.sidebar.markdown(Text_questions_list_1, unsafe_allow_html=True)
     st.sidebar.write(st.session_state['init_data']['feature_questions'])
-    st.sidebar.write(st.session_state['init_data'])
+    # st.sidebar.write(st.session_state['init_data'])
 
 def Load_Data(N):
     st.session_state['init_data']={
