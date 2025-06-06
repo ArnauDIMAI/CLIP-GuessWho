@@ -1,6 +1,6 @@
 ftfy
 regex
-numpy
+numpy<2.0
 tqdm
 pip==22.2.2
 --find-links https://download.pytorch.org/whl/torch_stable.html
